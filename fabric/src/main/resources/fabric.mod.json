@@ -8,10 +8,10 @@
     "awildgoose"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/awildergoose/wylan",
+    "sources": "https://github.com/awildergoose/wylan"
   },
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/wylan/icon.png",
   "environment": "*",
   "entrypoints": {
