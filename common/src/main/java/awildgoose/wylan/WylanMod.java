@@ -14,13 +14,13 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Function;
 
-public final class ExampleMod {
+public final class WylanMod {
     public static final String MOD_ID = "wylan";
 
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(MOD_ID, Registries.CREATIVE_MODE_TAB);
     public static final RegistrySupplier<CreativeModeTab> CREATIVE_TAB = TABS.register("wylan", () ->
             CreativeTabRegistry.create(Component.translatable("itemGroup." + MOD_ID + ".wylan"),
-                                       () -> new ItemStack(ExampleMod.WYLAN_COOKIE.get())));
+                                       () -> new ItemStack(WylanMod.WYLAN_COOKIE.get())));
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(MOD_ID, Registries.ITEM);
     public static final RegistrySupplier<Item> WYLAN_COOKIE = registerItem("wylan_cookie", Item::new,

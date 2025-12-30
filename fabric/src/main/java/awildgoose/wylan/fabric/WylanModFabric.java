@@ -2,11 +2,11 @@ package awildgoose.wylan.fabric;
 
 import net.fabricmc.api.ModInitializer;
 
-import awildgoose.wylan.ExampleMod;
+import awildgoose.wylan.WylanMod;
 
-public final class ExampleModFabric implements ModInitializer {
+public final class WylanModFabric implements ModInitializer {
     @Override
     public void onInitialize() {
-        ExampleMod.init();
+        WylanMod.init();
     }
 }

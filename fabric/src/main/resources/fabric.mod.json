@@ -16,10 +16,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "awildgoose.wylan.fabric.ExampleModFabric"
+      "awildgoose.wylan.fabric.WylanModFabric"
     ],
     "client": [
-      "awildgoose.wylan.fabric.client.ExampleModFabricClient"
+      "awildgoose.wylan.fabric.client.WylanModFabricClient"
     ]
   },
   "mixins": [
