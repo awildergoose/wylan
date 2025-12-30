@@ -1,5 +1,6 @@
 package awildgoose.wylan;
 
+import awildgoose.wylan.block.PlushieBlock;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -8,9 +9,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.equipment.ArmorMaterials;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import java.util.function.Function;
 
@@ -48,8 +52,38 @@ public final class WylanMod {
         return (new FoodProperties.Builder()).alwaysEdible().nutrition(2).saturationModifier(0.1F).build();
     }
 
+    public static final DeferredRegister<Block> BLOCKS =
+            DeferredRegister.create(WylanMod.MOD_ID, Registries.BLOCK);
+
+
+    public static final RegistrySupplier<Block> WYLAN_PLUSHIE =
+            registerBlockWithItem("wylan_plushie", PlushieBlock::new, BlockBehaviour.Properties.of()
+                                                                           .strength(3.0f)
+                                                                           .sound(SoundType.STONE), (p) -> p.humanoidArmor(ArmorMaterials.LEATHER, ArmorType.HELMET));
+
+    private static RegistrySupplier<Block> registerBlockWithItem(@SuppressWarnings("SameParameterValue") String path,
+                                                                 Function<BlockBehaviour.Properties, Block> factory,
+                                                                 BlockBehaviour.Properties properties,
+                                                                 Function<Item.Properties, Item.Properties> itemFactory) {
+        RegistrySupplier<Block> block = BLOCKS.register(path,
+                                                        () -> factory.apply(properties.setId(ResourceKey.create(Registries.BLOCK,
+                                                                                                                        ResourceLocation.fromNamespaceAndPath(MOD_ID, path)))));
+
+        WylanMod.ITEMS.register(path, () -> new BlockItem(
+                block.get(),
+                itemFactory.apply(new Item.Properties()
+                        .setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(WylanMod.MOD_ID, path)))
+                        .arch$tab(WylanMod.CREATIVE_TAB)
+                )
+        ));
+
+        return block;
+    }
+
+
     public static void init() {
         TABS.register();
+        BLOCKS.register();
         ITEMS.register();
     }
 }

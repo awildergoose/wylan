@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/wylan.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/wylan.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/wylan.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/common/wylan.common.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/wylan.common.test.iml" filepath="$PROJECT_DIR$/.idea/modules/common/wylan.common.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/wylan.fabric.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/wylan.fabric.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/wylan.fabric.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/wylan.fabric.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/wylan.fabric.test.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/wylan.fabric.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/neoforge/wylan.neoforge.iml" filepath="$PROJECT_DIR$/.idea/modules/neoforge/wylan.neoforge.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/neoforge/wylan.neoforge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/neoforge/wylan.neoforge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/neoforge/wylan.neoforge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/neoforge/wylan.neoforge.test.iml" />
+    </modules>
+  </component>
+</project>
