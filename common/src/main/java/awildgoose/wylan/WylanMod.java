@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Function;
 
+@SuppressWarnings("unused")
 public final class WylanMod {
     public static final String MOD_ID = "wylan";
 
