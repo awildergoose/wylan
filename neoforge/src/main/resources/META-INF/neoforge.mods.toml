@@ -1,17 +1,17 @@
 modLoader = "javafml"
 loaderVersion = "[9,)"
 #issueTrackerURL = ""
-license = "Insert License Here"
+license = "MIT"
 
 [[mods]]
 modId = "wylan"
 version = "${version}"
 displayName = "Wylan"
-authors = "Me!"
+authors = "awildgoose"
 description = '''
 This is an example description! Tell everyone what your mod is about!
 '''
-#logoFile = ""
+logoFile = "assets/wylan/icon.png"
 
 [[dependencies.wylan]]
 modId = "neoforge"
