@@ -4,14 +4,15 @@ import awildgoose.wylan.block.PlushieBlock;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.equipment.ArmorMaterials;
-import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -59,7 +60,9 @@ public final class WylanMod {
     public static final RegistrySupplier<Block> WYLAN_PLUSHIE =
             registerBlockWithItem("wylan_plushie", PlushieBlock::new, BlockBehaviour.Properties.of()
                                                                            .strength(3.0f)
-                                                                           .sound(SoundType.STONE), (p) -> p.humanoidArmor(ArmorMaterials.LEATHER, ArmorType.HELMET));
+                                                                           .sound(SoundType.STONE),
+                                  (p) -> p.component(DataComponents.EQUIPPABLE,
+                                                     Equippable.builder(EquipmentSlot.HEAD).build()));
 
     private static RegistrySupplier<Block> registerBlockWithItem(@SuppressWarnings("SameParameterValue") String path,
                                                                  Function<BlockBehaviour.Properties, Block> factory,

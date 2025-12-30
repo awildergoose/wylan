@@ -8,7 +8,7 @@
 		"3": "wylan:block/wylan_plushie_head_side",
 		"4": "wylan:block/wylan_plushie_head_top",
 		"5": "wylan:block/wylan_plushie_head_bottom",
-		"particle": "wylan:block/wylan_plushie"
+		"particle": "wylan:block/wylan_plushie_head_front"
 	},
 	"elements": [
 		{
