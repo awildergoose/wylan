@@ -1,6 +1,5 @@
 package awildgoose.wylan.mixin.client;
 
-import awildgoose.wylan.init.ModBlocks;
 import awildgoose.wylan.item.PlushieItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -35,7 +34,7 @@ public class ItemInHandRendererMixin {
 			int light,
 			CallbackInfo ci
 	) {
-		if (stack.getItem() == ModBlocks.WYLAN_PLUSHIE.get().asItem()) {
+		if (stack.getItem() instanceof PlushieItem) {
 			boolean isUsingNow = player.isUsingItem() && player.getUseItem().getItem() == stack.getItem();
 
 			if (isUsingNow && !PlushieItem.wasUsingLastFrame) {
@@ -79,7 +78,7 @@ public class ItemInHandRendererMixin {
 			int light,
 			CallbackInfo ci
 	) {
-		if (stack.getItem() == ModBlocks.WYLAN_PLUSHIE.get().asItem()) {
+		if (stack.getItem() instanceof PlushieItem) {
 			matrices.popPose();
 		}
 	}
