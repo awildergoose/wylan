@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "wylan:block/kat_plushie",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "wylan:block/kat_plushie"
+    },
+    "facing=south": {
+      "model": "wylan:block/kat_plushie",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "wylan:block/kat_plushie",
+      "y": 270
+    }
+  }
+}
