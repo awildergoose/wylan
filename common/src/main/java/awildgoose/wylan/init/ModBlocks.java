@@ -23,7 +23,8 @@ import java.util.function.Function;
 public class ModBlocks {
 	private static final BlockBehaviour.Properties PLUSHIE_PROPERTIES = BlockBehaviour.Properties.of()
 			.strength(0.8f)
-			.sound(SoundType.WOOL);
+			.sound(SoundType.WOOL)
+			.ignitedByLava();
 
 	private static Item.Properties applyPlushieProperties(Item.Properties p) {
 		return p.component(
