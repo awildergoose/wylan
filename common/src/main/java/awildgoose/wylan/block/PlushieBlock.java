@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -39,7 +40,9 @@ public class PlushieBlock extends Block {
 	protected void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, @Nullable Orientation orientation, boolean bl) {
 		BlockState above = level.getBlockState(blockPos.above());
 
-		if (above.getBlock() instanceof AnvilBlock) {
+		// destruct upon wrath of an anvil or lava
+		if (above.getBlock() instanceof AnvilBlock || (above.getBlock() instanceof LiquidBlock liquid && liquid.arch$getFluid().isSame(
+				Fluids.LAVA))) {
 			level.destroyBlock(blockPos, true);
 		}
 	}
