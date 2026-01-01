@@ -18,7 +18,7 @@ public class PlushieBlock extends Block {
 	public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
 	public PlushieBlock(Properties properties) {
-		super(properties);
+		super(properties.noOcclusion().lightLevel(s -> 0));
 	}
 
 	@Override
