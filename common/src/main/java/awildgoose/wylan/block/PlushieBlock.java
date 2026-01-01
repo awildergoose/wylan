@@ -26,6 +26,7 @@ public class PlushieBlock extends Block {
 
 	public PlushieBlock(Properties properties) {
 		super(properties.noOcclusion().lightLevel(s -> 0));
+		((FireBlock) Blocks.FIRE).setFlammable(this, 30, 60);
 	}
 
 	@Override
