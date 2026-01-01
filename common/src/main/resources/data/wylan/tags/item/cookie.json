@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "wylan:wylan_cookie",
+    "wylan:animated_cookie",
+    "wylan:kat_cookie",
+    "wylan:lorduckie_cookie",
+    "wylan:sm_cookie",
+    "wylan:zelder_cookie"
+  ]
+}

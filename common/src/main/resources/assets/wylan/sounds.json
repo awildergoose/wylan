@@ -1,0 +1,8 @@
+{
+  "plushie_interact": {
+    "sounds": [
+      "wylan:plushie_interact_1",
+      "wylan:plushie_interact_2"
+    ]
+  }
+}

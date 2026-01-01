@@ -1,7 +1,11 @@
 package awildgoose.wylan.block;
 
+import awildgoose.wylan.init.ModSounds;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
@@ -20,6 +24,16 @@ public class PlushieBlock extends Block {
 	public PlushieBlock(Properties properties) {
 		super(properties.noOcclusion().lightLevel(s -> 0));
 	}
+
+	@Override
+	protected void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
+		if (!level.isClientSide) {
+			level.playSound(null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), ModSounds.PLUSHIE_INTERACT.get()
+					, SoundSource.BLOCKS);
+		}
+	}
+
+	// Block state
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

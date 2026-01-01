@@ -2,6 +2,8 @@ package awildgoose.wylan.init;
 
 import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.block.PlushieBlock;
+import awildgoose.wylan.item.ItemFactory;
+import awildgoose.wylan.item.PlushieItem;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.component.DataComponents;
@@ -9,7 +11,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.block.Block;
@@ -34,22 +35,24 @@ public class ModBlocks {
 			DeferredRegister.create(WylanMod.MOD_ID, Registries.BLOCK);
 
 	public static final RegistrySupplier<Block> WYLAN_PLUSHIE =
-			registerBlockWithItem("wylan_plushie", PlushieBlock::new, PLUSHIE_PROPERTIES, ModBlocks::applyPlushieProperties);
+			registerBlockWithItem("wylan_plushie", PlushieBlock::new, PLUSHIE_PROPERTIES,
+								  PlushieItem::new, ModBlocks::applyPlushieProperties);
 
 	@SuppressWarnings("SameParameterValue")
-	private static RegistrySupplier<Block> registerBlockWithItem(String path,
+	private static <T extends Item> RegistrySupplier<Block> registerBlockWithItem(String path,
 																 Function<BlockBehaviour.Properties, Block> factory,
 																 BlockBehaviour.Properties properties,
-																 Function<Item.Properties, Item.Properties> itemFactory) {
+																 ItemFactory<T> itemFactory,
+																 Function<Item.Properties, Item.Properties> itemPropFactory) {
 		RegistrySupplier<Block> block = BLOCKS.register(path,
 														() -> factory.apply(properties.setId(ResourceKey.create(
 																Registries.BLOCK,
 																ResourceLocation.fromNamespaceAndPath(WylanMod.MOD_ID,
 																									  path)))));
 
-		ModItems.ITEMS.register(path, () -> new BlockItem(
+		ModItems.ITEMS.register(path, () -> itemFactory.create(
 				block.get(),
-				itemFactory.apply(new Item.Properties()
+				itemPropFactory.apply(new Item.Properties()
 										  .setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(WylanMod.MOD_ID, path)))
 										  .arch$tab(ModCreativeTabs.CREATIVE_TAB)
 				)

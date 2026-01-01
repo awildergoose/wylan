@@ -11,7 +11,7 @@ authors = "awildgoose"
 description = '''
 This is an example description! Tell everyone what your mod is about!
 '''
-logoFile = "assets/wylan/icon.png"
+logoFile = "icon.png"
 
 [[dependencies.wylan]]
 modId = "neoforge"

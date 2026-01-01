@@ -12,7 +12,7 @@
     "sources": "https://github.com/awildergoose/wylan"
   },
   "license": "MIT",
-  "icon": "assets/wylan/icon.png",
+  "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
