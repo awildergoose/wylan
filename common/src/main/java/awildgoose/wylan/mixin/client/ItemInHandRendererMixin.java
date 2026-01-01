@@ -34,6 +34,7 @@ public class ItemInHandRendererMixin {
 			int light,
 			CallbackInfo ci
 	) {
+		// TODO stupid doesn't work on neoforge, all boycott NF!!!
 		if (stack.getItem() instanceof PlushieItem) {
 			boolean isUsingNow = player.isUsingItem() && player.getUseItem().getItem() == stack.getItem();
 

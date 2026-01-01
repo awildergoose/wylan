@@ -28,7 +28,7 @@ public class ModBlocks {
 	private static Item.Properties applyPlushieProperties(Item.Properties p) {
 		return p.component(
 				DataComponents.EQUIPPABLE,
-				Equippable.builder(EquipmentSlot.HEAD).build());
+				Equippable.builder(EquipmentSlot.HEAD).build()).stacksTo(1);
 	}
 
 	public static final DeferredRegister<Block> BLOCKS =
