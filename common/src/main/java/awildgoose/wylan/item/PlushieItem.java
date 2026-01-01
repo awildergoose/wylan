@@ -27,7 +27,7 @@ public class PlushieItem extends BlockItem {
 				wasUsingLastFrame = true;
 			}
 
-			return InteractionResult.SUCCESS;
+			return InteractionResult.PASS;
 		}
 
 		return super.use(level, player, interactionHand);
