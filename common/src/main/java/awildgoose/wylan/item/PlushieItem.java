@@ -11,6 +11,8 @@ import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 public class PlushieItem extends BlockItem {
+	public static boolean wasUsingLastFrame = false;
+
 	public PlushieItem(Block block, Properties properties) {
 		super(block, properties);
 	}
@@ -19,6 +21,8 @@ public class PlushieItem extends BlockItem {
 	public @NotNull InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
 		if (!level.isClientSide) {
 			if (player.isShiftKeyDown()) {
+				wasUsingLastFrame = true;
+				player.startUsingItem(interactionHand);
 				level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.PLUSHIE_INTERACT.get()
 						, SoundSource.PLAYERS);
 				return InteractionResult.SUCCESS;
