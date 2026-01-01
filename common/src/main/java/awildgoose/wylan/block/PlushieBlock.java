@@ -4,6 +4,8 @@ import awildgoose.wylan.init.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -13,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +34,19 @@ public class PlushieBlock extends Block {
 			level.playSound(null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), ModSounds.PLUSHIE_INTERACT.get()
 					, SoundSource.BLOCKS);
 		}
+	}
+
+	@Override
+	protected @NotNull InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
+		if (!level.isClientSide) {
+			if (player.isShiftKeyDown()) {
+				level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.PLUSHIE_INTERACT.get()
+						, SoundSource.PLAYERS);
+				return InteractionResult.SUCCESS;
+			}
+		}
+
+		return InteractionResult.PASS;
 	}
 
 	// Block state
@@ -62,6 +78,11 @@ public class PlushieBlock extends Block {
 	@Override
 	protected @NotNull VoxelShape getOcclusionShape(BlockState blockState) {
 		return Shapes.empty();
+	}
+
+	@Override
+	protected boolean propagatesSkylightDown(BlockState blockState) {
+		return true;
 	}
 
 	@Override

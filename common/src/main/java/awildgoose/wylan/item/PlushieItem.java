@@ -21,6 +21,7 @@ public class PlushieItem extends BlockItem {
 			if (player.isShiftKeyDown()) {
 				level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.PLUSHIE_INTERACT.get()
 						, SoundSource.PLAYERS);
+				return InteractionResult.SUCCESS;
 			}
 		}
 
