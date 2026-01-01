@@ -19,14 +19,15 @@ public class PlushieItem extends BlockItem {
 
 	@Override
 	public @NotNull InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
-		if (!level.isClientSide) {
-			if (player.isShiftKeyDown()) {
-				wasUsingLastFrame = true;
-				player.startUsingItem(interactionHand);
+		if (player.isShiftKeyDown()) {
+			if (!level.isClientSide) {
 				level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.PLUSHIE_INTERACT.get()
 						, SoundSource.PLAYERS);
-				return InteractionResult.SUCCESS;
+			} else {
+				wasUsingLastFrame = true;
 			}
+
+			return InteractionResult.SUCCESS;
 		}
 
 		return super.use(level, player, interactionHand);

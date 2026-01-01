@@ -20,7 +20,7 @@ public class ItemInHandRendererMixin {
 	@Unique private static final int SQUISH_DURATION_MS = 100;
 	@Unique private static final float AMPLITUDE = 0.30f;
 
-	@Inject(method = "renderArmWithItem", at = @At("HEAD"))
+	@Inject(method = "renderArmWithItem(Lnet/minecraft/client/player/AbstractClientPlayer;FFLnet/minecraft/world/InteractionHand;FLnet/minecraft/world/item/ItemStack;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"))
 	private void renderArmWithItemPre(
 			AbstractClientPlayer player,
 			float tickDelta,
@@ -34,15 +34,11 @@ public class ItemInHandRendererMixin {
 			int light,
 			CallbackInfo ci
 	) {
-		// TODO stupid doesn't work on neoforge, all boycott NF!!!
 		if (stack.getItem() instanceof PlushieItem) {
-			boolean isUsingNow = player.isUsingItem() && player.getUseItem().getItem() == stack.getItem();
-
-			if (isUsingNow && !PlushieItem.wasUsingLastFrame) {
+			if (PlushieItem.wasUsingLastFrame) {
 				squishStartMS = System.currentTimeMillis();
+				PlushieItem.wasUsingLastFrame = false;
 			}
-
-			PlushieItem.wasUsingLastFrame = isUsingNow;
 
 			float scaleX = 1.0f;
 			float scaleY = 1.0f;
@@ -65,7 +61,7 @@ public class ItemInHandRendererMixin {
 		}
 	}
 
-	@Inject(method = "renderArmWithItem", at = @At("TAIL"))
+	@Inject(method = "renderArmWithItem(Lnet/minecraft/client/player/AbstractClientPlayer;FFLnet/minecraft/world/InteractionHand;FLnet/minecraft/world/item/ItemStack;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("RETURN"))
 	private void renderArmWithItemPost(
 			AbstractClientPlayer player,
 			float tickDelta,

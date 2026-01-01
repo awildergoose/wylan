@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PlushieBlock extends Block {
-	public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+	public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 
 	public PlushieBlock(Properties properties) {
 		super(properties.noOcclusion().lightLevel(s -> 0));
@@ -67,11 +67,9 @@ public class PlushieBlock extends Block {
 		builder.add(FACING);
 	}
 
-	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-		return this.defaultBlockState()
-				.setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+	public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
+		return this.defaultBlockState().setValue(FACING, blockPlaceContext.getNearestLookingDirection().getOpposite());
 	}
 
 	@Override
