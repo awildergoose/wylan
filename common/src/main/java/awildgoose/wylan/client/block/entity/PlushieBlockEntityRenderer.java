@@ -1,17 +1,16 @@
 package awildgoose.wylan.client.block.entity;
 
+import awildgoose.wylan.block.PlushieBlock;
 import awildgoose.wylan.block.entity.PlushieBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.Objects;
 
 // TODO client only this, how?
 public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieBlockEntity> {
@@ -26,21 +25,35 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieBl
 
 		poseStack.pushPose();
 
+		var facing = be.getBlockState().getValue(PlushieBlock.FACING);
+		var inverse = facing.getOpposite().getRotation();
+		if (facing == Direction.SOUTH || facing == Direction.NORTH) {
+			inverse.rotateLocalX((float) Math.toRadians(90.0 * (facing == Direction.NORTH ? -1 : 1)));
+		} else if (facing == Direction.UP || facing == Direction.DOWN) {
+			if (facing == Direction.UP) {
+				inverse.rotateLocalX((float) Math.toRadians(90.0));
+				inverse.rotateLocalY((float) Math.toRadians(180.0));
+				inverse.rotateLocalZ((float) Math.toRadians(180.0));
+				poseStack.translate(0.0, -0.4, 0.0);
+			} else {
+				inverse.rotateLocalX((float) Math.toRadians(-90.0));
+				poseStack.translate(0.0, -1.0, 0.0);
+			}
+		} else {
+			inverse.rotateLocalZ((float) Math.toRadians(90.0 * (facing == Direction.EAST ? -1 : 1)));
+		}
+
 		poseStack.translate(
 				0.5,
-				1.75,
+				1.2,
 				0.5
 		);
 
-		poseStack.scale(0.5f, 0.5f, 0.5f);
-
-		float time = (Objects.requireNonNull(be.getLevel())
-				.getGameTime() + f) % 360;
-		poseStack.mulPose(Axis.YP.rotationDegrees(time));
+		poseStack.mulPose(inverse);
 
 		Minecraft.getInstance().getItemRenderer().renderStatic(
 				stack,
-				ItemDisplayContext.FIRST_PERSON_RIGHT_HAND,
+				ItemDisplayContext.FIXED,
 				i,
 				j,
 				poseStack,
