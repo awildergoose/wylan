@@ -23,15 +23,23 @@ jobs:
       - name: Build
         run: ./gradlew build --stacktrace --no-daemon
 
-      - name: Setting mod version
+      - name: Set mod version
         run: |
-          cat $GITHUB_WORKSPACE/gradle.properties | grep '^mod_version *=' >> $GITHUB_ENV
-          cat $GITHUB_WORKSPACE/gradle.properties | grep '^minecraft_version *=' >> $GITHUB_ENV
-          cat $GITHUB_WORKSPACE/gradle.properties | grep '^archives_name *=' >> $GITHUB_ENV
-      
+          awk -F'=' '/^[[:space:]]*mod_version/ {
+              val=$2; gsub(/^[ \t]+|[ \t]+$/,"",val); print "MOD_VERSION=" val
+            }
+            /^[[:space:]]*minecraft_version/ {
+              val=$2; gsub(/^[ \t]+|[ \t]+$/,"",val); print "MINECRAFT_VERSION=" val
+            }
+            /^[[:space:]]*archives_name/ {
+              val=$2; gsub(/^[ \t]+|[ \t]+$/,"",val); print "ARCHIVES_NAME=" val
+            }' $GITHUB_WORKSPACE/gradle.properties >> $GITHUB_ENV
+
       - name: Create package name
-        run: echo "package_name=[$minecraft_version] $archives_name-$mod_version-SNAPSHOT.PR${{ github.event.number }}" >> $GITHUB_ENV
-      
+        run: |
+          PACKAGE="${MINECRAFT_VERSION}-${ARCHIVES_NAME}-${MOD_VERSION}.zip"
+          echo "package_name=${PACKAGE}" >> $GITHUB_ENV
+
       - uses: actions/upload-artifact@v6.0.0
         with:
           name: ${{ env.package_name }}
