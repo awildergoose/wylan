@@ -1,14 +1,18 @@
 package awildgoose.wylan.block;
 
+import awildgoose.wylan.block.entity.PlushieBlockEntity;
 import awildgoose.wylan.init.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -21,7 +25,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class PlushieBlock extends Block {
+public class PlushieBlock extends Block implements EntityBlock {
 	public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 
 	public PlushieBlock(Properties properties) {
@@ -61,7 +65,22 @@ public class PlushieBlock extends Block {
 		return InteractionResult.PASS;
 	}
 
-	// Block state
+	@Override
+	protected @NotNull InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+		if (!level.isClientSide) {
+			if (!player.isShiftKeyDown()) {
+				if (level.getBlockEntity(blockPos) instanceof PlushieBlockEntity be) {
+					be.setStack(level, player.getItemInHand(interactionHand));
+				}
+
+				return InteractionResult.SUCCESS;
+			}
+		}
+
+		return super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
+	}
+
+// Block state
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -98,5 +117,11 @@ public class PlushieBlock extends Block {
 	@Override
 	protected boolean useShapeForLightOcclusion(BlockState blockState) {
 		return true;
+	}
+
+	@Nullable
+	@Override
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new PlushieBlockEntity(blockPos, blockState);
 	}
 }
