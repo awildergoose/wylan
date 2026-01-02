@@ -44,6 +44,9 @@ public class ModBlocks {
 	public static final RegistrySupplier<Block> KAT_PLUSHIE =
 			registerBlockWithItem("kat_plushie", PlushieBlock::new, PLUSHIE_PROPERTIES,
 								  PlushieItem::new, ModBlocks::applyPlushieProperties);
+	public static final RegistrySupplier<Block> ZELDER_PLUSHIE =
+			registerBlockWithItem("zelder_plushie", PlushieBlock::new, PLUSHIE_PROPERTIES,
+								  PlushieItem::new, ModBlocks::applyPlushieProperties);
 
 	@SuppressWarnings("SameParameterValue")
 	private static <T extends Item> RegistrySupplier<Block> registerBlockWithItem(String path,

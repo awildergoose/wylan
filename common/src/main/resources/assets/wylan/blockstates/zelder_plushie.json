@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "wylan:block/zelder_plushie",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "wylan:block/zelder_plushie"
+    },
+    "facing=south": {
+      "model": "wylan:block/zelder_plushie",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "wylan:block/zelder_plushie",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "wylan:block/zelder_plushie",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "wylan:block/zelder_plushie",
+      "x": 90
+    }
+  }
+}
