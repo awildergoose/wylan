@@ -10,6 +10,7 @@ public final class WylanMod {
         ModBlocks.init();
         ModItems.init();
         ModBlockEntities.init();
+        ModEntityTypes.init();
         ModSounds.init();
     }
 }
