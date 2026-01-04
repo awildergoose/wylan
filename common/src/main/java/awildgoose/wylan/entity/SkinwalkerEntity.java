@@ -36,20 +36,21 @@ public class SkinwalkerEntity extends PathfinderMob {
 
 	@Override
 	public void tick() {
-		if (this.firstTick)
-			this.setTexture(SkinwalkerTexture.random());
-
 		super.tick();
 
 		if (this.level().isClientSide)
 			return;
 
+		if (this.firstTick)
+			this.setTexture(SkinwalkerTexture.random());
+
 		var player = this.level().getNearestPlayer(this, 300.0);
 
-		if (player != null) {
-			SkinwalkerTexture texture = this.getTexture();
-			boolean isZelder = (texture == SkinwalkerTexture.ZELDER);
+		SkinwalkerTexture texture = this.getTexture();
+		boolean isZelder = texture == SkinwalkerTexture.ZELDER;
+		boolean isKat = texture == SkinwalkerTexture.KAT;
 
+		if (player != null) {
 			// maybe only move sometimes, like every 0-3 seconds set a goal?
 			this.lookAt(player, 10f, 5f);
 			this.moveControl.setWantedPosition(player.getX(), player.getY(), player.getZ(), isZelder ? 10.0 : 1.0);
@@ -60,10 +61,14 @@ public class SkinwalkerEntity extends PathfinderMob {
 					this.setPos(player.position());
 				}
 			}
+		}
 
-			if (isZelder && this.tickCount % 20 == 0) {
-				this.swing(InteractionHand.MAIN_HAND);
-			}
+		if (isZelder && this.tickCount % 20 == 0) {
+			this.swing(InteractionHand.MAIN_HAND);
+		}
+
+		if (isKat) {
+			this.setInvulnerable(true);
 		}
 	}
 
