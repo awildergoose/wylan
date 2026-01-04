@@ -3,6 +3,7 @@ package awildgoose.wylan.entity.goal;
 import awildgoose.wylan.entity.HenryEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -22,7 +23,7 @@ public class HenryMilkCookiesSuicideGoal extends Goal {
 		super();
 
 		this.henry = henry;
-		this.suicideCounter = 20 * 5;
+		this.suicideCounter = 20 * 3;
 		this.givingMilkAndCookies = false;
 		this.target = null;
 		this.nearestLava = null;
@@ -53,10 +54,10 @@ public class HenryMilkCookiesSuicideGoal extends Goal {
 			if (suicideCounter > 0) {
 				suicideCounter--;
 
-				if (suicideCounter % 40 == 0) {
-					this.henry.drop(new ItemStack(Items.MILK_BUCKET), true, true);
-				} else if (suicideCounter % 20 == 0) {
-					this.henry.drop(new ItemStack(Items.COOKIE), true, true);
+				if (suicideCounter % 20 == 0) {
+					this.dropTowardsTarget(new ItemStack(Items.MILK_BUCKET));
+				} else if (suicideCounter % 5 == 0) {
+					this.dropTowardsTarget(new ItemStack(Items.COOKIE));
 				}
 
 				return;
@@ -73,14 +74,37 @@ public class HenryMilkCookiesSuicideGoal extends Goal {
 					Vec3 look = this.henry.getLookAngle();
 					this.henry.setDeltaMovement(
 							look.x * 0.45,
-							0.6,
+							0.1,
 							look.z * 0.45
 					);
 					this.henry.hasImpulse = true;
-					this.henry.jumpFromGround();
 				}
 			}
 		}
+	}
+
+	private void dropTowardsTarget(ItemStack stack) {
+		if (stack.isEmpty() || target == null) return;
+
+		double dx = target.getX() - this.henry.getX();
+		double dy = target.getEyeY() - this.henry.getEyeY();
+		double dz = target.getZ() - this.henry.getZ();
+
+		Vec3 direction = new Vec3(dx, dy, dz).normalize().scale(0.5);
+
+		ItemEntity item = new ItemEntity(
+				this.henry.level(),
+				this.henry.getX(),
+				this.henry.getEyeY() - 0.3,
+				this.henry.getZ(),
+				stack
+		);
+
+		item.setDeltaMovement(direction.x, direction.y, direction.z);
+		item.setPickUpDelay(0);
+		item.setThrower(this.henry);
+
+		this.henry.level().addFreshEntity(item);
 	}
 
 	private static @Nullable BlockPos findNearestLava(Level level, BlockPos origin) {

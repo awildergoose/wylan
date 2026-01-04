@@ -6,11 +6,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -42,10 +38,7 @@ public class HenryEntity extends PathfinderMob implements GeoEntity {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new HenryMilkCookiesSuicideGoal(this));
-		this.goalSelector.addGoal(1, new TemptGoal(this, 1, Ingredient.of(Items.COOKIE), false, 50.0));
-		this.goalSelector.addGoal(2, new TemptGoal(this, 1, Ingredient.of(Items.MILK_BUCKET), false, 50.0));
-		this.goalSelector.addGoal(3, new RandomStrollGoal(this, 1));
-		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0f));
+		this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0f));
 	}
 
 	@Override
