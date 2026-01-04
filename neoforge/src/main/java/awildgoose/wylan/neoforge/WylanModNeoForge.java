@@ -5,6 +5,7 @@ import awildgoose.wylan.entity.SkinwalkerEntity;
 import awildgoose.wylan.entity.SkinwalkerTexture;
 import awildgoose.wylan.init.ModEntityTypes;
 import net.minecraft.network.syncher.EntityDataSerializer;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
@@ -28,8 +29,9 @@ public final class WylanModNeoForge {
             SkinwalkerEntity.TEXTURE::serializer
     );
 
-    public WylanModNeoForge() {
+    public WylanModNeoForge(IEventBus bus) {
         WylanMod.init();
+        ENTITY_DATA_SERIALIZERS.register(bus);
     }
 
     @SubscribeEvent

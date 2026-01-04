@@ -44,13 +44,11 @@ public class SkinwalkerEntity extends PathfinderMob {
 
 	@Override
 	public void tick() {
+		if (!this.level().isClientSide && this.firstTick)
+			this.setTexture(SkinwalkerTexture.random());
 		super.tick();
-
 		if (this.level().isClientSide)
 			return;
-
-		if (this.firstTick)
-			this.setTexture(SkinwalkerTexture.random());
 
 		Player player = this.level().getNearestPlayer(this, 300.0);
 		SkinwalkerTexture texture = this.getTexture();
