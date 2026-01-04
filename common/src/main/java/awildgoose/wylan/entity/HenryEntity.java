@@ -1,13 +1,20 @@
 package awildgoose.wylan.entity;
 
 import awildgoose.wylan.entity.goal.HenryMilkCookiesSuicideGoal;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -57,4 +64,12 @@ public class HenryEntity extends PathfinderMob implements GeoEntity {
 	public AnimatableInstanceCache getAnimatableInstanceCache() {
 		return this.geoCache;
 	}
+
+	public static boolean canSpawnHere(EntityType<? extends Mob> type, ServerLevelAccessor world,
+									   EntitySpawnReason reason, BlockPos pos, RandomSource ignoredRandom) {
+		return world.getBlockState(pos.below()).is(Blocks.GRASS_BLOCK) &&
+				world.getBrightness(LightLayer.SKY, pos) > 8 &&
+				world.isUnobstructed(type.create(world.getLevel(), reason));
+	}
+
 }
