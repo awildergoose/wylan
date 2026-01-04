@@ -73,7 +73,7 @@ public class SkinwalkerEntity extends PathfinderMob {
 			}
 
 			if (isZelder && distanceTo(player) <= 5.0d) {
-				player.hurtServer(level, level.damageSources().mobAttack(this), 0.5f);
+				player.hurtServer(level, level.damageSources().mobAttack(this), 1.0f);
 			}
 		}
 
