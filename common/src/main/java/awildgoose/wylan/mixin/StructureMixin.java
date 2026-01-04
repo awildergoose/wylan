@@ -2,11 +2,11 @@ package awildgoose.wylan.mixin;
 
 import awildgoose.wylan.init.ModBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -83,7 +83,7 @@ public class StructureMixin {
 		Structure self = (Structure) (Object) this;
 		BlockPos blockPos = chunkToBlockPos(chunkPos);
 
-		if (worldGenLevel.getBiome(blockPos).is(BiomeTags.IS_MOUNTAIN)) {
+		if (worldGenLevel.getBiome(blockPos).is(Biomes.SNOWY_PLAINS)) {
 			BlockPos pivot = getPivot(piecesContainer);
 
 			if (pivot != null)
