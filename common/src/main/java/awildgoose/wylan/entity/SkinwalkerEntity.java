@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -53,8 +54,10 @@ public class SkinwalkerEntity extends PathfinderMob {
 
 		Player player = this.level().getNearestPlayer(this, 300.0);
 		SkinwalkerTexture texture = this.getTexture();
+		boolean isWylan = texture == SkinwalkerTexture.WYLAN;
 		boolean isZelder = texture == SkinwalkerTexture.ZELDER;
 		boolean isKat = texture == SkinwalkerTexture.KAT;
+		ServerLevel level = (ServerLevel) level();
 
 		if (player != null) {
 			// maybe only move sometimes, like every 0-3 seconds set a goal?
@@ -65,10 +68,14 @@ public class SkinwalkerEntity extends PathfinderMob {
 			);
 
 			// this is all your fault >:( /j
-			if (texture == SkinwalkerTexture.WYLAN) {
+			if (isWylan) {
 				if (this.random.nextInt(67) == 1) {
 					this.setPos(player.position());
 				}
+			}
+
+			if (isZelder && distanceTo(player) <= 5.0d) {
+				player.hurtServer(level, level.damageSources().mobAttack(this), 0.5f);
 			}
 		}
 
