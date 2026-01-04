@@ -42,7 +42,7 @@ public class PlushieBlockEntity extends BlockEntity {
 	@Override
 	protected void saveAdditional(ValueOutput valueOutput) {
 		super.saveAdditional(valueOutput);
-		valueOutput.storeNullable("Item", ItemStack.CODEC, stack);
+		valueOutput.storeNullable("Item", ItemStack.CODEC, stack.isEmpty() ? null : stack);
 	}
 
 	@Override

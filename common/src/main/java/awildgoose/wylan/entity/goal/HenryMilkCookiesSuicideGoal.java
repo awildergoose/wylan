@@ -3,7 +3,6 @@ package awildgoose.wylan.entity.goal;
 import awildgoose.wylan.ModUtils;
 import awildgoose.wylan.entity.HenryEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -78,31 +77,21 @@ public class HenryMilkCookiesSuicideGoal extends Goal {
 				if (this.henry.distanceToSqr(this.nearestLava.getCenter()) <= 5.0) {
 					// jump!
 					Vec3 look = this.henry.getLookAngle();
-					double y = 0.0d;
-					if (this.henry.onGround())
-						y = this.getJumpPower() * 2.0;
 
 					this.henry.setDeltaMovement(
 							look.x * 0.45,
-							y,
+							0.0,
 							look.z * 0.45
 					);
 					this.henry.hasImpulse = true;
+
+					if (this.henry.onGround())
+						this.henry.jumpFromGround();
 				}
 			}
 		}
 	}
 
-
-	protected float getJumpPower() {
-		return (float)this.henry.getAttributeValue(Attributes.JUMP_STRENGTH) * this.getBlockJumpFactor() + this.henry.getJumpBoostPower();
-	}
-
-	protected float getBlockJumpFactor() {
-		float f = this.henry.level().getBlockState(this.henry.blockPosition()).getBlock().getJumpFactor();
-		float g = this.henry.level().getBlockState(this.henry.getBlockPosBelowThatAffectsMyMovement()).getBlock().getJumpFactor();
-		return f == 1.0 ? g : f;
-	}
 
 	private static @Nullable BlockPos findNearestLava(Level level, BlockPos origin) {
 		final int radius = 50;
@@ -135,5 +124,4 @@ public class HenryMilkCookiesSuicideGoal extends Goal {
 
 		return bestPos;
 	}
-
 }

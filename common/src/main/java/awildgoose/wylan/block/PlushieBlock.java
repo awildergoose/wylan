@@ -72,13 +72,14 @@ public class PlushieBlock extends Block implements EntityBlock {
 			if (level.getBlockEntity(blockPos) instanceof PlushieBlockEntity be) {
 				if (!level.isClientSide) {
 					ItemStack handItem = player.getItemInHand(interactionHand);
+					ItemStack stack = be.getStack();
+					if (stack != ItemStack.EMPTY)
+						ModUtils.dropTowardsEntity(level, stack, blockPos.getCenter(), player);
 
 					if (!handItem.isEmpty()) {
 						be.setStack(level, handItem);
+						player.setItemInHand(interactionHand, ItemStack.EMPTY);
 					} else {
-						ItemStack stack = be.getStack();
-						if (stack != ItemStack.EMPTY)
-							ModUtils.dropTowardsEntity(level, stack, blockPos.getCenter(), player);
 						be.setStack(level, ItemStack.EMPTY);
 					}
 				}
