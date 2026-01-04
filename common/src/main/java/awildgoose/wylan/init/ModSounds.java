@@ -13,8 +13,9 @@ public class ModSounds {
 			Registries.SOUND_EVENT);
 
 	public static final RegistrySupplier<SoundEvent> PLUSHIE_INTERACT = registerSound("plushie_interact");
+	public static final RegistrySupplier<SoundEvent> RADIO_STATIC = registerSound("radio_static");
 
-	private static RegistrySupplier<SoundEvent> registerSound(@SuppressWarnings("SameParameterValue") String name) {
+	private static RegistrySupplier<SoundEvent> registerSound(String name) {
 		return SOUNDS.register(name,
 							   () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(WylanMod.MOD_ID, name)));
 	}

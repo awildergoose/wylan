@@ -1,5 +1,6 @@
 package awildgoose.wylan.init;
 
+import awildgoose.wylan.item.RadioItem;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
@@ -27,12 +28,14 @@ public class ModItems {
 																		new Item.Properties().food(alwaysEdibleCookie()));
 	public static final RegistrySupplier<Item> ZELDER_COOKIE = registerItem("zelder_cookie", Item::new,
 																			new Item.Properties().food(alwaysEdibleCookie()));
+	public static final RegistrySupplier<RadioItem> RADIO = registerItem("radio", RadioItem::new, new Item.Properties());
 
-	private static RegistrySupplier<Item> registerItem(String path, Function<Item.Properties, Item> factory,
+	private static <T extends Item> RegistrySupplier<T> registerItem(String path,
+																	Function<Item.Properties, T> factory,
 													   Item.Properties properties) {
 		//noinspection UnstableApiUsage
 		return ITEMS.register(path, () -> factory.apply(properties.setId(ResourceKey.create(Registries.ITEM,
-																							ResourceLocation.fromNamespaceAndPath(MOD_ID, path))).arch$tab(ModCreativeTabs.CREATIVE_TAB)));
+																												  ResourceLocation.fromNamespaceAndPath(MOD_ID, path))).arch$tab(ModCreativeTabs.CREATIVE_TAB)));
 	}
 
 	private static FoodProperties alwaysEdibleCookie() {

@@ -4,5 +4,10 @@
       "wylan:plushie_interact_1",
       "wylan:plushie_interact_2"
     ]
+  },
+  "radio_static": {
+    "sounds": [
+      "wylan:radio_static"
+    ]
   }
 }
