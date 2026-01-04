@@ -16,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
@@ -107,7 +108,13 @@ public class SkinwalkerEntity extends PathfinderMob {
 	@Override
 	protected void readAdditionalSaveData(ValueInput valueInput) {
 		super.readAdditionalSaveData(valueInput);
-		this.setTexture(valueInput.read("Texture", SkinwalkerTexture.CODEC).orElse(SkinwalkerTexture.random()));
+
+		SkinwalkerTexture randomTexture = SkinwalkerTexture.random();
+		if (this.level().getBiome(this.blockPosition()).is(Biomes.PALE_GARDEN)) {
+			randomTexture = SkinwalkerTexture.HUMMUS;
+		}
+
+		this.setTexture(valueInput.read("Texture", SkinwalkerTexture.CODEC).orElse(randomTexture));
 	}
 
 	public static boolean canSpawnHere(EntityType<? extends Mob> type, ServerLevelAccessor world,
