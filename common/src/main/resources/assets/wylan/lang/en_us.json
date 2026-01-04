@@ -11,5 +11,7 @@
   "item.wylan.kat_plushie": "Kat Plushie",
   "item.wylan.zelder_plushie": "Zelder Plushie",
   "tag.item.wylan.cookie": "Cookie",
-  "tag.block.wylan.plushie": "Plushie"
+  "tag.block.wylan.plushie": "Plushie",
+  "entity.wylan.henry": "Henry",
+  "entity.wylan.skinwalker": "Skinwalker"
 }

@@ -71,22 +71,20 @@ public class HenryMilkCookiesSuicideGoal extends Goal {
 				this.nearestLava = findNearestLava(level, this.henry.blockPosition());
 
 			if (this.nearestLava != null) {
-				this.henry.getMoveControl().setWantedPosition(nearestLava.getX(), nearestLava.getY(), nearestLava.getZ(), 1.0);
-//				this.henry.getNavigation().moveTo(nearestLava.getX(), nearestLava.getY(), nearestLava.getZ(), 1.0);
-
-				if (this.henry.distanceToSqr(this.nearestLava.getCenter()) <= 5.0) {
+				if (this.henry.distanceToSqr(this.nearestLava.getCenter()) <= 3.0) {
 					// jump!
 					Vec3 look = this.henry.getLookAngle();
 
 					this.henry.setDeltaMovement(
 							look.x * 0.45,
-							0.0,
+							0,
 							look.z * 0.45
 					);
 					this.henry.hasImpulse = true;
-
-					if (this.henry.onGround())
-						this.henry.jumpFromGround();
+					this.henry.getNavigation().stop();
+					this.henry.getMoveControl().setWantedPosition(nearestLava.getX(), nearestLava.getY(), nearestLava.getZ(), 1.0);
+				} else {
+					this.henry.getNavigation().moveTo(nearestLava.getX(), nearestLava.getY(), nearestLava.getZ(), 1.0);
 				}
 			}
 		}
