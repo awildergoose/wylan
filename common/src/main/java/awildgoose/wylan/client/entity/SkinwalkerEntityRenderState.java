@@ -1,6 +1,8 @@
 package awildgoose.wylan.client.entity;
 
 import io.netty.buffer.ByteBuf;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -9,6 +11,7 @@ import net.minecraft.util.ByIdMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.IntFunction;
 
+@Environment(EnvType.CLIENT)
 public class SkinwalkerEntityRenderState extends HumanoidRenderState {
 	public SkinwalkerTexture texture;
 

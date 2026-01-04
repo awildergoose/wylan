@@ -3,11 +3,14 @@ package awildgoose.wylan.client.entity;
 import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.entity.SkinwalkerEntity;
 import awildgoose.wylan.init.ModEntityModelLayers;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+@Environment(EnvType.CLIENT)
 public class SkinwalkerEntityRenderer extends LivingEntityRenderer<SkinwalkerEntity, SkinwalkerEntityRenderState,
 		SkinwalkerEntityModel> {
 	private static ResourceLocation getSkinwalkerTexture(String texture) {
