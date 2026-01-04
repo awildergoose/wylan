@@ -8,10 +8,12 @@ import awildgoose.wylan.init.ModBlockEntities;
 import awildgoose.wylan.init.ModEntityTypes;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 @Mod(value = WylanMod.MOD_ID, dist = Dist.CLIENT)
+@EventBusSubscriber(value = Dist.CLIENT, modid = WylanMod.MOD_ID)
 public final class WylanModNeoForgeClient {
 	public WylanModNeoForgeClient() {
 		WylanModClient.init();

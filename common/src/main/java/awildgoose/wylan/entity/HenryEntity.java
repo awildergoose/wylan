@@ -5,7 +5,6 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.player.Player;
@@ -41,10 +40,10 @@ public class HenryEntity extends PathfinderMob implements GeoEntity {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new TemptGoal(this, 1, Ingredient.of(Items.COOKIE), false));
-		this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1));
-		this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8.0f));
-		this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(0, new TemptGoal(this, 30, Ingredient.of(Items.COOKIE), false));
+		this.goalSelector.addGoal(1, new TemptGoal(this, 30, Ingredient.of(Items.MILK_BUCKET), false));
+		this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1));
+		this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0f));
 	}
 
 	@Override
