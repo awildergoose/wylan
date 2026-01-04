@@ -52,5 +52,6 @@ public class SkinwalkerEntityRenderer extends LivingEntityRenderer<SkinwalkerEnt
 		livingEntityRenderState.isCrouching = livingEntity.tickCount % 20 >= 10;
 		livingEntityRenderState.nameTag = null;
 		livingEntityRenderState.texture = livingEntity.getEntityData().get(SkinwalkerEntity.TEXTURE);
+		livingEntityRenderState.attackTime = livingEntity.swingTime;
 	}
 }

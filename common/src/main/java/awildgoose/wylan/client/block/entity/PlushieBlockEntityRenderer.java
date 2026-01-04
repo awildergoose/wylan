@@ -23,7 +23,7 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieBl
 	public void render(PlushieBlockEntity be, float f, PoseStack poseStack, MultiBufferSource multiBufferSource, int i
 			, int j, Vec3 vec3) {
 		ItemStack stack = be.stack;
-		if (stack == null || (stack instanceof ItemStack && stack.isEmpty())) return;
+		if (stack instanceof ItemStack && stack.isEmpty()) return;
 
 		poseStack.pushPose();
 
