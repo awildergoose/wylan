@@ -47,11 +47,11 @@ public class SkinwalkerEntityRenderer extends LivingEntityRenderer<SkinwalkerEnt
 	}
 
 	@Override
-	public void extractRenderState(SkinwalkerEntity livingEntity, SkinwalkerEntityRenderState livingEntityRenderState, float f) {
-		super.extractRenderState(livingEntity, livingEntityRenderState, f);
-		livingEntityRenderState.isCrouching = livingEntity.tickCount % 20 >= 10;
-		livingEntityRenderState.nameTag = null;
-		livingEntityRenderState.texture = livingEntity.getEntityData().get(SkinwalkerEntity.TEXTURE);
-		livingEntityRenderState.attackTime = livingEntity.swingTime;
+	public void extractRenderState(SkinwalkerEntity entity, SkinwalkerEntityRenderState state, float partialTicks) {
+		super.extractRenderState(entity, state, partialTicks);
+		state.isCrouching = entity.tickCount % 20 >= 10;
+		state.nameTag = null;
+		state.texture = entity.getEntityData().get(SkinwalkerEntity.TEXTURE);
+		state.attackTime = entity.getAttackAnim(partialTicks);
 	}
 }

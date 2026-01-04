@@ -28,7 +28,7 @@ public class ModEntityTypes {
 	public static final RegistrySupplier<EntityType<HenryEntity>> HENRY = register("henry", () -> EntityType.Builder.of(HenryEntity::new, MobCategory.MONSTER).sized(0.75f, 1.75f));
 	public static final RegistrySupplier<EntityType<SkinwalkerEntity>> SKINWALKER = register("skinwalker",
 																							 () -> EntityType.Builder.of(SkinwalkerEntity::new, MobCategory.MONSTER).sized(0.6F, 1.8F)
-																									 .eyeHeight(1.62F));
+																									 .eyeHeight(1.62F).updateInterval(2).clientTrackingRange(32));
 
 	public static <T extends Entity> RegistrySupplier<EntityType<T>> register(String name,
 																			  Supplier<EntityType.Builder<T>> builder) {

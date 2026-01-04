@@ -12,6 +12,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
@@ -35,6 +36,12 @@ public class SkinwalkerEntity extends PathfinderMob {
 	}
 
 	@Override
+	public void aiStep() {
+		super.aiStep();
+		this.updateSwingTime();
+	}
+
+	@Override
 	public void tick() {
 		super.tick();
 
@@ -44,8 +51,7 @@ public class SkinwalkerEntity extends PathfinderMob {
 		if (this.firstTick)
 			this.setTexture(SkinwalkerTexture.random());
 
-		var player = this.level().getNearestPlayer(this, 300.0);
-
+		Player player = this.level().getNearestPlayer(this, 300.0);
 		SkinwalkerTexture texture = this.getTexture();
 		boolean isZelder = texture == SkinwalkerTexture.ZELDER;
 		boolean isKat = texture == SkinwalkerTexture.KAT;
@@ -53,17 +59,20 @@ public class SkinwalkerEntity extends PathfinderMob {
 		if (player != null) {
 			// maybe only move sometimes, like every 0-3 seconds set a goal?
 			this.lookAt(player, 10f, 5f);
-			this.moveControl.setWantedPosition(player.getX(), player.getY(), player.getZ(), isZelder ? 10.0 : 1.0);
+			this.moveControl.setWantedPosition(
+					player.getX(), player.getY(), player.getZ(),
+					isZelder ? 10.0 : 1.0
+			);
 
 			// this is all your fault >:( /j
-			if (this.random.nextInt(67) == 1) {
-				if (texture == SkinwalkerTexture.WYLAN) {
+			if (texture == SkinwalkerTexture.WYLAN) {
+				if (this.random.nextInt(67) == 1) {
 					this.setPos(player.position());
 				}
 			}
 		}
 
-		if (isZelder && this.tickCount % 20 == 0) {
+		if (isZelder && !this.swinging) {
 			this.swing(InteractionHand.MAIN_HAND);
 		}
 
