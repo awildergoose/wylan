@@ -13,6 +13,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumSet;
+
 public class HenryMilkCookiesSuicideGoal extends Goal {
 	final HenryEntity henry;
 	int suicideCounter;
@@ -28,6 +30,7 @@ public class HenryMilkCookiesSuicideGoal extends Goal {
 		this.givingMilkAndCookies = false;
 		this.target = null;
 		this.nearestLava = null;
+		this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP, Flag.TARGET));
 	}
 
 	@Override
