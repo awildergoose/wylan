@@ -12,8 +12,22 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import software.bernie.geckolib.animatable.GeoAnimatable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.manager.AnimatableManager;
+import software.bernie.geckolib.animatable.processing.AnimationController;
+import software.bernie.geckolib.animatable.processing.AnimationTest;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class HenryEntity extends PathfinderMob {
+public class HenryEntity extends PathfinderMob implements GeoEntity {
+	protected static final RawAnimation RUN_ANIM = RawAnimation.begin().thenLoop("animation.henry.new_run");
+	protected static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("animation.henry.run_idle");
+
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+
 	public HenryEntity(EntityType<? extends HenryEntity> entityType, Level world) {
 		super(entityType, world);
 	}
@@ -29,7 +43,24 @@ public class HenryEntity extends PathfinderMob {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new TemptGoal(this, 1, Ingredient.of(Items.COOKIE), false));
 		this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1));
-		this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 4));
+		this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8.0f));
 		this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
+	}
+
+	@Override
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(new AnimationController<>("Running", 5, this::runAnimController));
+	}
+
+	private PlayState runAnimController(AnimationTest<GeoAnimatable> animTest) {
+		if (animTest.isMoving())
+			return animTest.setAndContinue(RUN_ANIM);
+
+		return animTest.setAndContinue(IDLE_ANIM);
+	}
+
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
 	}
 }

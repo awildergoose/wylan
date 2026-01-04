@@ -1,28 +1,16 @@
 package awildgoose.wylan.client.entity;
 
-import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.entity.HenryEntity;
-import awildgoose.wylan.init.ModEntityModelLayers;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.base.GeoRenderState;
 
-public class HenryEntityRenderer extends MobRenderer<HenryEntity, HenryEntityRenderState, HenryEntityModel> {
-	private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(WylanMod.MOD_ID, "textures" +
-			"/entity/henry.png");
-
+@Environment(EnvType.CLIENT)
+public class HenryEntityRenderer<R extends LivingEntityRenderState & GeoRenderState> extends GeoEntityRenderer<HenryEntity, R> {
 	public HenryEntityRenderer(EntityRendererProvider.Context context) {
-		super(context, new HenryEntityModel(context.bakeLayer(ModEntityModelLayers.HENRY)), 0.375f);
-	}
-
-	@Override
-	public @NotNull HenryEntityRenderState createRenderState() {
-		return new HenryEntityRenderState();
-	}
-
-	@Override
-	public @NotNull ResourceLocation getTextureLocation(HenryEntityRenderState state) {
-		return TEXTURE;
+		super(context, new HenryEntityModel());
 	}
 }

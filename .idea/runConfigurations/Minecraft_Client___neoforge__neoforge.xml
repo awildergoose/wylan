@@ -1,15 +1,15 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Minecraft Client (:neoforge)" type="Application" factoryName="Application">
+  <configuration default="false" factoryName="Application" name="Minecraft Client (:neoforge)" type="Application">
     <envs>
-      <env name="MOD_CLASSES" value="main%%G:\steve\wylan\neoforge\build\resources\main;main%%G:\steve\wylan\neoforge\build\classes\java\main;main%%G:\steve\wylan\neoforge\out\production\classes;main%%G:\steve\wylan\neoforge\out\production\resources" />
+      <env name="MOD_CLASSES" value="main%%G:\steve\wylan\neoforge\build\resources\main;main%%G:\steve\wylan\neoforge\build\classes\java\main;main%%G:\steve\wylan\neoforge\out\production\classes;main%%G:\steve\wylan\neoforge\out\production\resources"/>
     </envs>
-    <option name="MAIN_CLASS_NAME" value="dev.architectury.transformer.TransformerRuntime" />
-    <module name="wylan.neoforge.main" />
-    <shortenClasspath name="ARGS_FILE" />
-    <option name="VM_PARAMETERS" value="-Dfabric.dli.config=G:\steve\wylan\neoforge\.gradle\loom-cache\launch.cfg -Dfabric.dli.env=client -p C:\Users\OMEGA\.gradle\caches\modules-2\files-2.1\net.neoforged.fancymodloader\securejarhandler\9.0.18\a130f48d1f454285428953ba2ab79861b7532db7\securejarhandler-9.0.18.jar;C:\Users\OMEGA\.gradle\caches\modules-2\files-2.1\net.neoforged\JarJarFileSystems\0.4.1\78f59f89defcd032ed788b151ca6a0d40ace796a\JarJarFileSystems-0.4.1.jar --add-modules ALL-MODULE-PATH --add-opens java.base/java.util.jar=cpw.mods.securejarhandler --add-opens java.base/java.lang.invoke=cpw.mods.securejarhandler --add-exports java.base/sun.security.util=cpw.mods.securejarhandler --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming -Dfabric.dli.main=cpw.mods.bootstraplauncher.BootstrapLauncher -Darchitectury.main.class=G:\steve\wylan\neoforge\.gradle\architectury\.main_class -Darchitectury.runtime.transformer=G:\steve\wylan\neoforge\.gradle\architectury\.transforms -Darchitectury.properties=G:\steve\wylan\neoforge\.gradle\architectury\.properties -Djdk.attach.allowAttachSelf=true -javaagent:G:\steve\wylan\.gradle\architectury\architectury-transformer-agent.jar -javaagent:C:\Users\OMEGA\.gradle\caches\modules-2\files-2.1\net.fabricmc\sponge-mixin\0.15.2+mixin.0.8.7\2af2f021d8e02a0220dc27a7a72b4666d66d44ca\sponge-mixin-0.15.2+mixin.0.8.7.jar" />
-    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run/" />
+    <option name="MAIN_CLASS_NAME" value="dev.architectury.transformer.TransformerRuntime"/>
+    <module name="wylan.neoforge.main"/>
+    <shortenClasspath name="ARGS_FILE"/>
+    <option name="VM_PARAMETERS" value="-Dfabric.dli.config=G:\steve\wylan\neoforge\.gradle\loom-cache\launch.cfg -Dfabric.dli.env=client -p C:\Users\OMEGA\.gradle\caches\modules-2\files-2.1\net.neoforged.fancymodloader\securejarhandler\9.0.18\a130f48d1f454285428953ba2ab79861b7532db7\securejarhandler-9.0.18.jar;C:\Users\OMEGA\.gradle\caches\modules-2\files-2.1\net.neoforged\JarJarFileSystems\0.4.1\78f59f89defcd032ed788b151ca6a0d40ace796a\JarJarFileSystems-0.4.1.jar --add-modules ALL-MODULE-PATH --add-opens java.base/java.util.jar=cpw.mods.securejarhandler --add-opens java.base/java.lang.invoke=cpw.mods.securejarhandler --add-exports java.base/sun.security.util=cpw.mods.securejarhandler --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming -Dfabric.dli.main=cpw.mods.bootstraplauncher.BootstrapLauncher -Darchitectury.main.class=G:\steve\wylan\neoforge\.gradle\architectury\.main_class -Darchitectury.runtime.transformer=G:\steve\wylan\neoforge\.gradle\architectury\.transforms -Darchitectury.properties=G:\steve\wylan\neoforge\.gradle\architectury\.properties -Djdk.attach.allowAttachSelf=true -javaagent:G:\steve\wylan\.gradle\architectury\architectury-transformer-agent.jar -javaagent:C:\Users\OMEGA\.gradle\caches\modules-2\files-2.1\net.fabricmc\sponge-mixin\0.15.2+mixin.0.8.7\2af2f021d8e02a0220dc27a7a72b4666d66d44ca\sponge-mixin-0.15.2+mixin.0.8.7.jar"/>
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run/"/>
     <method v="2">
-      <option name="Make" enabled="true" />
+      <option enabled="true" name="Make"/>
     </method>
-  </configuration>
+  <classpathModifications/></configuration>
 </component>

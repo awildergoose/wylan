@@ -3,6 +3,8 @@ package awildgoose.wylan.client.block.entity;
 import awildgoose.wylan.block.PlushieBlock;
 import awildgoose.wylan.block.entity.PlushieBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -12,7 +14,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
-// TODO client only this, how?
+@Environment(EnvType.CLIENT)
 public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieBlockEntity> {
 	public PlushieBlockEntityRenderer(BlockEntityRendererProvider.Context ignoredContext) {
 	}
