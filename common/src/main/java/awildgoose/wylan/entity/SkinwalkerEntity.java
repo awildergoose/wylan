@@ -44,8 +44,6 @@ public class SkinwalkerEntity extends PathfinderMob {
 
 	@Override
 	public void tick() {
-		if (!this.level().isClientSide && this.firstTick)
-			this.setTexture(SkinwalkerTexture.random());
 		super.tick();
 		if (this.level().isClientSide)
 			return;
@@ -109,8 +107,7 @@ public class SkinwalkerEntity extends PathfinderMob {
 	@Override
 	protected void readAdditionalSaveData(ValueInput valueInput) {
 		super.readAdditionalSaveData(valueInput);
-		this.setTexture(valueInput.read("Texture", SkinwalkerTexture.CODEC).orElse(
-				SkinwalkerTexture.ANIMATED));
+		this.setTexture(valueInput.read("Texture", SkinwalkerTexture.CODEC).orElse(SkinwalkerTexture.random()));
 	}
 
 	public static boolean canSpawnHere(EntityType<? extends Mob> type, ServerLevelAccessor world,
