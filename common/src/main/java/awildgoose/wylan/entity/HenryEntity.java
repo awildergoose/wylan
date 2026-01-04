@@ -1,5 +1,6 @@
 package awildgoose.wylan.entity;
 
+import awildgoose.wylan.entity.goal.HenryMilkCookiesSuicideGoal;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -40,10 +41,11 @@ public class HenryEntity extends PathfinderMob implements GeoEntity {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new TemptGoal(this, 30, Ingredient.of(Items.COOKIE), false));
-		this.goalSelector.addGoal(1, new TemptGoal(this, 30, Ingredient.of(Items.MILK_BUCKET), false));
-		this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1));
-		this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0f));
+		this.goalSelector.addGoal(0, new HenryMilkCookiesSuicideGoal(this));
+		this.goalSelector.addGoal(1, new TemptGoal(this, 1, Ingredient.of(Items.COOKIE), false, 50.0));
+		this.goalSelector.addGoal(2, new TemptGoal(this, 1, Ingredient.of(Items.MILK_BUCKET), false, 50.0));
+		this.goalSelector.addGoal(3, new RandomStrollGoal(this, 1));
+		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0f));
 	}
 
 	@Override
