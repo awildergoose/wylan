@@ -1,6 +1,7 @@
 package awildgoose.wylan.fabric;
 
 import awildgoose.wylan.entity.HenryEntity;
+import awildgoose.wylan.entity.SkinwalkerEntity;
 import awildgoose.wylan.init.ModEntityTypes;
 import net.fabricmc.api.ModInitializer;
 
@@ -12,5 +13,7 @@ public final class WylanModFabric implements ModInitializer {
     public void onInitialize() {
         WylanMod.init();
         FabricDefaultAttributeRegistry.register(ModEntityTypes.HENRY.get(), HenryEntity.createCubeAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntityTypes.SKINWALKER.get(),
+                                                SkinwalkerEntity.createCubeAttributes());
     }
 }

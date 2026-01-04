@@ -1,6 +1,7 @@
 package awildgoose.wylan.neoforge;
 
 import awildgoose.wylan.entity.HenryEntity;
+import awildgoose.wylan.entity.SkinwalkerEntity;
 import awildgoose.wylan.init.ModEntityTypes;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -22,6 +23,10 @@ public final class WylanModNeoForge {
                 ModEntityTypes.HENRY.get(),
                 HenryEntity.createCubeAttributes()
                         .build()
+        );
+        event.put(
+                ModEntityTypes.SKINWALKER.get(),
+                SkinwalkerEntity.createCubeAttributes().build()
         );
     }
 }

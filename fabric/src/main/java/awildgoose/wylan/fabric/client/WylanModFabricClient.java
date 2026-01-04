@@ -3,6 +3,7 @@ package awildgoose.wylan.fabric.client;
 import awildgoose.wylan.client.WylanModClient;
 import awildgoose.wylan.client.block.entity.PlushieBlockEntityRenderer;
 import awildgoose.wylan.client.entity.HenryEntityRenderer;
+import awildgoose.wylan.client.entity.SkinwalkerEntityRenderer;
 import awildgoose.wylan.init.ModBlockEntities;
 import awildgoose.wylan.init.ModEntityTypes;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
@@ -16,5 +17,6 @@ public final class WylanModFabricClient implements ClientModInitializer {
         BlockEntityRendererRegistry.register(ModBlockEntities.PLUSHIE_BLOCK_ENTITY.get(),
                                              PlushieBlockEntityRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.HENRY.get(), HenryEntityRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.SKINWALKER.get(), SkinwalkerEntityRenderer::new);
     }
 }
