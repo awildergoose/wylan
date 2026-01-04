@@ -1,18 +1,33 @@
 package awildgoose.wylan.neoforge;
 
+import awildgoose.wylan.client.entity.SkinwalkerEntityRenderState;
 import awildgoose.wylan.entity.HenryEntity;
 import awildgoose.wylan.entity.SkinwalkerEntity;
 import awildgoose.wylan.init.ModEntityTypes;
+import net.minecraft.network.syncher.EntityDataSerializer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 
 import awildgoose.wylan.WylanMod;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
+@SuppressWarnings("unused")
 @Mod(WylanMod.MOD_ID)
 @EventBusSubscriber(modid = WylanMod.MOD_ID)
 public final class WylanModNeoForge {
+    public static final DeferredRegister<EntityDataSerializer<?>> ENTITY_DATA_SERIALIZERS = DeferredRegister.create(
+            NeoForgeRegistries.ENTITY_DATA_SERIALIZERS,
+            WylanMod.MOD_ID
+    );
+    public static final DeferredHolder<EntityDataSerializer<?>, EntityDataSerializer<SkinwalkerEntityRenderState.SkinwalkerTexture>> SKINWALKER_TEXTURE = ENTITY_DATA_SERIALIZERS.register(
+        "skinwalker_texture",
+        SkinwalkerEntity.TEXTURE::serializer
+    );
+
     public WylanModNeoForge() {
         WylanMod.init();
     }

@@ -1,5 +1,6 @@
 package awildgoose.wylan.block;
 
+import awildgoose.wylan.ModUtils;
 import awildgoose.wylan.block.entity.PlushieBlockEntity;
 import awildgoose.wylan.init.ModSounds;
 import net.minecraft.core.BlockPos;
@@ -67,10 +68,19 @@ public class PlushieBlock extends Block implements EntityBlock {
 
 	@Override
 	protected @NotNull InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-		if (!level.isClientSide) {
-			if (!player.isShiftKeyDown()) {
-				if (level.getBlockEntity(blockPos) instanceof PlushieBlockEntity be) {
-					be.setStack(level, player.getItemInHand(interactionHand));
+		if (!player.isShiftKeyDown()) {
+			if (level.getBlockEntity(blockPos) instanceof PlushieBlockEntity be) {
+				if (!level.isClientSide) {
+					ItemStack handItem = player.getItemInHand(interactionHand);
+
+					if (!handItem.isEmpty()) {
+						be.setStack(level, handItem);
+					} else {
+						ItemStack stack = be.getStack();
+						if (stack != ItemStack.EMPTY)
+							ModUtils.dropTowardsEntity(level, stack, blockPos.getCenter(), player);
+						be.setStack(level, ItemStack.EMPTY);
+					}
 				}
 
 				return InteractionResult.SUCCESS;

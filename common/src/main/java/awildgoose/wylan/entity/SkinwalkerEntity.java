@@ -8,8 +8,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class SkinwalkerEntity extends PathfinderMob {
@@ -30,8 +28,16 @@ public class SkinwalkerEntity extends PathfinderMob {
 	}
 
 	@Override
-	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new LookAtPlayerGoal(this, Player.class, 50));
+	public void tick() {
+		super.tick();
+
+		var player = this.level().getNearestPlayer(this, 300.0);
+
+		if (player != null) {
+			// maybe only move sometimes, like every 0-3 seconds set a goal?
+			this.lookAt(player, 10f, 5f);
+			this.moveControl.setWantedPosition(player.getX(), player.getY(), player.getZ(), 1.0);
+		}
 	}
 
 	@Override

@@ -17,15 +17,19 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PlushieBlockEntity extends BlockEntity {
-	public @Nullable ItemStack stack;
+	public @NotNull ItemStack stack = ItemStack.EMPTY;
 
 	public PlushieBlockEntity(BlockPos pos, BlockState state) {
 		super(ModBlockEntities.PLUSHIE_BLOCK_ENTITY.get(), pos, state);
 	}
 
-	public void setStack(Level level, @Nullable ItemStack stack) {
+	public void setStack(Level level, @NotNull ItemStack stack) {
 		this.stack = stack;
 		level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 0);
+	}
+
+	public @NotNull ItemStack getStack() {
+		return this.stack;
 	}
 
 	@Override
@@ -38,7 +42,7 @@ public class PlushieBlockEntity extends BlockEntity {
 	@Override
 	protected void saveAdditional(ValueOutput valueOutput) {
 		super.saveAdditional(valueOutput);
-		valueOutput.storeNullable("Item", ItemStack.CODEC, (stack == null || (stack instanceof ItemStack && stack.isEmpty())) ? null : stack);
+		valueOutput.storeNullable("Item", ItemStack.CODEC, stack);
 	}
 
 	@Override
