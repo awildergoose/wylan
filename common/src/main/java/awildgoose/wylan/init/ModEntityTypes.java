@@ -44,6 +44,12 @@ public class ModEntityTypes {
 		SpawnPlacementsRegistry.register(HENRY, SpawnPlacementTypes.ON_GROUND,
 										 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, HenryEntity::canSpawnHere);
 		BiomeModifications.addProperties((p) -> p.hasTag(BiomeTags.IS_FOREST), (biomeContext, mutable) -> mutable.getSpawnProperties().addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(HENRY.get(),
-																																																  0, 1), 30));
+																																																	  0, 1), 10));
+		SpawnPlacementsRegistry.register(SKINWALKER, SpawnPlacementTypes.ON_GROUND,
+										 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SkinwalkerEntity::canSpawnHere);
+		BiomeModifications.addProperties((p) -> p.hasTag(BiomeTags.IS_FOREST),
+										 (biomeContext, mutable) -> mutable.getSpawnProperties().addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(SKINWALKER.get(),
+																																																	  0, 1), 50));
+
 	}
 }
