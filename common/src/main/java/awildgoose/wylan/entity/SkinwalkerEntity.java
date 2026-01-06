@@ -61,7 +61,7 @@ public class SkinwalkerEntity extends PathfinderMob {
 		Player player = this.level().getNearestPlayer(this, 300.0);
 		SkinwalkerTexture texture = this.getTexture();
 		boolean isWylan = texture == SkinwalkerTexture.WYLAN;
-		boolean isZelder = texture == SkinwalkerTexture.ZELDER;
+		boolean isZelder = texture == SkinwalkerTexture.ZELDER || texture == SkinwalkerTexture.ZELDER_OILED;
 		boolean isKat = texture == SkinwalkerTexture.KAT;
 		ServerLevel level = (ServerLevel) level();
 
@@ -123,9 +123,9 @@ public class SkinwalkerEntity extends PathfinderMob {
 		if (!itemStack.isEmpty() && itemStack.getItem().equals(ModItems.OIL_BUCKET.get())) {
 			// this is oil!
 			SkinwalkerTexture texture = this.getTexture();
-			boolean isZelder = texture == SkinwalkerTexture.ZELDER;
+			boolean isUnoiledZelder = texture == SkinwalkerTexture.ZELDER;
 
-			if (isZelder) {
+			if (isUnoiledZelder) {
 				if (!player.level().isClientSide) {
 					this.setTexture(SkinwalkerTexture.ZELDER_OILED);
 				} else {
