@@ -19,7 +19,8 @@ public enum SkinwalkerTexture implements StringRepresentable {
 	WYLAN(4),
 	ZELDER(5),
 	HUMMUS(6),
-	LETTUCE(7);
+	LETTUCE(7),
+	GUAC(8);
 
 	public static final IntFunction<SkinwalkerTexture> BY_ID = ByIdMap.continuous(SkinwalkerTexture::id, values(),
 																				  ByIdMap.OutOfBoundsStrategy.ZERO);

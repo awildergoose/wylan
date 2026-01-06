@@ -19,9 +19,10 @@ public class SkinwalkerEntityRenderer extends LivingEntityRenderer<SkinwalkerEnt
 	}
 
 	private static final ResourceLocation ANIMATED = getSkinwalkerTexture("animated");
+	private static final ResourceLocation GUAC = getSkinwalkerTexture("guac");
 	private static final ResourceLocation HUMMUS = getSkinwalkerTexture("hummus");
-	private static final ResourceLocation LETTUCE = getSkinwalkerTexture("lettuce");
 	private static final ResourceLocation KAT = getSkinwalkerTexture("kat");
+	private static final ResourceLocation LETTUCE = getSkinwalkerTexture("lettuce");
 	private static final ResourceLocation LORDUCKIE = getSkinwalkerTexture("lorduckie");
 	private static final ResourceLocation SM = getSkinwalkerTexture("sm");
 	private static final ResourceLocation WYLAN = getSkinwalkerTexture("wylan");
@@ -42,6 +43,7 @@ public class SkinwalkerEntityRenderer extends LivingEntityRenderer<SkinwalkerEnt
 			case ZELDER -> ZELDER;
 			case HUMMUS -> HUMMUS;
 			case LETTUCE -> LETTUCE;
+			case GUAC -> GUAC;
 		};
 	}
 
