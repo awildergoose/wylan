@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:overworld",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "wylan:zelder_arena",
+      "layers": [
+        {
+          "block": "minecraft:bedrock",
+          "height": 1
+        },
+        {
+          "block": "minecraft:lava",
+          "height": 3
+        }
+      ],
+      "structure_overrides": []
+    }
+  }
+}
