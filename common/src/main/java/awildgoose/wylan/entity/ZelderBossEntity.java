@@ -13,6 +13,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
@@ -21,7 +22,9 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
@@ -47,12 +50,17 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 		this.moveControl = new FlyingMoveControl(this, 10, false);
 		this.setHealth(this.getMaxHealth());
 		this.xpReward = 50;
+		this.setNoGravity(true);
 	}
+
+	@Override
+	public void makeStuckInBlock(BlockState blockState, Vec3 vec3) {}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new RangedAttackGoal(this, 1.0, 40, 20.0F));
 		this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 30.0F));
+		this.goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}

@@ -26,6 +26,8 @@ public abstract class BossHealthOverlayMixin {
 																							  "boss_empty");
 	@Unique private final ResourceLocation BOSS_FILL = ResourceLocation.fromNamespaceAndPath(WylanMod.MOD_ID,
 																							 "boss_fill");
+	@Unique private final ResourceLocation BOSS_TITLE = ResourceLocation.fromNamespaceAndPath(WylanMod.MOD_ID,
+																							 "boss_title");
 
 	/**
 	 * @author awildergoose
@@ -63,8 +65,8 @@ public abstract class BossHealthOverlayMixin {
 
 					int l = (int)(lerpingBossEvent.getProgress() * 250.0f);
 
-					guiGraphics.drawStringWithBackdrop(this.minecraft.font, Component.literal("ZELDERONIAN"), ourX,
-													   ourY - 10, -1, 0xFF0000FF);
+					guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,
+										   BOSS_TITLE, ourX, ourY - 25, 256, 24);
 					guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,
 										   BOSS_EMPTY, ourX, ourY, 256, 16);
 					guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,

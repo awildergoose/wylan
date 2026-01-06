@@ -15,5 +15,10 @@
       "wylan:wylan_growl_1",
       "wylan:wylan_growl_2"
     ]
+  },
+  "boss_music": {
+    "sounds": [
+      "wylan:boss_music"
+    ]
   }
 }
