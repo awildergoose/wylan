@@ -1,0 +1,18 @@
+{
+  "feature": "wylan:zelder_chamber",
+  "placement": [
+    {
+      "type": "minecraft:fixed_placement",
+      "positions": [
+        [
+          0,
+          -60,
+          0
+        ]
+      ]
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

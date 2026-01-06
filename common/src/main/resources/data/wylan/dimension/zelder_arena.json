@@ -1,11 +1,22 @@
 {
-  "type": "wylan:zelder_arena",
+  "type": "minecraft:overworld",
   "generator": {
-    "type": "minecraft:noise",
-    "settings": "minecraft:overworld",
-    "biome_source": {
-      "type": "minecraft:fixed",
-      "biome": "wylan:zelder_arena"
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "wylan:zelder_arena",
+      "features": true,
+      "lakes": false,
+      "layers": [
+        {
+          "block": "minecraft:bedrock",
+          "height": 1
+        },
+        {
+          "block": "minecraft:lava",
+          "height": 3
+        }
+      ],
+      "structure_overrides": []
     }
   }
 }
