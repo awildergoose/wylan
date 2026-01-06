@@ -21,6 +21,8 @@ import net.minecraft.world.level.levelgen.placement.BiomeFilter;
 import net.minecraft.world.level.levelgen.placement.FixedPlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
+import java.util.function.Supplier;
+
 import static awildgoose.wylan.WylanMod.MOD_ID;
 
 public class ModFeatures {
@@ -35,15 +37,15 @@ public class ModFeatures {
 
 	public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(MOD_ID, Registries.FEATURE);
 
-	public static final RegistrySupplier<Feature<NoneFeatureConfiguration>> ZELDER_CHAMBER_FEATURE = register("zelder_chamber",
-																	   new ZelderChamberFeature(
+	public static final RegistrySupplier<ZelderChamberFeature> ZELDER_CHAMBER_FEATURE = register("zelder_chamber",
+																								 () -> new ZelderChamberFeature(
 																			   NoneFeatureConfiguration.CODEC
 																	   ));
 
 	@SuppressWarnings("SameParameterValue")
-	private static <T extends FeatureConfiguration> RegistrySupplier<Feature<T>> register(String name,
-																						  Feature<T> feature) {
-		return FEATURES.register(name, () -> feature);
+	private static <T extends Feature<C>, C extends FeatureConfiguration> RegistrySupplier<T> register(String name,
+																						  Supplier<T> feature) {
+		return FEATURES.register(name, feature);
 	}
 
 	public static void bootstrapConfiguredFeatures(BootstrapContext<ConfiguredFeature<?, ?>> arg) {
