@@ -4,6 +4,8 @@
     "type": "minecraft:flat",
     "settings": {
       "biome": "wylan:zelder_arena",
+      "features": true,
+      "lakes": false,
       "layers": [
         {
           "block": "minecraft:bedrock",
