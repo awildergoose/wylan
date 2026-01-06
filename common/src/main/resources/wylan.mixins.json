@@ -4,10 +4,10 @@
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "client": [
-    "client.ItemInHandRendererMixin",
-    "client.TranslucentBlocksMixin",
     "client.BossHealthOverlayMixin",
-    "client.BossMusicMixin"
+    "client.BossMusicMixin",
+    "client.ItemInHandRendererMixin",
+    "client.TranslucentBlocksMixin"
   ],
   "mixins": [
     "BlockEntityTypeConstructorMixin",
