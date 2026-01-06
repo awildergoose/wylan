@@ -6,6 +6,8 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -125,12 +127,16 @@ public class SkinwalkerEntity extends PathfinderMob {
 
 			if (isZelder) {
 				if (!player.level().isClientSide) {
-					// TODO oil
+					this.setTexture(SkinwalkerTexture.ZELDER_OILED);
+				} else {
+					level().playLocalSound(player, SoundEvents.HONEY_DRINK.value(), SoundSource.PLAYERS, 1.0f, 1.0f);
 				}
 
 				return InteractionResult.SUCCESS;
 			}
 		}
+
+		// TODO: MCC + Wylan => explosion effect
 
 		return super.mobInteract(player, interactionHand);
 	}

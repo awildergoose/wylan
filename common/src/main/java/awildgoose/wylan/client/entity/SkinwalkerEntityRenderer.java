@@ -27,6 +27,7 @@ public class SkinwalkerEntityRenderer extends LivingEntityRenderer<SkinwalkerEnt
 	private static final ResourceLocation SM = getSkinwalkerTexture("sm");
 	private static final ResourceLocation WYLAN = getSkinwalkerTexture("wylan");
 	private static final ResourceLocation ZELDER = getSkinwalkerTexture("zelder");
+	private static final ResourceLocation ZELDER_OILED = getSkinwalkerTexture("zelder_oiled");
 
 	public SkinwalkerEntityRenderer(EntityRendererProvider.Context context) {
 		super(context, new SkinwalkerEntityModel(context.bakeLayer(ModEntityModelLayers.SKINWALKER)), 0.375f);
@@ -44,6 +45,7 @@ public class SkinwalkerEntityRenderer extends LivingEntityRenderer<SkinwalkerEnt
 			case HUMMUS -> HUMMUS;
 			case LETTUCE -> LETTUCE;
 			case GUAC -> GUAC;
+			case ZELDER_OILED -> ZELDER_OILED;
 		};
 	}
 

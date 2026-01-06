@@ -8,6 +8,7 @@ import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.IntFunction;
 
@@ -20,7 +21,8 @@ public enum SkinwalkerTexture implements StringRepresentable {
 	ZELDER(5),
 	HUMMUS(6),
 	LETTUCE(7),
-	GUAC(8);
+	GUAC(8),
+	ZELDER_OILED(9);
 
 	public static final IntFunction<SkinwalkerTexture> BY_ID = ByIdMap.continuous(SkinwalkerTexture::id, values(),
 																				  ByIdMap.OutOfBoundsStrategy.ZERO);
@@ -39,9 +41,11 @@ public enum SkinwalkerTexture implements StringRepresentable {
 	}
 
 	public static SkinwalkerTexture random() {
-		SkinwalkerTexture[] values = SkinwalkerTexture.class.getEnumConstants();
-		return values[ThreadLocalRandom.current()
-				.nextInt(values.length)];
+		SkinwalkerTexture[] values = Arrays.stream(SkinwalkerTexture.values())
+				.filter(v -> v != SkinwalkerTexture.ZELDER_OILED) // remove oiled zelder!!
+				.toArray(SkinwalkerTexture[]::new);
+
+		return values[ThreadLocalRandom.current().nextInt(values.length)];
 	}
 
 	@Override
