@@ -1,42 +1,85 @@
 package awildgoose.wylan.feature;
 
+import awildgoose.wylan.WylanMod;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ZelderChamberFeature extends Feature<NoneFeatureConfiguration> {
 	public ZelderChamberFeature(Codec<NoneFeatureConfiguration> codec) {
 		super(codec);
 	}
 
-	@Override
-	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
-		createEndPlatform(featurePlaceContext.level(), featurePlaceContext.origin(), false);
-		return true;
+	public static void placeStructure(WorldGenLevel level, BlockPos origin, CompoundTag nbt) {
+		ListTag palette = nbt.getList("palette").orElseThrow();
+		ListTag blocks = nbt.getList("blocks").orElseThrow();
+
+		HolderGetter<Block> blockLookup =
+				level.registryAccess()
+						.lookupOrThrow(Registries.BLOCK);
+
+		List<BlockState> states = new ArrayList<>();
+
+		for (int i = 0; i < palette.size(); i++) {
+			CompoundTag tag = palette.getCompound(i).orElseThrow();
+			states.add(NbtUtils.readBlockState(blockLookup, tag));
+		}
+
+		for (int i = 0; i < blocks.size(); i++) {
+			CompoundTag b = blocks.getCompound(i).orElseThrow();
+			ListTag pos = b.getList("pos").orElseThrow();
+
+			BlockPos p = origin.offset(
+					pos.getInt(0).orElseThrow(),
+					pos.getInt(1).orElseThrow(),
+					pos.getInt(2).orElseThrow()
+			);
+
+			BlockState state = states.get(b.getInt("state").orElseThrow());
+
+			level.setBlock(p, state, Block.UPDATE_ALL);
+		}
 	}
 
-	public static void createEndPlatform(ServerLevelAccessor serverLevelAccessor, BlockPos blockPos, boolean bl) {
-		BlockPos.MutableBlockPos mutableBlockPos = blockPos.mutable();
 
-		for (int i = -2; i <= 2; i++) {
-			for (int j = -2; j <= 2; j++) {
-				for (int k = -1; k < 3; k++) {
-					BlockPos blockPos2 = mutableBlockPos.set(blockPos).move(j, k, i);
-					Block block = k == -1 ? Blocks.OBSIDIAN : Blocks.AIR;
-					if (!serverLevelAccessor.getBlockState(blockPos2).is(block)) {
-						if (bl) {
-							serverLevelAccessor.destroyBlock(blockPos2, true, null);
-						}
+	@Override
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
+		ResourceLocation id = ResourceLocation.fromNamespaceAndPath(
+				WylanMod.MOD_ID,
+				"structure/zelder_chamber.nbt"
+		);
 
-						serverLevelAccessor.setBlock(blockPos2, block.defaultBlockState(), 3);
-					}
-				}
-			}
+		CompoundTag nbt;
+
+		try (InputStream in =
+					 ctx.level()
+							 .getLevel()
+							 .getServer()
+							 .getResourceManager()
+							 .open(id)) {
+
+			nbt = NbtIo.readCompressed(in, NbtAccounter.unlimitedHeap());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
 		}
+
+		placeStructure(ctx.level(), ctx.origin(), nbt);
+
+		return true;
 	}
 }
