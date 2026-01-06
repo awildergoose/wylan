@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:overworld",
+  "type": "wylan:zelder_arena",
   "generator": {
     "type": "minecraft:flat",
     "settings": {
