@@ -5,6 +5,7 @@ import awildgoose.wylan.client.WylanModClient;
 import awildgoose.wylan.client.block.entity.PlushieBlockEntityRenderer;
 import awildgoose.wylan.client.entity.HenryEntityRenderer;
 import awildgoose.wylan.client.entity.SkinwalkerEntityRenderer;
+import awildgoose.wylan.client.entity.ZelderBossEntityRenderer;
 import awildgoose.wylan.init.ModBlockEntities;
 import awildgoose.wylan.init.ModEntityTypes;
 import net.neoforged.api.distmarker.Dist;
@@ -28,5 +29,6 @@ public final class WylanModNeoForgeClient {
 		);
 		event.registerEntityRenderer(ModEntityTypes.HENRY.get(), HenryEntityRenderer::new);
 		event.registerEntityRenderer(ModEntityTypes.SKINWALKER.get(), SkinwalkerEntityRenderer::new);
+		event.registerEntityRenderer(ModEntityTypes.ZELDER_BOSS.get(), ZelderBossEntityRenderer::new);
 	}
 }

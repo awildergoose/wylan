@@ -3,6 +3,7 @@ package awildgoose.wylan.init;
 import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.entity.HenryEntity;
 import awildgoose.wylan.entity.SkinwalkerEntity;
+import awildgoose.wylan.entity.ZelderBossEntity;
 import dev.architectury.registry.level.biome.BiomeModifications;
 import dev.architectury.registry.level.entity.SpawnPlacementsRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
@@ -29,6 +30,8 @@ public class ModEntityTypes {
 	public static final RegistrySupplier<EntityType<SkinwalkerEntity>> SKINWALKER = register("skinwalker",
 																							 () -> EntityType.Builder.of(SkinwalkerEntity::new, MobCategory.MONSTER).sized(0.6F, 1.8F)
 																									 .eyeHeight(1.62F).updateInterval(2).clientTrackingRange(32));
+	public static final RegistrySupplier<EntityType<ZelderBossEntity>> ZELDER_BOSS = register("zelder_boss",
+																							  () -> EntityType.Builder.of(ZelderBossEntity::new, MobCategory.MONSTER).sized(0.75f, 1.75f));
 
 	public static <T extends Entity> RegistrySupplier<EntityType<T>> register(String name,
 																			  Supplier<EntityType.Builder<T>> builder) {
