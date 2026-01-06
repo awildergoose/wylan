@@ -6,7 +6,8 @@
   "client": [
     "client.ItemInHandRendererMixin",
     "client.TranslucentBlocksMixin",
-    "client.BossHealthOverlayMixin"
+    "client.BossHealthOverlayMixin",
+    "client.BossMusicMixin"
   ],
   "mixins": [
     "BlockEntityTypeConstructorMixin",

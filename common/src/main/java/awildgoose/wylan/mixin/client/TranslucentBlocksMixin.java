@@ -2,6 +2,8 @@ package awildgoose.wylan.mixin.client;
 
 
 import awildgoose.wylan.init.ModBlocks;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.world.level.block.Block;
@@ -14,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 
+@Environment(EnvType.CLIENT)
 @Mixin(ItemBlockRenderTypes.class)
 public class TranslucentBlocksMixin {
 	@Shadow @Final private static Map<Block, ChunkSectionLayer> TYPE_BY_BLOCK;

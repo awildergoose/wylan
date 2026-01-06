@@ -5,6 +5,7 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 
 public class ModSounds {
@@ -16,6 +17,8 @@ public class ModSounds {
 	public static final RegistrySupplier<SoundEvent> RADIO_STATIC = registerSound("radio_static");
 	public static final RegistrySupplier<SoundEvent> WYLAN_GROWL = registerSound("wylan_growl");
 	public static final RegistrySupplier<SoundEvent> BOSS_MUSIC = registerSound("boss_music");
+
+	public static final Music ZELDER_BOSS_MUSIC = new Music(BOSS_MUSIC, 0, 0, true);
 
 	private static RegistrySupplier<SoundEvent> registerSound(String name) {
 		return SOUNDS.register(name,

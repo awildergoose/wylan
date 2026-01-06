@@ -1,6 +1,8 @@
 package awildgoose.wylan.mixin.client;
 
 import awildgoose.wylan.WylanMod;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.BossHealthOverlay;
@@ -16,6 +18,7 @@ import org.spongepowered.asm.mixin.*;
 import java.util.Map;
 import java.util.UUID;
 
+@Environment(EnvType.CLIENT)
 @Mixin(BossHealthOverlay.class)
 public abstract class BossHealthOverlayMixin {
 	@Shadow @Final Map<UUID, LerpingBossEvent> events;
