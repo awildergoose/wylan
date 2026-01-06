@@ -1,7 +1,7 @@
 package awildgoose.wylan.entity;
 
+import awildgoose.wylan.init.ModItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -17,7 +17,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biomes;
@@ -118,11 +117,8 @@ public class SkinwalkerEntity extends PathfinderMob {
 	@Override
 	protected @NotNull InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
 		ItemStack itemStack = player.getItemInHand(interactionHand);
-		Component customName = itemStack.getCustomName();
 
-		// Maybe a custom item?
-		if (!itemStack.isEmpty() && itemStack.getItem().equals(Items.WATER_BUCKET) && customName != null && customName.getString().toLowerCase().contains(
-				"oil")) {
+		if (!itemStack.isEmpty() && itemStack.getItem().equals(ModItems.OIL_BUCKET.get())) {
 			// this is oil!
 			SkinwalkerTexture texture = this.getTexture();
 			boolean isZelder = texture == SkinwalkerTexture.ZELDER;

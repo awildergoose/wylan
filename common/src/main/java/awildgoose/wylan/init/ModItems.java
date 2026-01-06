@@ -9,6 +9,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.Consumables;
 
 import java.util.function.Function;
 
@@ -30,7 +32,14 @@ public class ModItems {
 	public static final RegistrySupplier<Item> ZELDER_COOKIE = registerItem("zelder_cookie", Item::new,
 																			new Item.Properties().food(alwaysEdibleCookie()));
 	public static final RegistrySupplier<Item> SALAD = registerItem("salad", Item::new,
-																			new Item.Properties().food(Foods.MUSHROOM_STEW));
+																	new Item.Properties().food(Foods.MUSHROOM_STEW));
+	public static final RegistrySupplier<Item> OIL_BUCKET = registerItem("oil_bucket", Item::new,
+																		 new Item.Properties()
+																				 .craftRemainder(Items.GLASS_BOTTLE)
+																				 .food(Foods.HONEY_BOTTLE, Consumables.HONEY_BOTTLE)
+																				 .usingConvertsTo(Items.GLASS_BOTTLE)
+																				 .stacksTo(16)
+	);
 	public static final RegistrySupplier<RadioItem> RADIO = registerItem("radio", RadioItem::new, new Item.Properties());
 
 	private static <T extends Item> RegistrySupplier<T> registerItem(String path,
