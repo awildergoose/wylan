@@ -14,6 +14,7 @@ public class ModSounds {
 
 	public static final RegistrySupplier<SoundEvent> PLUSHIE_INTERACT = registerSound("plushie_interact");
 	public static final RegistrySupplier<SoundEvent> RADIO_STATIC = registerSound("radio_static");
+	public static final RegistrySupplier<SoundEvent> WYLAN_GROWL = registerSound("wylan_growl");
 
 	private static RegistrySupplier<SoundEvent> registerSound(String name) {
 		return SOUNDS.register(name,

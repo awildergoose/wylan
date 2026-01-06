@@ -2,6 +2,7 @@ package awildgoose.wylan.block;
 
 import awildgoose.wylan.ModUtils;
 import awildgoose.wylan.block.entity.PlushieBlockEntity;
+import awildgoose.wylan.init.ModBlocks;
 import awildgoose.wylan.init.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -57,8 +58,14 @@ public class PlushieBlock extends Block implements EntityBlock {
 	protected @NotNull InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
 		if (!level.isClientSide) {
 			if (player.isShiftKeyDown()) {
-				level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.PLUSHIE_INTERACT.get()
-						, SoundSource.PLAYERS);
+				if (this.equals(ModBlocks.WYLAN_PLUSHIE.get())) {
+					level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.WYLAN_GROWL.get()
+							, SoundSource.PLAYERS);
+				} else {
+					level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.PLUSHIE_INTERACT.get()
+							, SoundSource.PLAYERS);
+				}
+
 				return InteractionResult.SUCCESS;
 			}
 		}

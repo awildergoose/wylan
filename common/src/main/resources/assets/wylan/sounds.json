@@ -9,5 +9,11 @@
     "sounds": [
       "wylan:radio_static"
     ]
+  },
+  "wylan_growl": {
+    "sounds": [
+      "wylan:wylan_growl_1",
+      "wylan:wylan_growl_2"
+    ]
   }
 }

@@ -17,6 +17,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biomes;
@@ -87,6 +88,11 @@ public class SkinwalkerEntity extends PathfinderMob {
 		if (isKat) {
 			this.setInvulnerable(true);
 		}
+
+		if (isWylan) {
+			// if block in under the front of the entity is a composter, fill it
+
+		}
 	}
 
 	@Override
@@ -94,7 +100,9 @@ public class SkinwalkerEntity extends PathfinderMob {
 		ItemStack itemStack = player.getItemInHand(interactionHand);
 		Component customName = itemStack.getCustomName();
 
-		if (!itemStack.isEmpty() && customName != null && customName.getString().toLowerCase().contains("oil")) {
+		// Maybe a custom item?
+		if (!itemStack.isEmpty() && itemStack.getItem().equals(Items.WATER_BUCKET) && customName != null && customName.getString().toLowerCase().contains(
+				"oil")) {
 			// this is oil!
 			SkinwalkerTexture texture = this.getTexture();
 			boolean isZelder = texture == SkinwalkerTexture.ZELDER;
