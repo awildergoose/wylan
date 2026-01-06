@@ -21,8 +21,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class SkinwalkerEntity extends PathfinderMob {
@@ -69,9 +72,9 @@ public class SkinwalkerEntity extends PathfinderMob {
 					isZelder ? 10.0 : 1.0
 			);
 
-			// this is all your fault >:( /j
 			if (isWylan) {
-				if (this.random.nextInt(67) == 1) {
+				// adjusted from 67 (too often)
+				if (this.random.nextInt(670) == 1) {
 					this.setPos(player.position());
 				}
 			}
@@ -90,8 +93,25 @@ public class SkinwalkerEntity extends PathfinderMob {
 		}
 
 		if (isWylan) {
-			// if block in under the front of the entity is a composter, fill it
+			Vec3 look = getLookAngle();
+			Vec3 forward = new Vec3(look.x, 0, look.z).normalize();
 
+			BlockPos blockPos = BlockPos.containing(
+					position().add(forward)
+			);
+
+			BlockState state = level.getBlockState(blockPos);
+			if (state.getBlock() instanceof ComposterBlock) {
+				int levelValue = state.getValue(ComposterBlock.LEVEL);
+
+				if (levelValue < 7) {
+					level.setBlock(
+							blockPos,
+							state.setValue(ComposterBlock.LEVEL, levelValue + 1),
+							3
+					);
+				}
+			}
 		}
 	}
 
