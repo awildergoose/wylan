@@ -46,11 +46,11 @@ public class ModFeatures {
 		return FEATURES.register(name, () -> feature);
 	}
 
-	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> arg) {
+	public static void bootstrapConfiguredFeatures(BootstrapContext<ConfiguredFeature<?, ?>> arg) {
 		FeatureUtils.register(arg, ZELDER_CHAMBER, ZELDER_CHAMBER_FEATURE.get());
 	}
 
-	public static void bootstrapPlacements(BootstrapContext<PlacedFeature> bootstrapContext) {
+	public static void bootstrapPlacedFeatures(BootstrapContext<PlacedFeature> bootstrapContext) {
 		HolderGetter<ConfiguredFeature<?, ?>> holderGetter = bootstrapContext.lookup(Registries.CONFIGURED_FEATURE);
 		Holder<ConfiguredFeature<?, ?>> holder = holderGetter.getOrThrow(ZELDER_CHAMBER);
 		PlacementUtils.register(
