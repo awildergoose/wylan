@@ -38,10 +38,8 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
 	protected static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("animation.model.idle");
-
-	// TODO inject new enum value
 	private final ServerBossEvent bossEvent = (ServerBossEvent)new ServerBossEvent(
-			this.getDisplayName(), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.NOTCHED_20
+			this.getDisplayName(), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.PROGRESS
 	).setDarkenScreen(true).setCreateWorldFog(true).setPlayBossMusic(true);
 
 	public ZelderBossEntity(EntityType<? extends ZelderBossEntity> entityType, Level world) {

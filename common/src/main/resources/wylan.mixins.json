@@ -5,7 +5,8 @@
   "minVersion": "0.8",
   "client": [
     "client.ItemInHandRendererMixin",
-    "client.TranslucentBlocksMixin"
+    "client.TranslucentBlocksMixin",
+    "client.BossHealthOverlayMixin"
   ],
   "mixins": [
     "BlockEntityTypeConstructorMixin",
