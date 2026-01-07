@@ -6,6 +6,7 @@ import awildgoose.wylan.client.block.entity.PlushieBlockEntityRenderer;
 import awildgoose.wylan.client.entity.HenryEntityRenderer;
 import awildgoose.wylan.client.entity.SkinwalkerEntityRenderer;
 import awildgoose.wylan.client.entity.ZelderBossEntityRenderer;
+import awildgoose.wylan.client.init.ModClientCommands;
 import awildgoose.wylan.init.ModBlockEntities;
 import awildgoose.wylan.init.ModEntityTypes;
 import net.neoforged.api.distmarker.Dist;
@@ -13,6 +14,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 
 @Mod(value = WylanMod.MOD_ID, dist = Dist.CLIENT)
 @EventBusSubscriber(value = Dist.CLIENT, modid = WylanMod.MOD_ID)
@@ -30,5 +32,10 @@ public final class WylanModNeoForgeClient {
 		event.registerEntityRenderer(ModEntityTypes.HENRY.get(), HenryEntityRenderer::new);
 		event.registerEntityRenderer(ModEntityTypes.SKINWALKER.get(), SkinwalkerEntityRenderer::new);
 		event.registerEntityRenderer(ModEntityTypes.ZELDER_BOSS.get(), ZelderBossEntityRenderer::new);
+	}
+
+	@SubscribeEvent
+	public static void registerClientCommands(RegisterClientCommandsEvent event) {
+		ModClientCommands.init(event.getDispatcher());
 	}
 }
