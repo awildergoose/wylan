@@ -1,5 +1,6 @@
 package awildgoose.wylan.mixin.client.lava;
 
+import awildgoose.wylan.client.init.ModRendering;
 import awildgoose.wylan.client.render.GooseUniform;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -24,5 +25,7 @@ public class GameRendererMixin {
 		if (!Minecraft.getInstance().noRender) {
 			gooseUniform.update();
 		}
+
+		ModRendering.preRender(deltaTracker);
 	}
 }

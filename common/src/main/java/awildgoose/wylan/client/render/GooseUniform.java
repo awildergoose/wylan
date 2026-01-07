@@ -1,5 +1,6 @@
 package awildgoose.wylan.client.render;
 
+import awildgoose.wylan.client.init.ModRendering;
 import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.buffers.Std140Builder;
 import com.mojang.blaze3d.buffers.Std140SizeCalculator;
@@ -22,10 +23,8 @@ public class GooseUniform implements AutoCloseable {
 
 	public void update() {
 		try (MemoryStack memoryStack = MemoryStack.stackPush()) {
-			float timeSeconds = (System.currentTimeMillis() % 60000L) * 0.001f;
-
 			ByteBuffer byteBuffer = Std140Builder.onStack(memoryStack, UBO_SIZE)
-					.putFloat(timeSeconds)
+					.putFloat(ModRendering.lavaTransitionProgress)
 					.putFloat(0) // padding
 					.putFloat(0) // padding
 					.putFloat(0) // padding

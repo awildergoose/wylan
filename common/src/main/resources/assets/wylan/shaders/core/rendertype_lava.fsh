@@ -16,15 +16,9 @@ out vec4 fragColor;
 
 void main() {
     vec4 color = texture(Sampler0, texCoord0) * vertexColor * ColorModulator;
-    float t = WorldTimeMS * 0.1;
-
-    vec3 rainbow = vec3(
-        sin(t) * 0.5 + 0.5,
-        sin(t + 2.0943951) * 0.5 + 0.5,
-        sin(t + 4.1887902) * 0.5 + 0.5
-    );
-
-    color.rgb *= rainbow;
+    vec3 targetColor = vec3(0.0, 0.0, 1.0);
+    vec3 multiplier = mix(vec3(1.0), targetColor, LavaTransitionProgress);
+    color.rgb *= multiplier;
 
 #ifdef ALPHA_CUTOUT
     if (color.a < ALPHA_CUTOUT) {
