@@ -13,11 +13,12 @@ in vec2 texCoord0;
 out vec4 fragColor;
 
 void main() {
-    //vec4 color = texture(Sampler0, texCoord0) * vertexColor * ColorModulator;
-//#ifdef ALPHA_CUTOUT
-//    if (color.a < ALPHA_CUTOUT) {
-//        discard;
-//    }
-//#endif
-    fragColor = vec4(1.0, 1.0, 1.0, 1.0);//apply_fog(color, sphericalVertexDistance, cylindricalVertexDistance, FogEnvironmentalStart, FogEnvironmentalEnd, FogRenderDistanceStart, FogRenderDistanceEnd, FogColor);
+    vec4 color = texture(Sampler0, texCoord0) * vertexColor * ColorModulator;
+#ifdef ALPHA_CUTOUT
+    if (color.a < ALPHA_CUTOUT) {
+        discard;
+    }
+#endif
+    fragColor.r = 255;
+    fragColor = apply_fog(color, sphericalVertexDistance, cylindricalVertexDistance, FogEnvironmentalStart, FogEnvironmentalEnd, FogRenderDistanceStart, FogRenderDistanceEnd, FogColor);
 }

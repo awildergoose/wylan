@@ -2,29 +2,31 @@ package awildgoose.wylan.client.init;
 
 import awildgoose.wylan.WylanMod;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
+import static net.minecraft.client.renderer.RenderStateShard.BLOCK_SHEET_MIPPED;
+import static net.minecraft.client.renderer.RenderStateShard.LIGHTMAP;
+
 public class ModRendering {
 	public static final RenderPipeline LAVA_PIPELINE = register(
-			RenderPipeline.builder()
+			RenderPipeline.builder(RenderPipelines.TERRAIN_SNIPPET)
 					.withVertexShader(path("core/rendertype_lava"))
 					.withFragmentShader(path("core/rendertype_lava"))
 					.withLocation(path("pipeline/lava"))
-					.withSampler("Sampler0")
-					.withSampler("Sampler2")
-					.withVertexFormat(DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS)
 					.build()
 	);
 	public static final RenderType LAVA = RenderType.create(
-			"lava", 1536, false, true, LAVA_PIPELINE,
+			"lava",
+			1536,
+			true,
+			false,
+			LAVA_PIPELINE,
 			RenderType.CompositeState.builder()
-					.setOutputState(RenderStateShard.MAIN_TARGET)
-					.createCompositeState(false)
+					.setLightmapState(LIGHTMAP)
+					.setTextureState(BLOCK_SHEET_MIPPED)
+					.createCompositeState(true)
 	);
 
 	private static ResourceLocation path(String p) {
@@ -32,7 +34,8 @@ public class ModRendering {
 	}
 
 	private static RenderPipeline register(RenderPipeline pipeline) {
-		return RenderPipelines.PIPELINES_BY_LOCATION.put(pipeline.getLocation(), pipeline);
+		RenderPipelines.PIPELINES_BY_LOCATION.put(pipeline.getLocation(), pipeline);
+		return pipeline;
 	}
 
 	public static void init() {

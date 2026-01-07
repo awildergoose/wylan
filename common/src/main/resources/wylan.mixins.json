@@ -12,7 +12,6 @@
     "client.lava.ChunkSectionLayerMixin",
     "client.lava.ItemBlockRenderTypesMixin",
     "client.lava.RenderBuffersMixin",
-    "client.lava.SectionCompilerMixin",
     "client.lava.ChunkSectionsToRenderMixin"
   ],
   "mixins": [
