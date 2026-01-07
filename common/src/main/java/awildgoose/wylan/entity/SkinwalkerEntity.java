@@ -1,6 +1,8 @@
 package awildgoose.wylan.entity;
 
+import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.init.ModItems;
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
@@ -24,6 +26,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
@@ -124,12 +127,29 @@ public class SkinwalkerEntity extends PathfinderMob {
 			// this is oil!
 			SkinwalkerTexture texture = this.getTexture();
 			boolean isUnoiledZelder = texture == SkinwalkerTexture.ZELDER;
+			boolean isOiledZelder = texture == SkinwalkerTexture.ZELDER_OILED;
 
 			if (isUnoiledZelder) {
 				if (!player.level().isClientSide) {
 					this.setTexture(SkinwalkerTexture.ZELDER_OILED);
 				} else {
 					level().playLocalSound(player, SoundEvents.HONEY_DRINK.value(), SoundSource.PLAYERS, 1.0f, 1.0f);
+				}
+
+				return InteractionResult.SUCCESS;
+			} else if (isOiledZelder) {
+				if (!player.level().isClientSide) {
+					var server = player.level().getServer();
+
+					if (server != null) {
+						player.teleport(new TeleportTransition(server.getLevel(WylanMod.ZELDER_ARENA),
+															   new Vec3(2.5, 40, 2.5), // pos
+															   Vec3.ZERO, // velocity
+															   0, 0,   // rotation
+															   TeleportTransition.PLAY_PORTAL_SOUND));
+					} else {
+						LogUtils.getLogger().error("SkinwalkerEntity::mobInteract(): Server is null somehow?");
+					}
 				}
 
 				return InteractionResult.SUCCESS;
