@@ -16,12 +16,12 @@ public class ItemBlockRenderTypesMixin {
 	@Shadow @Final private static Map<Fluid, ChunkSectionLayer> LAYER_BY_FLUID;
 
 	/**
-	 * @author
-	 * @reason
+	 * @author awildergoose
+	 * @reason use our custom layer for lava
 	 */
 	@Overwrite
 	private static ChunkSectionLayer getRenderLayer(FluidState fluidState) {
 		ChunkSectionLayer chunkSectionLayer = LAYER_BY_FLUID.get(fluidState.getType());
-		return chunkSectionLayer != null ? chunkSectionLayer : ChunkSectionLayer.SOLID;
+		return chunkSectionLayer != null ? chunkSectionLayer : Enum.valueOf(ChunkSectionLayer.class, "LAVA");
 	}
 }

@@ -1,42 +1,33 @@
 package awildgoose.wylan.mixin.client;
 
-import awildgoose.wylan.client.init.ModRendering;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 
 @Mixin(ChunkSectionLayer.class)
 public class ChunkSectionLayerMixin {
+	@Shadow
+	private static ChunkSectionLayer[] $VALUES;
+	@Unique private static ChunkSectionLayer LAVA;
+
 	@Inject(method = "<clinit>", at = @At("RETURN"))
-	private static void addLavaLayer(CallbackInfo ci) {
+	private static void injectLavaLayer(CallbackInfo ci) {
+		ChunkSectionLayer placeholder = $VALUES[0];
+
+		LAVA = placeholder;
+
+		ChunkSectionLayer[] newValues = Arrays.copyOf($VALUES, $VALUES.length + 1);
+		newValues[newValues.length - 1] = LAVA;
+
 		try {
-			ChunkSectionLayer[] values = ChunkSectionLayer.values();
-
-			Constructor<ChunkSectionLayer> ctor = ChunkSectionLayer.class.getDeclaredConstructor(
-					String.class, int.class, RenderPipeline.class, int.class, boolean.class, boolean.class
-			);
-			ctor.setAccessible(true);
-
-			ChunkSectionLayer lava = ctor.newInstance(
-					"LAVA",
-					values.length,
-					ModRendering.LAVA_PIPELINE,
-					786432,
-					true,
-					true
-			);
-
-			Field valuesField = ChunkSectionLayer.class.getDeclaredField("$VALUES");
+			java.lang.reflect.Field valuesField = ChunkSectionLayer.class.getDeclaredField("$VALUES");
 			valuesField.setAccessible(true);
-			ChunkSectionLayer[] newValues = Arrays.copyOf(values, values.length + 1);
-			newValues[values.length] = lava;
 			valuesField.set(null, newValues);
 		} catch (Exception e) {
 			e.printStackTrace();
