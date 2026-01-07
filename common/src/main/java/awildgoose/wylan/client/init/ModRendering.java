@@ -14,6 +14,10 @@ public class ModRendering {
 			RenderPipeline.builder(RenderPipelines.TERRAIN_SNIPPET)
 					.withVertexShader(path("core/rendertype_lava"))
 					.withFragmentShader(path("core/rendertype_lava"))
+//					.withSampler("Sampler0")
+//					.withSampler("Sampler2")
+//					.withVertexFormat(DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS)
+
 					.withLocation(path("pipeline/lava"))
 					.build()
 	);
