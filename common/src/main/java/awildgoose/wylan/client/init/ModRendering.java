@@ -2,6 +2,7 @@ package awildgoose.wylan.client.init;
 
 import awildgoose.wylan.WylanMod;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.blaze3d.shaders.UniformType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -15,6 +16,7 @@ import static net.minecraft.client.renderer.RenderStateShard.LIGHTMAP;
 public class ModRendering {
 	public static final RenderPipeline LAVA_PIPELINE = register(
 			RenderPipeline.builder(RenderPipelines.TERRAIN_SNIPPET, RenderPipelines.GLOBALS_SNIPPET)
+					.withUniform("Goose", UniformType.UNIFORM_BUFFER)
 					.withVertexShader(path("core/rendertype_lava"))
 					.withFragmentShader(path("core/rendertype_lava"))
 					.withLocation(path("pipeline/lava"))

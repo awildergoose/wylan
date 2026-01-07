@@ -14,23 +14,17 @@ in vec2 texCoord0;
 
 out vec4 fragColor;
 
-const float PI = 3.14159265;
-
 void main() {
     vec4 color = texture(Sampler0, texCoord0) * vertexColor * ColorModulator;
-
-    float cycleSeconds = 3.0;
-    float cycleTicks   = cycleSeconds * (20.0 * 10000.0);
-    float wrappedTicks = WorldTimeMS * cycleTicks;
-
-    float t = (wrappedTicks / cycleTicks) * (2.0 * PI);
-    //t += sphericalVertexDistance * 0.15;
+    float t = WorldTimeMS * 0.1;
 
     vec3 rainbow = vec3(
-        abs(sin(t))
+        sin(t) * 0.5 + 0.5,
+        sin(t + 2.0943951) * 0.5 + 0.5,
+        sin(t + 4.1887902) * 0.5 + 0.5
     );
 
-    color.rgb = rainbow;
+    color.rgb *= rainbow;
 
 #ifdef ALPHA_CUTOUT
     if (color.a < ALPHA_CUTOUT) {
