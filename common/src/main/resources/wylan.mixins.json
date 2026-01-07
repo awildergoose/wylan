@@ -10,13 +10,15 @@
     "client.TranslucentBlocksMixin",
     "client.lava.ChunkSectionLayerGroupMixin",
     "client.lava.ChunkSectionLayerMixin",
+    "client.lava.ChunkSectionsToRenderMixin",
+    "client.lava.GameRendererMixin",
     "client.lava.ItemBlockRenderTypesMixin",
-    "client.lava.RenderBuffersMixin",
-    "client.lava.ChunkSectionsToRenderMixin"
+    "client.lava.RenderBuffersMixin"
   ],
   "mixins": [
     "BlockEntityTypeConstructorMixin",
-    "StructureMixin"
+    "StructureMixin",
+    "client.lava.RenderSystemMixin"
   ],
   "injectors": {
     "defaultRequire": 1

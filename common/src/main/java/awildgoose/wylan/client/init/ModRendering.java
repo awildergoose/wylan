@@ -2,6 +2,8 @@ package awildgoose.wylan.client.init;
 
 import awildgoose.wylan.WylanMod;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
@@ -9,15 +11,12 @@ import net.minecraft.resources.ResourceLocation;
 import static net.minecraft.client.renderer.RenderStateShard.BLOCK_SHEET_MIPPED;
 import static net.minecraft.client.renderer.RenderStateShard.LIGHTMAP;
 
+@Environment(EnvType.CLIENT)
 public class ModRendering {
 	public static final RenderPipeline LAVA_PIPELINE = register(
-			RenderPipeline.builder(RenderPipelines.TERRAIN_SNIPPET)
+			RenderPipeline.builder(RenderPipelines.TERRAIN_SNIPPET, RenderPipelines.GLOBALS_SNIPPET)
 					.withVertexShader(path("core/rendertype_lava"))
 					.withFragmentShader(path("core/rendertype_lava"))
-//					.withSampler("Sampler0")
-//					.withSampler("Sampler2")
-//					.withVertexFormat(DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS)
-
 					.withLocation(path("pipeline/lava"))
 					.build()
 	);
