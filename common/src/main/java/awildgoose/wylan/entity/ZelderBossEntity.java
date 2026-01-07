@@ -4,6 +4,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
@@ -60,7 +61,7 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new RangedAttackGoal(this, 1.0, 40, 20.0F));
-		this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 30.0F));
+		this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
@@ -128,6 +129,17 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 	@Override
 	protected void customServerAiStep(ServerLevel serverLevel) {
 		this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
+	}
+
+	@Override
+	public void aiStep() {
+		Vec3 vec3 = this.getDeltaMovement().multiply(1.0, 0.6, 1.0);
+		this.setDeltaMovement(vec3);
+		if (vec3.horizontalDistanceSqr() > 0.05) {
+			this.setYRot((float) Mth.atan2(vec3.z, vec3.x) * (180.0F / (float)Math.PI) - 90.0F);
+		}
+
+		super.aiStep();
 	}
 
 	@Override
