@@ -1,6 +1,7 @@
 package awildgoose.wylan.client;
 
-import awildgoose.wylan.init.ModEntityModelLayers;
+import awildgoose.wylan.client.init.ModRendering;
+import awildgoose.wylan.client.init.ModEntityModelLayers;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -8,5 +9,6 @@ import net.fabricmc.api.Environment;
 public class WylanModClient {
 	public static void init() {
 		ModEntityModelLayers.init();
+		ModRendering.init();
 	}
 }

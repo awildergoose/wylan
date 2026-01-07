@@ -2,7 +2,7 @@ package awildgoose.wylan.client.entity;
 
 import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.entity.SkinwalkerEntity;
-import awildgoose.wylan.init.ModEntityModelLayers;
+import awildgoose.wylan.client.init.ModEntityModelLayers;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

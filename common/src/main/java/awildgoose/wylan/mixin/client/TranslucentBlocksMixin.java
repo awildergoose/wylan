@@ -22,7 +22,7 @@ public class TranslucentBlocksMixin {
 	@Shadow @Final private static Map<Block, ChunkSectionLayer> TYPE_BY_BLOCK;
 
 	@Inject(method = "<clinit>*", at = @At("RETURN"))
-	private static void onInitialize(CallbackInfo ci) {
+	private static void wylan$onInitialize(CallbackInfo ci) {
 		TYPE_BY_BLOCK.put(ModBlocks.KAT_PLUSHIE.get(), ChunkSectionLayer.CUTOUT);
 	}
 }

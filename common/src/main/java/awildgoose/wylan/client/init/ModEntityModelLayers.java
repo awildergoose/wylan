@@ -1,4 +1,4 @@
-package awildgoose.wylan.init;
+package awildgoose.wylan.client.init;
 
 import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.client.entity.SkinwalkerEntityModel;

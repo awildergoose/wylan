@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -71,6 +72,15 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 		flyingPathNavigation.setCanOpenDoors(false);
 		flyingPathNavigation.setCanFloat(true);
 		return flyingPathNavigation;
+	}
+
+	@Override
+	public void checkDespawn() {
+		if (this.level().getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
+			this.discard();
+		} else {
+			this.noActionTime = 0;
+		}
 	}
 
 	public static AttributeSupplier.Builder createCubeAttributes() {

@@ -24,7 +24,7 @@ public class ItemInHandRendererMixin {
 	@Unique private static final float AMPLITUDE = 0.30f;
 
 	@Inject(method = "renderArmWithItem(Lnet/minecraft/client/player/AbstractClientPlayer;FFLnet/minecraft/world/InteractionHand;FLnet/minecraft/world/item/ItemStack;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"))
-	private void renderArmWithItemPre(
+	private void wylan$renderArmWithItemPre(
 			AbstractClientPlayer player,
 			float tickDelta,
 			float pitch,
@@ -65,7 +65,7 @@ public class ItemInHandRendererMixin {
 	}
 
 	@Inject(method = "renderArmWithItem(Lnet/minecraft/client/player/AbstractClientPlayer;FFLnet/minecraft/world/InteractionHand;FLnet/minecraft/world/item/ItemStack;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("RETURN"))
-	private void renderArmWithItemPost(
+	private void wylan$renderArmWithItemPost(
 			AbstractClientPlayer player,
 			float tickDelta,
 			float pitch,

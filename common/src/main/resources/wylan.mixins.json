@@ -6,8 +6,11 @@
   "client": [
     "client.BossHealthOverlayMixin",
     "client.BossMusicMixin",
+    "client.ItemBlockRenderTypesMixin",
     "client.ItemInHandRendererMixin",
-    "client.TranslucentBlocksMixin"
+    "client.SectionCompilerMixin",
+    "client.TranslucentBlocksMixin",
+    "client.ChunkSectionLayerMixin"
   ],
   "mixins": [
     "BlockEntityTypeConstructorMixin",

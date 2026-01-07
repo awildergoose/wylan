@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Minecraft.class)
 public class BossMusicMixin {
 	@Inject(at = @At("HEAD"), method = "getSituationalMusic", cancellable = true)
-	public void getSituationalMusic(CallbackInfoReturnable<MusicInfo> cir) {
+	public void wylan$getSituationalMusic(CallbackInfoReturnable<MusicInfo> cir) {
 		Minecraft self = Minecraft.getInstance();
 		Music music = Optionull.map(self.screen, Screen::getBackgroundMusic);
 

@@ -1,0 +1,27 @@
+package awildgoose.wylan.mixin.client;
+
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.Map;
+
+@Mixin(ItemBlockRenderTypes.class)
+public class ItemBlockRenderTypesMixin {
+	@Shadow @Final private static Map<Fluid, ChunkSectionLayer> LAYER_BY_FLUID;
+
+	/**
+	 * @author
+	 * @reason
+	 */
+	@Overwrite
+	private static ChunkSectionLayer getRenderLayer(FluidState fluidState) {
+		ChunkSectionLayer chunkSectionLayer = LAYER_BY_FLUID.get(fluidState.getType());
+		return chunkSectionLayer != null ? chunkSectionLayer : ChunkSectionLayer.SOLID;
+	}
+}
