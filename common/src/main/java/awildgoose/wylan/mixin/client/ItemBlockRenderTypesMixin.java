@@ -20,8 +20,10 @@ public class ItemBlockRenderTypesMixin {
 	 * @reason use our custom layer for lava
 	 */
 	@Overwrite
-	private static ChunkSectionLayer getRenderLayer(FluidState fluidState) {
+	public static ChunkSectionLayer getRenderLayer(FluidState fluidState) {
 		ChunkSectionLayer chunkSectionLayer = LAYER_BY_FLUID.get(fluidState.getType());
+		// TODO: This does break compat for other mods
+		// Instead, check for fluid state tag if lava
 		return chunkSectionLayer != null ? chunkSectionLayer : Enum.valueOf(ChunkSectionLayer.class, "LAVA");
 	}
 }
