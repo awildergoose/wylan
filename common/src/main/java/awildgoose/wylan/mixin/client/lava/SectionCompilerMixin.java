@@ -1,4 +1,4 @@
-package awildgoose.wylan.mixin.client;
+package awildgoose.wylan.mixin.client.lava;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

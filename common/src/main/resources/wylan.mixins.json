@@ -6,11 +6,14 @@
   "client": [
     "client.BossHealthOverlayMixin",
     "client.BossMusicMixin",
-    "client.ItemBlockRenderTypesMixin",
     "client.ItemInHandRendererMixin",
-    "client.SectionCompilerMixin",
     "client.TranslucentBlocksMixin",
-    "client.ChunkSectionLayerMixin"
+    "client.lava.ChunkSectionLayerGroupMixin",
+    "client.lava.ChunkSectionLayerMixin",
+    "client.lava.ItemBlockRenderTypesMixin",
+    "client.lava.RenderBuffersMixin",
+    "client.lava.SectionCompilerMixin",
+    "client.lava.ChunkSectionsToRenderMixin"
   ],
   "mixins": [
     "BlockEntityTypeConstructorMixin",
