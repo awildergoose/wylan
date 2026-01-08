@@ -58,7 +58,8 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new RangedAttackGoal(this, 1.0, 40, 20.0F));
+		// 1 ranged attack per second
+		this.goalSelector.addGoal(0, new RangedAttackGoal(this, 1.0, 20, 20.0F));
 	}
 
 	@Override

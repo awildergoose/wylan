@@ -17,6 +17,8 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class GumballPelletEntity extends LivingEntity {
+	private int age = 0;
+
 	public GumballPelletEntity(EntityType<? extends GumballPelletEntity> entityType, Level level) {
 		super(entityType, level);
 	}
@@ -85,6 +87,7 @@ public class GumballPelletEntity extends LivingEntity {
 
 	@Override
 	public void tick() {
+		this.age++;
 		this.applyGravity();
 		this.setDeltaMovement(this.getDeltaMovement().scale(0.99));
 
@@ -114,6 +117,11 @@ public class GumballPelletEntity extends LivingEntity {
 				this.level().broadcastEntityEvent(this, (byte)69);
 				this.discard();
 			}
+		}
+
+		if (this.level().isClientSide) {
+			if (age % 5 == 0)
+				this.level().addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
 		}
 	}
 
