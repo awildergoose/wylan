@@ -113,12 +113,12 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 		GumballPelletEntity pellet = new GumballPelletEntity(ModEntityTypes.GUMBALL_PELLET.get(), this.level());
 		pellet.setPos(
 				this.getX(),
-				this.getEyeY() - 0.1,
+				this.getEyeY(),
 				this.getZ()
 		);
 
 		double dx = target.getX() - this.getX();
-		double dy = target.getEyeY() - pellet.getY();
+		double dy = target.getEyeY() - pellet.getEyeY();
 		double dz = target.getZ() - this.getZ();
 
 		pellet.shoot(
