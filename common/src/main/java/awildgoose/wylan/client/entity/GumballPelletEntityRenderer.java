@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class GumballPelletEntityRenderer extends LivingEntityRenderer<GumballPelletEntity, GumballPelletEntityRenderState, GumballPelletEntityModel> {
 	public GumballPelletEntityRenderer(EntityRendererProvider.Context context) {
-		super(context, new GumballPelletEntityModel(context.bakeLayer(ModEntityModelLayers.GUMBALL_PELLET)), 0.35f);
+		super(context, new GumballPelletEntityModel(context.bakeLayer(ModEntityModelLayers.GUMBALL_PELLET)), 0f);
 	}
 
 	@Override
@@ -21,5 +21,11 @@ public class GumballPelletEntityRenderer extends LivingEntityRenderer<GumballPel
 	@Override
 	public @NotNull ResourceLocation getTextureLocation(GumballPelletEntityRenderState livingEntityRenderState) {
 		return ResourceLocation.fromNamespaceAndPath(WylanMod.MOD_ID, "textures/entity/gumball_pellet.png");
+	}
+
+	@Override
+	public void extractRenderState(GumballPelletEntity entity, GumballPelletEntityRenderState state, float partialTicks) {
+		super.extractRenderState(entity, state, partialTicks);
+		state.nameTag = null;
 	}
 }

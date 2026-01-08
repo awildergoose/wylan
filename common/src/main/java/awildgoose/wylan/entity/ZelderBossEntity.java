@@ -1,5 +1,6 @@
 package awildgoose.wylan.entity;
 
+import awildgoose.wylan.init.ModEntityTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
@@ -108,8 +109,24 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 	}
 
 	@Override
-	public void performRangedAttack(LivingEntity livingEntity, float f) {
+	public void performRangedAttack(LivingEntity target, float power) {
+		GumballPelletEntity pellet = new GumballPelletEntity(ModEntityTypes.GUMBALL_PELLET.get(), this.level());
+		pellet.setPos(
+				this.getX(),
+				this.getEyeY() - 0.1,
+				this.getZ()
+		);
 
+		double dx = target.getX() - this.getX();
+		double dy = target.getEyeY() - pellet.getY();
+		double dz = target.getZ() - this.getZ();
+
+		pellet.shoot(
+				dx, dy, dz,
+				1.5F, 0.0F
+		);
+
+		this.level().addFreshEntity(pellet);
 	}
 
 	@Override
@@ -149,7 +166,7 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 		LivingEntity target = getTarget();
 		if (target != null) {
 			this.lookAt(target, 30.0f, 30.0f);
-			this.getMoveControl().setWantedPosition(target.getX(), target.getY(), target.getZ(), 1.0);
+			this.getNavigation().moveTo(target, 1.0);
 		} else {
 			setTarget(level.getNearestPlayer(this, 100.0));
 		}
