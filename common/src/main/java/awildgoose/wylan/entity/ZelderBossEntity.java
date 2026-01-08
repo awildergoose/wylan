@@ -77,7 +77,7 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 		}
 	}
 
-	public static AttributeSupplier.Builder createCubeAttributes() {
+	public static AttributeSupplier.Builder createDefaultAttributes() {
 		return PathfinderMob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 300.0)
 				.add(Attributes.MOVEMENT_SPEED, 1.0)

@@ -3,6 +3,7 @@ package awildgoose.wylan.neoforge.client;
 import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.client.WylanModClient;
 import awildgoose.wylan.client.block.entity.PlushieBlockEntityRenderer;
+import awildgoose.wylan.client.entity.GumballPelletEntityRenderer;
 import awildgoose.wylan.client.entity.HenryEntityRenderer;
 import awildgoose.wylan.client.entity.SkinwalkerEntityRenderer;
 import awildgoose.wylan.client.entity.ZelderBossEntityRenderer;
@@ -32,6 +33,7 @@ public final class WylanModNeoForgeClient {
 		event.registerEntityRenderer(ModEntityTypes.HENRY.get(), HenryEntityRenderer::new);
 		event.registerEntityRenderer(ModEntityTypes.SKINWALKER.get(), SkinwalkerEntityRenderer::new);
 		event.registerEntityRenderer(ModEntityTypes.ZELDER_BOSS.get(), ZelderBossEntityRenderer::new);
+		event.registerEntityRenderer(ModEntityTypes.GUMBALL_PELLET.get(), GumballPelletEntityRenderer::new);
 	}
 
 	@SubscribeEvent

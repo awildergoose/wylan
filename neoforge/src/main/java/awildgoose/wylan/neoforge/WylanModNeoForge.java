@@ -1,9 +1,6 @@
 package awildgoose.wylan.neoforge;
 
-import awildgoose.wylan.entity.HenryEntity;
-import awildgoose.wylan.entity.SkinwalkerEntity;
-import awildgoose.wylan.entity.SkinwalkerTexture;
-import awildgoose.wylan.entity.ZelderBossEntity;
+import awildgoose.wylan.entity.*;
 import awildgoose.wylan.init.ModEntityTypes;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.neoforged.bus.api.IEventBus;
@@ -39,15 +36,19 @@ public final class WylanModNeoForge {
     public static void createDefaultAttributes(EntityAttributeCreationEvent event) {
         event.put(
                 ModEntityTypes.HENRY.get(),
-                HenryEntity.createCubeAttributes().build()
+                HenryEntity.createDefaultAttributes().build()
         );
         event.put(
                 ModEntityTypes.SKINWALKER.get(),
-                SkinwalkerEntity.createCubeAttributes().build()
+                SkinwalkerEntity.createDefaultAttributes().build()
         );
         event.put(
                 ModEntityTypes.ZELDER_BOSS.get(),
-                ZelderBossEntity.createCubeAttributes().build()
+                ZelderBossEntity.createDefaultAttributes().build()
+        );
+        event.put(
+                ModEntityTypes.GUMBALL_PELLET.get(),
+                GumballPelletEntity.createDefaultAttributes().build()
         );
     }
 }

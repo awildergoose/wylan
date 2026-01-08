@@ -2,6 +2,7 @@ package awildgoose.wylan.fabric.client;
 
 import awildgoose.wylan.client.WylanModClient;
 import awildgoose.wylan.client.block.entity.PlushieBlockEntityRenderer;
+import awildgoose.wylan.client.entity.GumballPelletEntityRenderer;
 import awildgoose.wylan.client.entity.HenryEntityRenderer;
 import awildgoose.wylan.client.entity.SkinwalkerEntityRenderer;
 import awildgoose.wylan.client.entity.ZelderBossEntityRenderer;
@@ -22,6 +23,7 @@ public final class WylanModFabricClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntityTypes.HENRY.get(), HenryEntityRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.SKINWALKER.get(), SkinwalkerEntityRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.ZELDER_BOSS.get(), ZelderBossEntityRenderer::new);
+        EntityRendererRegistry.register(ModEntityTypes.GUMBALL_PELLET.get(), GumballPelletEntityRenderer::new);
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> ModClientCommands.init(dispatcher));
     }
 }

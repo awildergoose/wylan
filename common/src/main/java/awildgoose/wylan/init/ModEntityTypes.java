@@ -1,6 +1,7 @@
 package awildgoose.wylan.init;
 
 import awildgoose.wylan.WylanMod;
+import awildgoose.wylan.entity.GumballPelletEntity;
 import awildgoose.wylan.entity.HenryEntity;
 import awildgoose.wylan.entity.SkinwalkerEntity;
 import awildgoose.wylan.entity.ZelderBossEntity;
@@ -32,6 +33,8 @@ public class ModEntityTypes {
 																									 .eyeHeight(1.62F).updateInterval(2).clientTrackingRange(32));
 	public static final RegistrySupplier<EntityType<ZelderBossEntity>> ZELDER_BOSS = register("zelder_boss",
 																							  () -> EntityType.Builder.of(ZelderBossEntity::new, MobCategory.MONSTER).sized(0.75f, 1.75f));
+	public static final RegistrySupplier<EntityType<GumballPelletEntity>> GUMBALL_PELLET = register("gumball_pellet",
+																						   () -> EntityType.Builder.of(GumballPelletEntity::new, MobCategory.MISC).noLootTable().sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
 
 	public static <T extends Entity> RegistrySupplier<EntityType<T>> register(String name,
 																			  Supplier<EntityType.Builder<T>> builder) {

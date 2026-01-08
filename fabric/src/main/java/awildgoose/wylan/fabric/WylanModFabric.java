@@ -1,5 +1,6 @@
 package awildgoose.wylan.fabric;
 
+import awildgoose.wylan.entity.GumballPelletEntity;
 import awildgoose.wylan.entity.HenryEntity;
 import awildgoose.wylan.entity.SkinwalkerEntity;
 import awildgoose.wylan.entity.ZelderBossEntity;
@@ -16,9 +17,10 @@ public final class WylanModFabric implements ModInitializer {
     public void onInitialize() {
         WylanMod.init();
 
-        FabricDefaultAttributeRegistry.register(ModEntityTypes.HENRY.get(), HenryEntity.createCubeAttributes());
-        FabricDefaultAttributeRegistry.register(ModEntityTypes.SKINWALKER.get(), SkinwalkerEntity.createCubeAttributes());
-        FabricDefaultAttributeRegistry.register(ModEntityTypes.ZELDER_BOSS.get(), ZelderBossEntity.createCubeAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntityTypes.HENRY.get(), HenryEntity.createDefaultAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntityTypes.SKINWALKER.get(), SkinwalkerEntity.createDefaultAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntityTypes.ZELDER_BOSS.get(), ZelderBossEntity.createDefaultAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntityTypes.GUMBALL_PELLET.get(), GumballPelletEntity.createDefaultAttributes());
 
         FabricTrackedDataRegistry.register(ResourceLocation.fromNamespaceAndPath(WylanMod.MOD_ID,
                                                                                  "skinwalker_texture"), SkinwalkerEntity.TEXTURE.serializer());

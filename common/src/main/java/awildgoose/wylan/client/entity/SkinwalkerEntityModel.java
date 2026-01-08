@@ -15,10 +15,4 @@ public class SkinwalkerEntityModel extends HumanoidModel<SkinwalkerEntityRenderS
 	public static LayerDefinition createBodyLayer() {
 		return LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0), 64, 64);
 	}
-
-	@Override
-	public void setupAnim(SkinwalkerEntityRenderState entityRenderState) {
-		super.setupAnim(entityRenderState);
-	}
-
 }

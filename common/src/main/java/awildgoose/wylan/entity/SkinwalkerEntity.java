@@ -42,7 +42,7 @@ public class SkinwalkerEntity extends PathfinderMob {
 		super(entityType, world);
 	}
 
-	public static AttributeSupplier.Builder createCubeAttributes() {
+	public static AttributeSupplier.Builder createDefaultAttributes() {
 		return PathfinderMob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 5)
 				.add(Attributes.TEMPT_RANGE, 10)
