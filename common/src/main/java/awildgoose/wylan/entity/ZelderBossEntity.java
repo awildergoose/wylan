@@ -4,25 +4,22 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -61,10 +58,6 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new RangedAttackGoal(this, 1.0, 40, 20.0F));
-		this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
-		this.goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0));
-		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 
 	@Override
@@ -87,7 +80,7 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 	public static AttributeSupplier.Builder createCubeAttributes() {
 		return PathfinderMob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 300.0)
-				.add(Attributes.MOVEMENT_SPEED, 0.6)
+				.add(Attributes.MOVEMENT_SPEED, 1.0)
 				.add(Attributes.FLYING_SPEED, 0.2F)
 				.add(Attributes.FOLLOW_RANGE, 100.0)
 				.add(Attributes.ARMOR, 4.0);
@@ -96,6 +89,13 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(new AnimationController<>("Idle", 5, this::animController));
+	}
+
+	@Override
+	public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
+		if (damageSource.is(DamageTypeTags.IS_FIRE))
+			return true;
+		return super.isInvulnerableTo(serverLevel, damageSource);
 	}
 
 	private PlayState animController(AnimationTest<GeoAnimatable> animTest) {
@@ -128,15 +128,30 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 
 	@Override
 	protected void customServerAiStep(ServerLevel serverLevel) {
+		if (this.tickCount % 20 == 0) {
+			this.heal(1.0F);
+		}
+
 		this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
 	}
 
 	@Override
 	public void aiStep() {
 		Vec3 vec3 = this.getDeltaMovement().multiply(1.0, 0.6, 1.0);
+		Level level = this.level();
+
+		if (level.getFluidState(blockPosition().below()).is(FluidTags.LAVA)) {
+			vec3 = vec3.add(new Vec3(0, 0.5, 0));
+		}
+
 		this.setDeltaMovement(vec3);
-		if (vec3.horizontalDistanceSqr() > 0.05) {
-			this.setYRot((float) Mth.atan2(vec3.z, vec3.x) * (180.0F / (float)Math.PI) - 90.0F);
+
+		LivingEntity target = getTarget();
+		if (target != null) {
+			this.lookAt(target, 30.0f, 30.0f);
+			this.getMoveControl().setWantedPosition(target.getX(), target.getY(), target.getZ(), 1.0);
+		} else {
+			setTarget(level.getNearestPlayer(this, 100.0));
 		}
 
 		super.aiStep();
