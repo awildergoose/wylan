@@ -12,6 +12,7 @@ import org.joml.Vector4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LevelRenderer.class)
 public class ScreenshakeMixin {
@@ -28,7 +29,8 @@ public class ScreenshakeMixin {
 			Matrix4f matrix4f2,
 			GpuBufferSlice gpuBufferSlice,
 			Vector4f vector4f,
-			boolean bl2
+			boolean bl2,
+			CallbackInfo ci
 	) {
 		float intensity = ScreenshakeHandler.getIntensity();
 		if (intensity <= 0f) return;

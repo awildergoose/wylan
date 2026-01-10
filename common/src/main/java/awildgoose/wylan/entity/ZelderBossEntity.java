@@ -1,5 +1,7 @@
 package awildgoose.wylan.entity;
 
+import awildgoose.wylan.ScreenshakeInstance;
+import awildgoose.wylan.ccb.ClientCommonBridge;
 import awildgoose.wylan.init.ModEntityTypes;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -129,9 +131,14 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 			Vec3[] positions = getRingPositions(12, speed, radius, radius, radius);
 
 			for (Vec3 pos : positions) {
-				level().addParticle(ParticleTypes.SOUL_FIRE_FLAME,
+				level().addParticle(ParticleTypes.FLAME,
 									pos.x, pos.y, pos.z,
 									0, 0, 0);
+
+				if (this.age % 5 == 0)
+					ClientCommonBridge.i.addScreenshake(
+							new ScreenshakeInstance(
+									5, 0.0f, 0.2f, 3.0f, pos));
 			}
 		}
 	}

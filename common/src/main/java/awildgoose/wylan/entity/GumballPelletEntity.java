@@ -1,8 +1,12 @@
 package awildgoose.wylan.entity;
 
+import awildgoose.wylan.ScreenshakeInstance;
+import awildgoose.wylan.ccb.ClientCommonBridge;
 import awildgoose.wylan.init.ModEntityTypes;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -129,6 +133,13 @@ public class GumballPelletEntity extends LivingEntity {
 	public void handleEntityEvent(byte b) {
 		if (b == 69) {
 			this.level().addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+			if (this.level().isClientSide) {
+				ClientCommonBridge.i.addScreenshake(new ScreenshakeInstance(
+						10, 0.0f, 2.0f, 5.0f, position()));
+				this.level().playPlayerSound(SoundEvents.GENERIC_EXPLODE.value(),
+											SoundSource.HOSTILE, 1.0f,
+											1.0f);
+			}
 		} else {
 			super.handleEntityEvent(b);
 		}

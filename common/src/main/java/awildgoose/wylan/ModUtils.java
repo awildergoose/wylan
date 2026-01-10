@@ -1,5 +1,10 @@
 package awildgoose.wylan;
 
+import awildgoose.wylan.payloads.ScreenshakeS2CPayload;
+import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -27,5 +32,39 @@ public class ModUtils {
 		item.setDeltaMovement(direction.x, direction.y, direction.z);
 		item.setPickUpDelay(0);
 		level.addFreshEntity(item);
+	}
+
+	private static ScreenshakeS2CPayload makeScreenshakePacket(ScreenshakeInstance instance) {
+		return new ScreenshakeS2CPayload(
+				instance.duration,
+				instance.startingStrength, instance.endingStrength,
+				instance.falloffDistance, instance.center);
+	}
+
+	public static void broadcastScreenshake(ServerLevel level, ScreenshakeInstance instance) {
+		broadcastPayload(level, makeScreenshakePacket(instance));
+	}
+
+	public static void sendScreenshake(ServerPlayer player, ScreenshakeInstance instance) {
+		sendS2CPayload(player, makeScreenshakePacket(instance));
+	}
+
+	public static ClientboundCustomPayloadPacket makeS2CPacket(CustomPacketPayload payload) {
+		return new ClientboundCustomPayloadPacket(payload);
+	}
+
+	public static void sendS2CPacket(ServerPlayer player, ClientboundCustomPayloadPacket packet) {
+		player.connection.send(packet);
+	}
+
+	public static void sendS2CPayload(ServerPlayer player, CustomPacketPayload payload) {
+		sendS2CPacket(player, new ClientboundCustomPayloadPacket(payload));
+	}
+
+	public static void broadcastPayload(ServerLevel level, CustomPacketPayload payload) {
+		var packet = makeS2CPacket(payload);
+
+		for (ServerPlayer player : level.players())
+			sendS2CPacket(player, packet);
 	}
 }
