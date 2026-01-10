@@ -10,7 +10,8 @@
     "client.sodium.SodiumWorldRendererMixin",
     "client.sodium.SodiumNonTerrainBlockRenderContextMixin",
     "client.sodium.SodiumSimpleBlockRenderContextMixin",
-    "client.sodium.SodiumShaderChunkRendererMixin"
+    "client.sodium.SodiumShaderChunkRendererMixin",
+    "client.sodium.SodiumDefaultShaderInterfaceMixin"
   ],
   "injectors": {
     "defaultRequire": 1

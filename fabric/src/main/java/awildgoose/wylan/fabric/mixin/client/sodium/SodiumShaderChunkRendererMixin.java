@@ -27,7 +27,7 @@ public class SodiumShaderChunkRendererMixin {
 		throw new AssertionError();
 	}
 
-	@Inject(at = @At("HEAD"), method = "compileProgram", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "compileProgram", cancellable = true, remap = false)
 	protected void compileProgram(ChunkShaderOptions options,
 								  CallbackInfoReturnable<GlProgram<ChunkShaderInterface>> cir) {
 		if (options.pass().equals(SodiumCompat.LAVA_PASS)) {

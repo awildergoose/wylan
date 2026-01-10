@@ -19,6 +19,7 @@ uniform sampler2D u_BlockTex; // The block texture
 uniform vec4 u_FogColor; // The color of the shader fog
 uniform vec2 u_EnvironmentFog; // The start and end position for environmental fog
 uniform vec2 u_RenderFog; // The start and end position for border fog
+uniform float u_LavaTransitionProgress; // The lava to oil transition progress (0.0-1.0)
 
 out vec4 fragColor; // The output fragment for the color framebuffer
 
@@ -36,7 +37,7 @@ void main() {
     float safeTargetLum = max(targetLum, 1e-4);
     vec3 targetScaled = targetColor * (lum / safeTargetLum);
 
-    color.rgb = mix(color.rgb, targetScaled, LavaTransitionProgress);
+    color.rgb = mix(color.rgb, targetScaled, u_LavaTransitionProgress);
 
 #ifdef USE_FRAGMENT_DISCARD
     if (color.a < _material_alpha_cutoff(v_Material)) {
