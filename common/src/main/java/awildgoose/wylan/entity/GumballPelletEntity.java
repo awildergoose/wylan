@@ -121,10 +121,8 @@ public class GumballPelletEntity extends LivingEntity {
 			}
 		}
 
-		if (this.level().isClientSide) {
-			if (age % 5 == 0)
-				this.level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
-		}
+		if (this.level().isClientSide && age % 5 == 0)
+			this.level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
 	}
 
 	@Override
