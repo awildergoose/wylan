@@ -14,6 +14,7 @@
     "client.RainAndThunderMixin",
     "client.ScreenshakeMixin",
     "client.TranslucentBlocksMixin",
+    "client.WeatherEffectRendererMixin",
     "client.lava.ChunkSectionLayerGroupMixin",
     "client.lava.ChunkSectionLayerMixin",
     "client.lava.ChunkSectionsToRenderMixin",

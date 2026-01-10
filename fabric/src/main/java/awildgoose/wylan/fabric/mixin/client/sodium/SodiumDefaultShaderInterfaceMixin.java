@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class SodiumDefaultShaderInterfaceMixin {
 	@Unique private @Nullable GlUniformFloat wylan$lavaTransitionProgress;
 
-	@Inject(at = @At("TAIL"), method = "<init>")
+	@Inject(at = @At("TAIL"), method = "<init>", remap = false)
 	public void create(ShaderBindingContext context, ChunkShaderOptions options, CallbackInfo ci) {
 		if (options.pass().equals(SodiumCompat.LAVA_PASS))
 			this.wylan$lavaTransitionProgress = context.bindUniform("u_LavaTransitionProgress", GlUniformFloat::new);

@@ -19,7 +19,6 @@ public class BloodDropParticle extends TextureSheetParticle {
 		this.setSize(0.01F, 0.01F);
 		this.gravity = 0.06F;
 		this.lifetime = (int)(8.0 / (Math.random() * 0.8 + 0.2));
-		this.setColor(255.0f, 0.0f, 0.0f);
 	}
 
 	@Override

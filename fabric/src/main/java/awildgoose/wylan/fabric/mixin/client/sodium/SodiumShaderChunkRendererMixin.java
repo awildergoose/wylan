@@ -23,9 +23,9 @@ import java.util.Map;
 @Environment(EnvType.CLIENT)
 @Mixin(ShaderChunkRenderer.class)
 public class SodiumShaderChunkRendererMixin {
-	@Shadow @Final private Map<ChunkShaderOptions, GlProgram<ChunkShaderInterface>> programs;
+	@Shadow(remap = false) @Final private Map<ChunkShaderOptions, GlProgram<ChunkShaderInterface>> programs;
 
-	@Shadow
+	@Shadow(remap = false)
 	private static ShaderConstants createShaderConstants(ChunkShaderOptions options) {
 		throw new AssertionError();
 	}

@@ -7,6 +7,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,7 +27,8 @@ public class BloodRainMixin {
 			"(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V", cancellable = true)
 	public void addParticle(ParticleOptions particleData, double x, double y, double z, double xSpeed, double ySpeed,
 					   double zSpeed, CallbackInfo ci) {
-		if (((Level)(Object)this).dimension().equals(WylanMod.ZELDER_ARENA)) {
+		if (((Level)(Object)this).dimension().equals(WylanMod.ZELDER_ARENA) && particleData.getType().equals(
+				ParticleTypes.RAIN)) {
 			ci.cancel();
 			var newParticle = ModParticles.BLOOD.get();
 			this.levelRenderer.addParticle(
