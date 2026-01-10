@@ -10,6 +10,7 @@
     "client.BossMusicMixin",
     "client.ItemInHandRendererMixin",
     "client.TranslucentBlocksMixin",
+    "client.ScreenshakeMixin",
     "client.lava.ChunkSectionLayerGroupMixin",
     "client.lava.ChunkSectionLayerMixin",
     "client.lava.ChunkSectionsToRenderMixin",

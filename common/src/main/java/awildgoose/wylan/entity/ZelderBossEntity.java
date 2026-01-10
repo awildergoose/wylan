@@ -122,6 +122,18 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 		}
 
 		super.aiStep();
+
+		if (level.isClientSide) {
+			float radius = 1.5f;
+			float speed = 2.0f;
+			Vec3[] positions = getRingPositions(12, speed, radius, radius, radius);
+
+			for (Vec3 pos : positions) {
+				level().addParticle(ParticleTypes.SOUL_FIRE_FLAME,
+									pos.x, pos.y, pos.z,
+									0, 0, 0);
+			}
+		}
 	}
 
 	@Override
@@ -129,28 +141,52 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 		super.tick();
 		this.age++;
 
-		if (this.level().isClientSide && age % 2 == 0) {
+		Level level = this.level();
+
+		if (level.isClientSide && age % 2 == 0) {
 			// feet and body
 			Vec3 a = getFootPosition(true);
 			Vec3 b = getFootPosition(false);
 			Vec3 c = position().add(0, 1.0, 0);
 
-			this.level().addParticle(
+			level.addParticle(
 					ParticleTypes.SOUL_FIRE_FLAME,
 					a.x, a.y, a.z,
 					0.0, 0.0, 0.0);
-			this.level().addParticle(
+			level.addParticle(
 					ParticleTypes.SOUL_FIRE_FLAME,
 					b.x, b.y, b.z,
 					0.0, 0.0, 0.0);
-			this.level().addParticle(
+			level.addParticle(
 					ParticleTypes.SOUL_FIRE_FLAME,
 					c.x, c.y, c.z,
 					0.0, 0.0, 0.0);
-
-			// ring of soul flames
-
 		}
+	}
+
+	public Vec3[] getRingPositions(int numberOfParticles, float speed, float radiusX, float radiusY, float radiusZ) {
+		Vec3[] positions = new Vec3[numberOfParticles];
+		double yaw = Math.toRadians(-this.getRotationVector().x);
+		double animationRotation = (System.currentTimeMillis() % (long)(10000 / speed)) / (10000.0 / speed) * 2 * Math.PI;
+
+		for (int i = 0; i < numberOfParticles; i++) {
+			double angle = (2 * Math.PI * i / numberOfParticles) + animationRotation;
+
+			double localX = Math.cos(angle) * radiusX;
+			double localY = Math.sin(angle) * radiusY;
+			double localZ = Math.sin(angle * 1.5) * radiusZ;
+
+			double rotatedX = localX * Math.cos(yaw) - localZ * Math.sin(yaw);
+			double rotatedZ = localX * Math.sin(yaw) + localZ * Math.cos(yaw);
+
+			positions[i] = new Vec3(
+					this.getX() + rotatedX,
+					this.getY() + localY + 0.75,
+					this.getZ() + rotatedZ
+			);
+		}
+
+		return positions;
 	}
 
 	public Vec3 getFootPosition(boolean side) {

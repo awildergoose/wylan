@@ -10,5 +10,6 @@ public class WylanModClient {
 	public static void init() {
 		ModEntityModelLayers.init();
 		ModRendering.init();
+		ScreenshakeHandler.init();
 	}
 }
