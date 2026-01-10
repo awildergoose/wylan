@@ -60,8 +60,7 @@ dependencies {
     modImplementation "dev.architectury:architectury-neoforge:$architectury_api_version"
 
     implementation "software.bernie.geckolib:geckolib-neoforge-$minecraft_version:$geckolib_version"
-
-    compileOnly "maven.modrinth:sodium:$sodium_version-neoforge"
+    implementation "maven.modrinth:sodium:$sodium_version-neoforge"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')

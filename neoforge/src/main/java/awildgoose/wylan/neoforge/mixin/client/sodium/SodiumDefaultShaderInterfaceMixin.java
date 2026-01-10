@@ -1,7 +1,7 @@
-package awildgoose.wylan.fabric.mixin.client.sodium;
+package awildgoose.wylan.neoforge.mixin.client.sodium;
 
 import awildgoose.wylan.client.init.ModRendering;
-import awildgoose.wylan.fabric.sodium.SodiumCompat;
+import awildgoose.wylan.neoforge.sodium.SodiumCompat;
 import net.caffeinemc.mods.sodium.client.gl.shader.uniform.GlUniformFloat;
 import net.caffeinemc.mods.sodium.client.render.chunk.shader.ChunkShaderOptions;
 import net.caffeinemc.mods.sodium.client.render.chunk.shader.DefaultShaderInterface;

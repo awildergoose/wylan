@@ -37,5 +37,7 @@ side = "BOTH"
 [[mixins]]
 config = "wylan.mixins.json"
 
+# we only need this for rendering, should be ok for now!
 [[mixins]]
 config = "wylan.neoforge.mixins.json"
+requiredMods = ["sodium"]

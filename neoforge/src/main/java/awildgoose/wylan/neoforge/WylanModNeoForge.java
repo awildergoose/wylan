@@ -3,8 +3,6 @@ package awildgoose.wylan.neoforge;
 import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.entity.*;
 import awildgoose.wylan.init.ModEntityTypes;
-import awildgoose.wylan.neoforge.sodium.SodiumCompat;
-import dev.architectury.platform.Platform;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -31,11 +29,6 @@ public final class WylanModNeoForge {
     public WylanModNeoForge(IEventBus bus) {
         WylanMod.init();
         ENTITY_DATA_SERIALIZERS.register(bus);
-
-        if (Platform.isModLoaded("sodium")) {
-            //noinspection InstantiationOfUtilityClass
-            new SodiumCompat();
-        }
     }
 
     @SubscribeEvent
