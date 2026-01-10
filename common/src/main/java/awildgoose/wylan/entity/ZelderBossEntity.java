@@ -1,6 +1,7 @@
 package awildgoose.wylan.entity;
 
 import awildgoose.wylan.init.ModEntityTypes;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
@@ -45,6 +46,8 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 			this.getDisplayName(), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.PROGRESS
 	).setDarkenScreen(true).setCreateWorldFog(true).setPlayBossMusic(true);
 
+	private int age = 0;
+
 	public ZelderBossEntity(EntityType<? extends ZelderBossEntity> entityType, Level world) {
 		super(entityType, world);
 		this.moveControl = new FlyingMoveControl(this, 10, false);
@@ -53,58 +56,10 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 		this.setNoGravity(true);
 	}
 
-	@Override
-	public void makeStuckInBlock(BlockState blockState, Vec3 vec3) {}
-
-	@Override
-	protected void registerGoals() {
-		// 1 ranged attack per second
-		this.goalSelector.addGoal(0, new RangedAttackGoal(this, 1.0, 20, 20.0F));
-	}
-
-	@Override
-	protected @NotNull PathNavigation createNavigation(Level level) {
-		FlyingPathNavigation flyingPathNavigation = new FlyingPathNavigation(this, level);
-		flyingPathNavigation.setCanOpenDoors(false);
-		flyingPathNavigation.setCanFloat(true);
-		return flyingPathNavigation;
-	}
-
-	@Override
-	public void checkDespawn() {
-		if (this.level().getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
-			this.discard();
-		} else {
-			this.noActionTime = 0;
-		}
-	}
-
-	public static AttributeSupplier.Builder createDefaultAttributes() {
-		return PathfinderMob.createMobAttributes()
-				.add(Attributes.MAX_HEALTH, 300.0)
-				.add(Attributes.MOVEMENT_SPEED, 1.0)
-				.add(Attributes.FLYING_SPEED, 0.2F)
-				.add(Attributes.FOLLOW_RANGE, 100.0)
-				.add(Attributes.ARMOR, 4.0);
-	}
-
+	//region animation
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(new AnimationController<>("Idle", 5, this::animController));
-	}
-
-	@Override
-	public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
-		if (damageSource.is(DamageTypeTags.IS_FIRE))
-			return true;
-		if (damageSource.is(DamageTypeTags.IS_FALL))
-			return true;
-		//noinspection RedundantIfStatement
-		if (super.isInvulnerableTo(serverLevel, damageSource))
-			return true;
-
-		// SHIELD DEFENSE CHANCE!!
-		return false;
 	}
 
 	private PlayState animController(AnimationTest<GeoAnimatable> animTest) {
@@ -115,6 +70,7 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 	public AnimatableInstanceCache getAnimatableInstanceCache() {
 		return this.geoCache;
 	}
+	//endregion
 
 	@Override
 	public void performRangedAttack(LivingEntity target, float power) {
@@ -135,20 +91,6 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 		);
 
 		this.level().addFreshEntity(pellet);
-	}
-
-	@Override
-	protected void readAdditionalSaveData(ValueInput valueInput) {
-		super.readAdditionalSaveData(valueInput);
-		if (this.hasCustomName()) {
-			this.bossEvent.setName(this.getDisplayName());
-		}
-	}
-
-	@Override
-	public void setCustomName(@Nullable Component component) {
-		super.setCustomName(component);
-		this.bossEvent.setName(this.getDisplayName());
 	}
 
 	@Override
@@ -183,6 +125,118 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 	}
 
 	@Override
+	public void tick() {
+		super.tick();
+		this.age++;
+
+		if (this.level().isClientSide && age % 2 == 0) {
+			// feet and body
+			Vec3 a = getFootPosition(true);
+			Vec3 b = getFootPosition(false);
+			Vec3 c = position().add(0, 1.0, 0);
+
+			this.level().addParticle(
+					ParticleTypes.SOUL_FIRE_FLAME,
+					a.x, a.y, a.z,
+					0.0, 0.0, 0.0);
+			this.level().addParticle(
+					ParticleTypes.SOUL_FIRE_FLAME,
+					b.x, b.y, b.z,
+					0.0, 0.0, 0.0);
+			this.level().addParticle(
+					ParticleTypes.SOUL_FIRE_FLAME,
+					c.x, c.y, c.z,
+					0.0, 0.0, 0.0);
+
+			// ring of soul flames
+
+		}
+	}
+
+	public Vec3 getFootPosition(boolean side) {
+		double footOffsetX = (side ? 5.0 : -5.0) / 16.0;
+
+		double yaw = Math.toRadians(-this.getRotationVector().x);
+		double rotatedX = footOffsetX * Math.cos(yaw) * Math.sin(yaw);
+		double rotatedZ = footOffsetX * Math.sin(yaw) * Math.cos(yaw);
+
+		return new Vec3(
+				this.getX() + rotatedX,
+				this.getY(),
+				this.getZ() + rotatedZ
+		);
+	}
+
+	//region generic stuff
+	@Override
+	public void makeStuckInBlock(BlockState blockState, Vec3 vec3) {}
+
+	@Override
+	protected void registerGoals() {
+		// 1 ranged attack per second
+		this.goalSelector.addGoal(0, new RangedAttackGoal(this, 1.0, 20, 20.0F));
+	}
+
+	@Override
+	protected @NotNull PathNavigation createNavigation(Level level) {
+		FlyingPathNavigation flyingPathNavigation = new FlyingPathNavigation(this, level);
+		flyingPathNavigation.setCanOpenDoors(false);
+		flyingPathNavigation.setCanFloat(true);
+		return flyingPathNavigation;
+	}
+
+	public static AttributeSupplier.Builder createDefaultAttributes() {
+		return PathfinderMob.createMobAttributes()
+				.add(Attributes.MAX_HEALTH, 300.0)
+				.add(Attributes.MOVEMENT_SPEED, 1.0)
+				.add(Attributes.FLYING_SPEED, 0.2F)
+				.add(Attributes.FOLLOW_RANGE, 100.0)
+				.add(Attributes.ARMOR, 4.0);
+	}
+
+	@Override
+	public boolean fireImmune() {
+		return true;
+	}
+
+	@Override
+	public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
+		if (damageSource.is(DamageTypeTags.IS_FIRE))
+			return true;
+		if (damageSource.is(DamageTypeTags.IS_FALL))
+			return true;
+		//noinspection RedundantIfStatement
+		if (super.isInvulnerableTo(serverLevel, damageSource))
+			return true;
+
+		// SHIELD DEFENSE CHANCE!!
+		return false;
+	}
+
+	@Override
+	public void checkDespawn() {
+		if (this.level().getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
+			this.discard();
+		} else {
+			this.noActionTime = 0;
+		}
+	}
+
+	@Override
+	protected void readAdditionalSaveData(ValueInput valueInput) {
+		super.readAdditionalSaveData(valueInput);
+		if (this.hasCustomName()) {
+			this.bossEvent.setName(this.getDisplayName());
+		}
+	}
+
+	@Override
+	public void setCustomName(@Nullable Component component) {
+		super.setCustomName(component);
+		this.bossEvent.setName(this.getDisplayName());
+	}
+
+	@Override
 	public void startSeenByPlayer(ServerPlayer serverPlayer) {
 		super.startSeenByPlayer(serverPlayer);
 		this.bossEvent.addPlayer(serverPlayer);
@@ -193,4 +247,5 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 		super.stopSeenByPlayer(serverPlayer);
 		this.bossEvent.removePlayer(serverPlayer);
 	}
+	//endregion
 }

@@ -27,5 +27,6 @@ public class GumballPelletEntityRenderer extends LivingEntityRenderer<GumballPel
 	public void extractRenderState(GumballPelletEntity entity, GumballPelletEntityRenderState state, float partialTicks) {
 		super.extractRenderState(entity, state, partialTicks);
 		state.nameTag = null;
+		state.bodyRot = state.ageInTicks * partialTicks * 120.0f;
 	}
 }
