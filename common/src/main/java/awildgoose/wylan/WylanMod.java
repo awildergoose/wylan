@@ -18,5 +18,6 @@ public final class WylanMod {
         ModEntityTypes.init();
         ModSounds.init();
         ModFeatures.init();
+        // TODO(NeoForge): register packets
     }
 }
