@@ -16,14 +16,14 @@ public class SodiumDefaultMaterialsMixin {
 	@Inject(at = @At("HEAD"), method = "forChunkLayer", cancellable = true)
 	private static void forChunkLayer(ChunkSectionLayer layer, CallbackInfoReturnable<Material> cir) {
 		if (layer.equals(ChunkSectionLayer.valueOf("LAVA"))) {
-			cir.setReturnValue((Material) SodiumCompat.LAVA_MATERIAL);
+			cir.setReturnValue(SodiumCompat.LAVA_MATERIAL);
 		}
 	}
 
 	@Inject(at = @At("HEAD"), method = "forRenderLayer", cancellable = true)
 	private static void forRenderLayer(RenderType layer, CallbackInfoReturnable<Material> cir) {
 		if (layer.equals(ModRendering.LAVA)) {
-			cir.setReturnValue((Material) SodiumCompat.LAVA_MATERIAL);
+			cir.setReturnValue(SodiumCompat.LAVA_MATERIAL);
 		}
 	}
 }

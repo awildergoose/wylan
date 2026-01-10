@@ -29,7 +29,7 @@ public class SodiumDefaultTerrainRenderPassesMixin {
 	private static void onStaticInit(CallbackInfo ci) {
 		TerrainRenderPass[] current = DefaultTerrainRenderPasses.ALL;
 		TerrainRenderPass[] expanded = Arrays.copyOf(current, current.length + 1);
-		expanded[expanded.length - 1] = (TerrainRenderPass) SodiumCompat.LAVA_PASS;
+		expanded[expanded.length - 1] = SodiumCompat.LAVA_PASS;
 		setAll(expanded);
 	}
 }

@@ -2,7 +2,6 @@ package awildgoose.wylan.mixin.client.lava;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import org.spongepowered.asm.mixin.Final;
@@ -22,10 +21,10 @@ public class ItemBlockRenderTypesMixin {
 	 */
 	@Overwrite
 	public static ChunkSectionLayer getRenderLayer(FluidState fluidState) {
-		ChunkSectionLayer chunkSectionLayer = LAYER_BY_FLUID.get(fluidState.getType());
-		ChunkSectionLayer lava = ChunkSectionLayer.valueOf("LAVA");
-		if (fluidState.is(FluidTags.LAVA))
-			return lava;
-		return chunkSectionLayer != null ? chunkSectionLayer : lava;
+		return ChunkSectionLayer.valueOf("LAVA");
+//		ChunkSectionLayer chunkSectionLayer = LAYER_BY_FLUID.get(fluidState.getType());
+//		if (fluidState.is(FluidTags.LAVA))
+//			return ChunkSectionLayer.valueOf("LAVA");
+//		return chunkSectionLayer != null ? chunkSectionLayer : ChunkSectionLayer.SOLID;
 	}
 }

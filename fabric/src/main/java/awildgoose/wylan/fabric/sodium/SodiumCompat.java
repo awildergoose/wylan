@@ -6,18 +6,12 @@ import net.caffeinemc.mods.sodium.client.render.chunk.terrain.material.parameter
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 
 public class SodiumCompat {
-
-	public static Object LAVA_PASS;
-	public static Object LAVA_MATERIAL;
-
-	public SodiumCompat() {
-		LAVA_PASS = new TerrainRenderPass(ChunkSectionLayer.valueOf("LAVA"),
-											 false,
-											 false);
-		LAVA_MATERIAL = new Material(
-				(TerrainRenderPass) LAVA_PASS,
-				AlphaCutoffParameter.ZERO,
-				true
-		);
-	}
+	public static TerrainRenderPass LAVA_PASS = new TerrainRenderPass(ChunkSectionLayer.valueOf("LAVA"),
+														   false,
+														   false);
+	public static Material LAVA_MATERIAL = new Material(
+			LAVA_PASS,
+			AlphaCutoffParameter.ZERO,
+			true
+	);
 }

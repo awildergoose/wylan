@@ -4,7 +4,6 @@ import awildgoose.wylan.fabric.sodium.SodiumCompat;
 import net.caffeinemc.mods.sodium.client.render.SodiumWorldRenderer;
 import net.caffeinemc.mods.sodium.client.render.chunk.ChunkRenderMatrices;
 import net.caffeinemc.mods.sodium.client.render.chunk.RenderSectionManager;
-import net.caffeinemc.mods.sodium.client.render.chunk.terrain.TerrainRenderPass;
 import net.caffeinemc.mods.sodium.client.util.FogParameters;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayerGroup;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,12 +18,11 @@ public class SodiumWorldRendererMixin {
 	@Shadow(remap = false) private FogParameters lastFogParameters;
 
 	@Inject(at = @At("HEAD"), method = "drawChunkLayer", cancellable = true)
-	public void drawChunkLayer(ChunkSectionLayerGroup group, ChunkRenderMatrices matrices, double x, double y,
-							   double z, CallbackInfo ci) {
+	public void drawChunkLayer(ChunkSectionLayerGroup group, ChunkRenderMatrices matrices, double x, double y, double z, CallbackInfo ci) {
 		if (group.equals(ChunkSectionLayerGroup.valueOf("LAVA"))) {
 			ci.cancel();
 
-			this.renderSectionManager.renderLayer(matrices, (TerrainRenderPass) SodiumCompat.LAVA_PASS, x, y, z,
+			this.renderSectionManager.renderLayer(matrices, SodiumCompat.LAVA_PASS, x, y, z,
 												  this.lastFogParameters);
 		}
 	}
