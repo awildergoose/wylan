@@ -7,8 +7,10 @@ import awildgoose.wylan.client.entity.HenryEntityRenderer;
 import awildgoose.wylan.client.entity.SkinwalkerEntityRenderer;
 import awildgoose.wylan.client.entity.ZelderBossEntityRenderer;
 import awildgoose.wylan.client.init.ModClientCommands;
+import awildgoose.wylan.fabric.sodium.SodiumCompat;
 import awildgoose.wylan.init.ModBlockEntities;
 import awildgoose.wylan.init.ModEntityTypes;
+import dev.architectury.platform.Platform;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -25,5 +27,10 @@ public final class WylanModFabricClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntityTypes.ZELDER_BOSS.get(), ZelderBossEntityRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.GUMBALL_PELLET.get(), GumballPelletEntityRenderer::new);
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> ModClientCommands.init(dispatcher));
+
+
+        if (Platform.isModLoaded("sodium")) {
+            new SodiumCompat();
+        }
     }
 }

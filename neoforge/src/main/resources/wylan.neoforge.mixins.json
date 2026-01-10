@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "awildgoose.wylan.neoforge.mixin",
+  "plugin": "awildgoose.wylan.compat.MixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "client.sodium.SodiumDefaultMaterialsMixin",
+    "client.sodium.SodiumDefaultTerrainRenderPassesMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

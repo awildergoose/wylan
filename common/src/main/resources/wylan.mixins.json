@@ -1,6 +1,7 @@
 {
   "required": true,
   "package": "awildgoose.wylan.mixin",
+  "plugin": "awildgoose.wylan.compat.MixinPlugin",
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "client": [
@@ -13,12 +14,12 @@
     "client.lava.ChunkSectionsToRenderMixin",
     "client.lava.GameRendererMixin",
     "client.lava.ItemBlockRenderTypesMixin",
-    "client.lava.RenderBuffersMixin"
+    "client.lava.RenderBuffersMixin",
+    "client.lava.RenderSystemMixin"
   ],
   "mixins": [
     "BlockEntityTypeConstructorMixin",
-    "StructureMixin",
-    "client.lava.RenderSystemMixin"
+    "StructureMixin"
   ],
   "injectors": {
     "defaultRequire": 1

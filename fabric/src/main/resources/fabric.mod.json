@@ -23,7 +23,8 @@
     ]
   },
   "mixins": [
-    "wylan.mixins.json"
+    "wylan.mixins.json",
+    "wylan.fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.18.4",

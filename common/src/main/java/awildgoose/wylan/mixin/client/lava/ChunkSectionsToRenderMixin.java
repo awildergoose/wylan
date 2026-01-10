@@ -10,7 +10,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ChunkSectionsToRender.class)
 public class ChunkSectionsToRenderMixin {
-	@Inject(at = @At("RETURN"), method = "renderGroup(Lnet/minecraft/client/renderer/chunk/ChunkSectionLayerGroup;)V")
+	@Inject(at = @At("HEAD"), method = "renderGroup(Lnet/minecraft/client/renderer/chunk/ChunkSectionLayerGroup;)V"
+			, order = 500) // allow us to render our group, sodium!
 	public void renderGroup(ChunkSectionLayerGroup chunkSectionLayerGroup, CallbackInfo ci) {
 		if (chunkSectionLayerGroup == ChunkSectionLayerGroup.TRIPWIRE) {
 			// ITS TIME FOR US!!!!!!

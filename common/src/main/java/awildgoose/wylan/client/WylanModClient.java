@@ -1,7 +1,7 @@
 package awildgoose.wylan.client;
 
-import awildgoose.wylan.client.init.ModRendering;
 import awildgoose.wylan.client.init.ModEntityModelLayers;
+import awildgoose.wylan.client.init.ModRendering;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
