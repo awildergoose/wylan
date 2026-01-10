@@ -6,7 +6,6 @@
 
 #import <sodium:include/fog.glsl>
 #import <sodium:include/chunk_material.glsl>
-#import <wylan:include/goose_sodium.glsl>
 
 in vec4 v_Color; // The interpolated vertex color
 in vec2 v_TexCoord; // The interpolated block texture coordinates
