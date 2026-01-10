@@ -97,6 +97,8 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 	public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
 		if (damageSource.is(DamageTypeTags.IS_FIRE))
 			return true;
+		if (damageSource.is(DamageTypeTags.IS_FALL))
+			return true;
 		return super.isInvulnerableTo(serverLevel, damageSource);
 	}
 
@@ -167,7 +169,7 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 		LivingEntity target = getTarget();
 		if (target != null) {
 			this.lookAt(target, 30.0f, 30.0f);
-			this.getNavigation().moveTo(target, 1.0);
+			this.moveControl.setWantedPosition(target.getX(), target.getY(), target.getZ(), 1.0);
 		} else {
 			setTarget(level.getNearestPlayer(this, 100.0));
 		}
