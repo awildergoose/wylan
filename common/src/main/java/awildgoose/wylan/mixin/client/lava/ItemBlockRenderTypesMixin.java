@@ -2,6 +2,7 @@ package awildgoose.wylan.mixin.client.lava;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import org.spongepowered.asm.mixin.Final;
@@ -11,7 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.Map;
 
-@Mixin(ItemBlockRenderTypes.class)
+@Mixin(value = ItemBlockRenderTypes.class, priority = 500)
 public class ItemBlockRenderTypesMixin {
 	@Shadow @Final private static Map<Fluid, ChunkSectionLayer> LAYER_BY_FLUID;
 
@@ -22,8 +23,9 @@ public class ItemBlockRenderTypesMixin {
 	@Overwrite
 	public static ChunkSectionLayer getRenderLayer(FluidState fluidState) {
 		ChunkSectionLayer chunkSectionLayer = LAYER_BY_FLUID.get(fluidState.getType());
-		// TODO: This does break compat for other mods
-		// Instead, check for fluid state tag if lava
-		return chunkSectionLayer != null ? chunkSectionLayer : Enum.valueOf(ChunkSectionLayer.class, "LAVA");
+		ChunkSectionLayer lava = ChunkSectionLayer.valueOf("LAVA");
+		if (fluidState.is(FluidTags.LAVA))
+			return lava;
+		return chunkSectionLayer != null ? chunkSectionLayer : lava;
 	}
 }

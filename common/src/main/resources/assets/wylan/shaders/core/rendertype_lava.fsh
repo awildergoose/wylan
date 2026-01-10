@@ -16,7 +16,7 @@ out vec4 fragColor;
 
 void main() {
     vec4 color = texture(Sampler0, texCoord0) * vertexColor * ColorModulator;
-    vec3 targetColor = vec3(111.0/255.0, 101.0/255.0, 61.0/255.0);
+    /*vec3 targetColor = vec3(111.0/255.0, 101.0/255.0, 61.0/255.0);
     const vec3 LUMA = vec3(0.2126, 0.7152, 0.0722);
 
     float lum = dot(color.rgb, LUMA);
@@ -24,7 +24,8 @@ void main() {
     float safeTargetLum = max(targetLum, 1e-4);
     vec3 targetScaled = targetColor * (lum / safeTargetLum);
 
-    color.rgb = mix(color.rgb, targetScaled, LavaTransitionProgress);
+    color.rgb = mix(color.rgb, targetScaled, LavaTransitionProgress);*/
+    color.rgb = vec3(1.0, 0.0, 0.0);
 
 #ifdef ALPHA_CUTOUT
     if (color.a < ALPHA_CUTOUT) {

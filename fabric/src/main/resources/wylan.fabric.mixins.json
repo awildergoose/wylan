@@ -7,7 +7,9 @@
   "client": [
     "client.sodium.SodiumDefaultMaterialsMixin",
     "client.sodium.SodiumDefaultTerrainRenderPassesMixin",
-    "client.sodium.SodiumWorldRendererMixin"
+    "client.sodium.SodiumWorldRendererMixin",
+    "client.sodium.SodiumNonTerrainBlockRenderContextMixin",
+    "client.sodium.SodiumSimpleBlockRenderContextMixin"
   ],
   "injectors": {
     "defaultRequire": 1
