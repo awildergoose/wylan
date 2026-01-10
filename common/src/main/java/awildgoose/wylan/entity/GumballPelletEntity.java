@@ -1,5 +1,6 @@
 package awildgoose.wylan.entity;
 
+import awildgoose.wylan.ModUtils;
 import awildgoose.wylan.ScreenshakeInstance;
 import awildgoose.wylan.ccb.ClientCommonBridge;
 import awildgoose.wylan.init.ModEntityTypes;
@@ -121,6 +122,7 @@ public class GumballPelletEntity extends LivingEntity {
 
 			if (!this.level().isClientSide) {
 				this.level().broadcastEntityEvent(this, (byte)69);
+				ModUtils.applyKnockback((ServerLevel) this.level(), this.position(), 8.0, 1.0);
 				this.discard();
 			}
 		}

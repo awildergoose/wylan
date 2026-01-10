@@ -6,10 +6,14 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
 
 public class ModUtils {
 	public static void dropTowardsEntity(Level level, ItemStack stack, Vec3 eyePos, Entity target) {
@@ -32,6 +36,34 @@ public class ModUtils {
 		item.setDeltaMovement(direction.x, direction.y, direction.z);
 		item.setPickUpDelay(0);
 		level.addFreshEntity(item);
+	}
+
+	public static void applyKnockback(ServerLevel level, Vec3 pos, double radius, double force) {
+		AABB box = new AABB(
+				pos.x - radius, pos.y - radius, pos.z - radius,
+				pos.x + radius, pos.y + radius, pos.z + radius
+		);
+
+		List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, box, e -> true);
+
+		for (LivingEntity e : entities) {
+			Vec3 offset = e.position().subtract(pos);
+			Vec3 direction = offset.normalize();
+
+			double vForce = force * 0.7;
+
+			double rx = (Math.random() - 0.5);
+			double ry = (Math.random() - 0.5) * 0.5;
+			double rz = (Math.random() - 0.5);
+
+			e.setDeltaMovement(
+					direction.x * force + rx,
+					vForce + ry,
+					direction.z * force + rz
+			);
+
+			e.hasImpulse = true;
+		}
 	}
 
 	private static ScreenshakeS2CPayload makeScreenshakePacket(ScreenshakeInstance instance) {
