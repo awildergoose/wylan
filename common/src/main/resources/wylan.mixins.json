@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "client": [
+    "client.AllowWeatherInLevelMixin",
     "client.AtmosphericFogEnvironmentMixin",
     "client.BloodRainMixin",
     "client.BossHealthOverlayMixin",
@@ -22,7 +23,8 @@
     "client.lava.RenderSystemMixin"
   ],
   "mixins": [
-    "BlockEntityTypeConstructorMixin",
+    "BlockEntityTypeConstructorAccessor",
+    "SimpleParticleTypeAccessor",
     "StructureMixin"
   ],
   "injectors": {

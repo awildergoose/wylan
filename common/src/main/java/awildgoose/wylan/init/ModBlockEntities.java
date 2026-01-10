@@ -2,7 +2,7 @@ package awildgoose.wylan.init;
 
 import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.block.entity.PlushieBlockEntity;
-import awildgoose.wylan.mixin.BlockEntityTypeConstructorMixin;
+import awildgoose.wylan.mixin.BlockEntityTypeConstructorAccessor;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
@@ -29,7 +29,7 @@ public class ModBlockEntities {
 	private static <T extends BlockEntity> RegistrySupplier<BlockEntityType<T>> register(String name,
 																						 BlockEntityType.BlockEntitySupplier<? extends T> supplier, Supplier<Set<Block>> blocks) {
 		return BLOCK_ENTITIES.register(name,
-									   () -> BlockEntityTypeConstructorMixin.invokeInit(
+									   () -> BlockEntityTypeConstructorAccessor.invokeInit(
 											   supplier,
 											   blocks.get()
 									   )

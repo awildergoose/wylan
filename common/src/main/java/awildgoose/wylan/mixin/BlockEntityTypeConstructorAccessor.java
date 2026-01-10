@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 import java.util.Set;
 
 @Mixin(BlockEntityType.class)
-public interface BlockEntityTypeConstructorMixin {
+public interface BlockEntityTypeConstructorAccessor {
 	@Invoker("<init>")
 	static <T extends BlockEntity> BlockEntityType<T> invokeInit(
 			BlockEntityType.BlockEntitySupplier<? extends T> supplier,

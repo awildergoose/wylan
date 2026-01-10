@@ -9,13 +9,16 @@ import awildgoose.wylan.client.entity.HenryEntityRenderer;
 import awildgoose.wylan.client.entity.SkinwalkerEntityRenderer;
 import awildgoose.wylan.client.entity.ZelderBossEntityRenderer;
 import awildgoose.wylan.client.init.ModClientCommands;
+import awildgoose.wylan.client.particle.BloodDropParticle;
 import awildgoose.wylan.init.ModBlockEntities;
 import awildgoose.wylan.init.ModEntityTypes;
+import awildgoose.wylan.init.ModParticles;
 import awildgoose.wylan.payloads.ScreenshakeS2CPayload;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
 public final class WylanModFabricClient implements ClientModInitializer {
@@ -36,5 +39,7 @@ public final class WylanModFabricClient implements ClientModInitializer {
                 payload.falloffDistance(),
                 payload.center()
         )));
+
+        ParticleFactoryRegistry.getInstance().register(ModParticles.BLOOD.get(), BloodDropParticle.Provider::new);
     }
 }

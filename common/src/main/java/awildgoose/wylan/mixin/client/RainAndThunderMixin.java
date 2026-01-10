@@ -13,6 +13,7 @@ import java.util.function.BooleanSupplier;
 @Environment(EnvType.CLIENT)
 @Mixin(ClientLevel.class)
 public class RainAndThunderMixin {
+	@SuppressWarnings("DataFlowIssue")
 	@Inject(at = @At("HEAD"), method = "tick")
 	public void tick(BooleanSupplier booleanSupplier, CallbackInfo ci) {
 		((ClientLevel)(Object)this).setRainLevel(1.0f);

@@ -1,22 +1,39 @@
 package awildgoose.wylan.mixin.client;
 
 import awildgoose.wylan.WylanMod;
+import awildgoose.wylan.init.ModParticles;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.WaterDropParticle;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
-@Mixin(WaterDropParticle.class)
+@Mixin(ClientLevel.class)
 public class BloodRainMixin {
+	@Shadow @Final
+	private LevelRenderer levelRenderer;
+
 	@SuppressWarnings("DataFlowIssue")
-	@Inject(at = @At("TAIL"), method = "<init>")
-	public void create(ClientLevel level, double x, double y, double z, CallbackInfo ci) {
-		if (level.dimension().equals(WylanMod.ZELDER_ARENA))
-			((WaterDropParticle)(Object)this).setColor(255.0F, 0.0F, 0.0F);
+	@Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/multiplayer/ClientLevel;addParticle" +
+			"(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V", cancellable = true)
+	public void addParticle(ParticleOptions particleData, double x, double y, double z, double xSpeed, double ySpeed,
+					   double zSpeed, CallbackInfo ci) {
+		if (((Level)(Object)this).dimension().equals(WylanMod.ZELDER_ARENA)) {
+			ci.cancel();
+			var newParticle = ModParticles.BLOOD.get();
+			this.levelRenderer.addParticle(
+					newParticle,
+					newParticle.getType().getOverrideLimiter(),
+					x, y, z, xSpeed, ySpeed, zSpeed
+			);
+		}
 	}
 }
