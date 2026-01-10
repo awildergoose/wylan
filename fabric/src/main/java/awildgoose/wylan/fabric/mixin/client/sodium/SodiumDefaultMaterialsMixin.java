@@ -2,15 +2,18 @@ package awildgoose.wylan.fabric.mixin.client.sodium;
 
 import awildgoose.wylan.client.init.ModRendering;
 import awildgoose.wylan.fabric.sodium.SodiumCompat;
+import net.caffeinemc.mods.sodium.client.render.chunk.terrain.material.DefaultMaterials;
 import net.caffeinemc.mods.sodium.client.render.chunk.terrain.material.Material;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import org.spongepowered.asm.mixin.Mixin;
-import net.caffeinemc.mods.sodium.client.render.chunk.terrain.material.DefaultMaterials;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@Environment(EnvType.CLIENT)
 @Mixin(DefaultMaterials.class)
 public class SodiumDefaultMaterialsMixin {
 	@Inject(at = @At("HEAD"), method = "forChunkLayer", cancellable = true)

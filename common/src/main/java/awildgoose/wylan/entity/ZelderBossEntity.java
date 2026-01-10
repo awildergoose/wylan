@@ -99,7 +99,12 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 			return true;
 		if (damageSource.is(DamageTypeTags.IS_FALL))
 			return true;
-		return super.isInvulnerableTo(serverLevel, damageSource);
+		//noinspection RedundantIfStatement
+		if (super.isInvulnerableTo(serverLevel, damageSource))
+			return true;
+
+		// SHIELD DEFENSE CHANCE!!
+		return false;
 	}
 
 	private PlayState animController(AnimationTest<GeoAnimatable> animTest) {

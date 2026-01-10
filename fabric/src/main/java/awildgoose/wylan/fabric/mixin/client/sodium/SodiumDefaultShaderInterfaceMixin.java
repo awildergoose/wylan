@@ -8,6 +8,8 @@ import net.caffeinemc.mods.sodium.client.render.chunk.shader.DefaultShaderInterf
 import net.caffeinemc.mods.sodium.client.render.chunk.shader.ShaderBindingContext;
 import net.caffeinemc.mods.sodium.client.render.chunk.terrain.TerrainRenderPass;
 import net.caffeinemc.mods.sodium.client.util.FogParameters;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -15,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@Environment(EnvType.CLIENT)
 @Mixin(DefaultShaderInterface.class)
 public class SodiumDefaultShaderInterfaceMixin {
 	@Unique private @Nullable GlUniformFloat wylan$lavaTransitionProgress;

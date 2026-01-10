@@ -2,6 +2,8 @@ package awildgoose.wylan.mixin.client.lava;
 
 import awildgoose.wylan.client.init.ModRendering;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import org.apache.commons.lang3.ArrayUtils;
 import org.spongepowered.asm.mixin.Final;
@@ -10,6 +12,7 @@ import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
+@Environment(EnvType.CLIENT)
 @Mixin(ChunkSectionLayer.class)
 public class ChunkSectionLayerMixin {
 	@Mutable

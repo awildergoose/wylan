@@ -1,7 +1,10 @@
 package awildgoose.wylan.mixin.client.lava;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import org.spongepowered.asm.mixin.Final;
@@ -11,6 +14,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.Map;
 
+@Environment(EnvType.CLIENT)
 @Mixin(value = ItemBlockRenderTypes.class, priority = 500)
 public class ItemBlockRenderTypesMixin {
 	@Shadow @Final private static Map<Fluid, ChunkSectionLayer> LAYER_BY_FLUID;
@@ -21,10 +25,9 @@ public class ItemBlockRenderTypesMixin {
 	 */
 	@Overwrite
 	public static ChunkSectionLayer getRenderLayer(FluidState fluidState) {
-		return ChunkSectionLayer.valueOf("LAVA");
-//		ChunkSectionLayer chunkSectionLayer = LAYER_BY_FLUID.get(fluidState.getType());
-//		if (fluidState.is(FluidTags.LAVA))
-//			return ChunkSectionLayer.valueOf("LAVA");
-//		return chunkSectionLayer != null ? chunkSectionLayer : ChunkSectionLayer.SOLID;
+		ChunkSectionLayer chunkSectionLayer = LAYER_BY_FLUID.get(fluidState.getType());
+		if (fluidState.is(FluidTags.LAVA))
+			return ChunkSectionLayer.valueOf("LAVA");
+		return chunkSectionLayer != null ? chunkSectionLayer : ChunkSectionLayer.SOLID;
 	}
 }

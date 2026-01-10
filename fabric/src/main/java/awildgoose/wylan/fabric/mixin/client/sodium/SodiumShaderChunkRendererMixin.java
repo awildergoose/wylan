@@ -7,6 +7,8 @@ import net.caffeinemc.mods.sodium.client.render.chunk.ShaderChunkRenderer;
 import net.caffeinemc.mods.sodium.client.render.chunk.shader.ChunkShaderInterface;
 import net.caffeinemc.mods.sodium.client.render.chunk.shader.ChunkShaderOptions;
 import net.caffeinemc.mods.sodium.client.render.chunk.shader.DefaultShaderInterface;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
+@Environment(EnvType.CLIENT)
 @Mixin(ShaderChunkRenderer.class)
 public class SodiumShaderChunkRendererMixin {
 	@Shadow @Final private Map<ChunkShaderOptions, GlProgram<ChunkShaderInterface>> programs;

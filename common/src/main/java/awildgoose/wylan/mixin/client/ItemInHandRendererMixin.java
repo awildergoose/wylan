@@ -18,10 +18,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Environment(EnvType.CLIENT)
 @Mixin(ItemInHandRenderer.class)
 public class ItemInHandRendererMixin {
-	@Unique private static long squishStartMS = -1L;
+	@Unique private static long wylan$squishStartMS = -1L;
 
-	@Unique private static final int SQUISH_DURATION_MS = 100;
-	@Unique private static final float AMPLITUDE = 0.30f;
+	@Unique private static final int wylan$SQUISH_DURATION_MS = 100;
+	@Unique private static final float wylan$AMPLITUDE = 0.30f;
 
 	@Inject(method = "renderArmWithItem(Lnet/minecraft/client/player/AbstractClientPlayer;FFLnet/minecraft/world/InteractionHand;FLnet/minecraft/world/item/ItemStack;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"))
 	private void wylan$renderArmWithItemPre(
@@ -39,22 +39,22 @@ public class ItemInHandRendererMixin {
 	) {
 		if (stack.getItem() instanceof PlushieItem) {
 			if (PlushieItem.wasUsingLastFrame) {
-				squishStartMS = System.currentTimeMillis();
+				wylan$squishStartMS = System.currentTimeMillis();
 				PlushieItem.wasUsingLastFrame = false;
 			}
 
 			float scaleX = 1.0f;
 			float scaleY = 1.0f;
 
-			if (squishStartMS >= 0) {
-				long elapsed = System.currentTimeMillis() - squishStartMS;
+			if (wylan$squishStartMS >= 0) {
+				long elapsed = System.currentTimeMillis() - wylan$squishStartMS;
 
-				if (elapsed < SQUISH_DURATION_MS) {
-					float progress = 1.0f - ((float) elapsed / (float) SQUISH_DURATION_MS);
-					scaleX = 1.0f - AMPLITUDE * progress;
-					scaleY = 1.0f + AMPLITUDE * progress;
+				if (elapsed < wylan$SQUISH_DURATION_MS) {
+					float progress = 1.0f - ((float) elapsed / (float) wylan$SQUISH_DURATION_MS);
+					scaleX = 1.0f - wylan$AMPLITUDE * progress;
+					scaleY = 1.0f + wylan$AMPLITUDE * progress;
 				} else {
-					squishStartMS = -1L;
+					wylan$squishStartMS = -1L;
 				}
 			}
 
