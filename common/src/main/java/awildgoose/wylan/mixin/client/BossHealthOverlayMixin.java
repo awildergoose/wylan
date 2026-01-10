@@ -53,15 +53,17 @@ public abstract class BossHealthOverlayMixin {
 				int x = guiWidth / 2 - textWidth / 2;
 				int y = barY - 9;
 
+				// NOTE: this is unreliable, but it works well enough
+				// for our use case here
 				final String ZELDER_BOSS_NAME = "ZELDERONIAN: THE OIL BATHER";
 
 				if (component.getString().equals(ZELDER_BOSS_NAME)) {
 					long time = System.currentTimeMillis();
-					double angle = time / 200.0;
+					double angle = time / 500.0;
 
 					int radius = 10;
 					int centerX = guiGraphics.guiWidth() / 2 - 127;
-					int centerY = 32;
+					int centerY = 48;
 
 					int ourX = centerX + (int)(Math.cos(angle) * radius);
 					int ourY = centerY + (int)(Math.sin(angle) * radius);
