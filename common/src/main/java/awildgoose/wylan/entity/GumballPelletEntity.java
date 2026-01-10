@@ -1,5 +1,6 @@
 package awildgoose.wylan.entity;
 
+import awildgoose.wylan.init.ModEntityTypes;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -72,7 +73,8 @@ public class GumballPelletEntity extends LivingEntity {
 	//endregion
 
 	protected boolean canHitEntity(Entity entity) {
-		return true;
+		return !entity.getType().equals(ModEntityTypes.GUMBALL_PELLET.get()) &&
+				!entity.getType().equals(ModEntityTypes.ZELDER_BOSS.get());
 	}
 
 	@Override
