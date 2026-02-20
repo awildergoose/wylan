@@ -33,32 +33,30 @@ public abstract class NFSodiumShaderChunkRendererMixin {
 	@SuppressWarnings("deprecation")
 	@Inject(at = @At("HEAD"), method = "begin", cancellable = true)
 	protected void begin(TerrainRenderPass pass, FogParameters parameters, CallbackInfo ci) {
-		ci.cancel();
 		RenderTarget target = pass.getTarget();
 
 		var vColorTexture = target.getColorTexture();
 		if (vColorTexture instanceof ValidationGpuTexture v) {
-			if (v.getRealTexture() instanceof GlTexture glColorTexture) {
-				ci.cancel();
+			ci.cancel();
+			var glColorTexture = (GlTexture) v.getRealTexture();
 
-				GlDevice glDevice = (GlDevice) ((ValidationGpuDevice) RenderSystem.getDevice()).getRealDevice();
-				//noinspection DataFlowIssue
-				GlTexture glDepthTexture =
-						(GlTexture) ((ValidationGpuTexture)target.getDepthTexture()).getRealTexture();
-				//noinspection ReferenceToMixin
-				GlCommandEncoderAccessor glCommandEncoder = (GlCommandEncoderAccessor) glDevice.createCommandEncoder();
+			GlDevice glDevice = (GlDevice) ((ValidationGpuDevice) RenderSystem.getDevice()).getRealDevice();
+			//noinspection DataFlowIssue
+			GlTexture glDepthTexture =
+					(GlTexture) ((ValidationGpuTexture)target.getDepthTexture()).getRealTexture();
+			//noinspection ReferenceToMixin
+			GlCommandEncoderAccessor glCommandEncoder = (GlCommandEncoderAccessor) glDevice.createCommandEncoder();
 
-				GlStateManager._viewport(0, 0, glColorTexture.getWidth(0), glColorTexture.getHeight(0));
-				GlStateManager._glBindFramebuffer(36160,
-												  glColorTexture.getFbo(glDevice.directStateAccess(),
-															  glDepthTexture));
-				glCommandEncoder.sodium$applyPipelineState(pass.getPipeline());
-				glCommandEncoder.sodium$setLastProgram(null);
-				ChunkShaderOptions options = new ChunkShaderOptions(ChunkFogMode.SMOOTH, pass, this.vertexType);
-				this.activeProgram = this.compileProgram(options);
-				this.activeProgram.bind();
-				this.activeProgram.getInterface().setupState(pass, parameters);
-			}
+			GlStateManager._viewport(0, 0, glColorTexture.getWidth(0), glColorTexture.getHeight(0));
+			GlStateManager._glBindFramebuffer(36160,
+											  glColorTexture.getFbo(glDevice.directStateAccess(),
+														  glDepthTexture));
+			glCommandEncoder.sodium$applyPipelineState(pass.getPipeline());
+			glCommandEncoder.sodium$setLastProgram(null);
+			ChunkShaderOptions options = new ChunkShaderOptions(ChunkFogMode.SMOOTH, pass, this.vertexType);
+			this.activeProgram = this.compileProgram(options);
+			this.activeProgram.bind();
+			this.activeProgram.getInterface().setupState(pass, parameters);
 		}
 	}
 }
