@@ -32,8 +32,5 @@
     "java": ">=21",
     "architectury": ">=17.0.8",
     "fabric-api": "*"
-  },
-  "suggests": {
-
   }
 }

@@ -1,4 +1,4 @@
-package awildgoose.wylan.mixin.client;
+package awildgoose.wylan.mixin.client.zelderarena.boss;
 
 import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.init.ModSounds;

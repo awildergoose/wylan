@@ -1,4 +1,4 @@
-package awildgoose.wylan.mixin.client.lava;
+package awildgoose.wylan.mixin.client.zelderarena.lava;
 
 import awildgoose.wylan.client.init.ModRendering;
 import com.mojang.blaze3d.pipeline.RenderPipeline;

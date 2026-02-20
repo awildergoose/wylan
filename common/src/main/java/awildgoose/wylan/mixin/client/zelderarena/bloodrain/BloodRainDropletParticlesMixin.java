@@ -1,4 +1,4 @@
-package awildgoose.wylan.mixin.client;
+package awildgoose.wylan.mixin.client.zelderarena.bloodrain;
 
 import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.init.ModParticles;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ClientLevel.class)
-public class BloodRainMixin {
+public class BloodRainDropletParticlesMixin {
 	@Shadow @Final
 	private LevelRenderer levelRenderer;
 

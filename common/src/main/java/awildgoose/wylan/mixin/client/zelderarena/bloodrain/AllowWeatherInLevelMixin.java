@@ -1,4 +1,4 @@
-package awildgoose.wylan.mixin.client;
+package awildgoose.wylan.mixin.client.zelderarena.bloodrain;
 
 import awildgoose.wylan.WylanMod;
 import net.fabricmc.api.EnvType;

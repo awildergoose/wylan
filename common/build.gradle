@@ -2,6 +2,10 @@ architectury {
     common enabled_platforms.split(',')
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/wylan.accesswidener")
+}
+
 repositories {
     exclusiveContent {
         forRepository {

@@ -66,6 +66,34 @@ public class ModUtils {
 		}
 	}
 
+	// xRot = this.getRotationVector().x
+	public static Vec3[] getRingPositions(double x, double y, double z, double xRot, int numberOfParticles, float speed,
+										  float radiusX,
+										  float radiusY, float radiusZ) {
+		Vec3[] positions = new Vec3[numberOfParticles];
+		double yaw = Math.toRadians(-xRot);
+		double animationRotation = (System.currentTimeMillis() % (long)(10000 / speed)) / (10000.0 / speed) * 2 * Math.PI;
+
+		for (int i = 0; i < numberOfParticles; i++) {
+			double angle = (2 * Math.PI * i / numberOfParticles) + animationRotation;
+
+			double localX = Math.cos(angle) * radiusX;
+			double localY = Math.sin(angle) * radiusY;
+			double localZ = Math.sin(angle * 1.5) * radiusZ;
+
+			double rotatedX = localX * Math.cos(yaw) - localZ * Math.sin(yaw);
+			double rotatedZ = localX * Math.sin(yaw) + localZ * Math.cos(yaw);
+
+			positions[i] = new Vec3(
+					x + rotatedX,
+					y + localY + 0.75,
+					z + rotatedZ
+			);
+		}
+
+		return positions;
+	}
+
 	private static ScreenshakeS2CPayload makeScreenshakePacket(ScreenshakeInstance instance) {
 		return new ScreenshakeS2CPayload(
 				instance.duration,

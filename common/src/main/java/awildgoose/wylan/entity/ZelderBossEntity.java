@@ -1,5 +1,6 @@
 package awildgoose.wylan.entity;
 
+import awildgoose.wylan.ModUtils;
 import awildgoose.wylan.ScreenshakeInstance;
 import awildgoose.wylan.ccb.ClientCommonBridge;
 import awildgoose.wylan.init.ModEntityTypes;
@@ -172,28 +173,8 @@ public class ZelderBossEntity extends Monster implements GeoEntity, RangedAttack
 	}
 
 	public Vec3[] getRingPositions(int numberOfParticles, float speed, float radiusX, float radiusY, float radiusZ) {
-		Vec3[] positions = new Vec3[numberOfParticles];
-		double yaw = Math.toRadians(-this.getRotationVector().x);
-		double animationRotation = (System.currentTimeMillis() % (long)(10000 / speed)) / (10000.0 / speed) * 2 * Math.PI;
-
-		for (int i = 0; i < numberOfParticles; i++) {
-			double angle = (2 * Math.PI * i / numberOfParticles) + animationRotation;
-
-			double localX = Math.cos(angle) * radiusX;
-			double localY = Math.sin(angle) * radiusY;
-			double localZ = Math.sin(angle * 1.5) * radiusZ;
-
-			double rotatedX = localX * Math.cos(yaw) - localZ * Math.sin(yaw);
-			double rotatedZ = localX * Math.sin(yaw) + localZ * Math.cos(yaw);
-
-			positions[i] = new Vec3(
-					this.getX() + rotatedX,
-					this.getY() + localY + 0.75,
-					this.getZ() + rotatedZ
-			);
-		}
-
-		return positions;
+		return ModUtils.getRingPositions(this.getX(), this.getY(), this.getZ(), this.getRotationVector().x,
+										 numberOfParticles, speed, radiusX, radiusY, radiusZ);
 	}
 
 	public Vec3 getFootPosition(boolean side) {

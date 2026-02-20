@@ -1,9 +1,11 @@
 package awildgoose.wylan.entity;
 
+import awildgoose.wylan.ModUtils;
 import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.init.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -14,6 +16,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -21,6 +24,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -148,39 +152,93 @@ public class SkinwalkerEntity extends PathfinderMob {
 	}
 
 	@Override
+	protected void dropCustomDeathLoot(ServerLevel serverLevel, DamageSource damageSource, boolean bl) {
+		super.dropCustomDeathLoot(serverLevel, damageSource, bl);
+
+		SkinwalkerTexture texture = this.getTexture();
+		if (texture == SkinwalkerTexture.LETTUCE) {
+			this.playSound(SoundEvents.CREEPER_PRIMED, 1.0F, 0.5F);
+			serverLevel.explode(this, this.getX(), this.getY(), this.getZ(), 3, Level.ExplosionInteraction.MOB);
+		}
+
+		Item item = switch (texture) {
+			case ANIMATED -> ModItems.ANIMATED_COOKIE.get();
+			case KAT -> ModItems.KAT_COOKIE.get();
+			case LORDUCKIE -> ModItems.LORDUCKIE_COOKIE.get();
+			case SM -> ModItems.SM_COOKIE.get();
+			case WYLAN, WYLAN_EVIL -> ModItems.WYLAN_COOKIE.get();
+			case ZELDER, ZELDER_OILED -> ModItems.ZELDER_COOKIE.get();
+			case HUMMUS, GUAC, LETTUCE -> ModItems.WYLAN_COOKIE.get(); // TODO
+		};
+
+		this.spawnAtLocation(serverLevel, item);
+	}
+
+	@Override
 	protected @NotNull InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
 		ItemStack itemStack = player.getItemInHand(interactionHand);
 
-		if (!itemStack.isEmpty() && itemStack.getItem().equals(ModItems.OIL_BUCKET.get())) {
-			// this is oil!
-			SkinwalkerTexture texture = this.getTexture();
-			boolean isUnoiledZelder = texture == SkinwalkerTexture.ZELDER;
-			boolean isOiledZelder = texture == SkinwalkerTexture.ZELDER_OILED;
+		if (!itemStack.isEmpty()) {
+			if (itemStack.getItem().equals(ModItems.OIL_BUCKET.get())) {
+				// this is oil!
+				SkinwalkerTexture texture = this.getTexture();
+				boolean isUnoiledZelder = texture == SkinwalkerTexture.ZELDER;
+				boolean isOiledZelder = texture == SkinwalkerTexture.ZELDER_OILED;
 
-			if (isUnoiledZelder) {
-				if (!player.level().isClientSide) {
-					this.setTexture(SkinwalkerTexture.ZELDER_OILED);
-				} else {
-					level().playLocalSound(player, SoundEvents.HONEY_DRINK.value(), SoundSource.PLAYERS, 1.0f, 1.0f);
-				}
-
-				return InteractionResult.SUCCESS;
-			} else if (isOiledZelder) {
-				if (!player.level().isClientSide) {
-					var server = player.level().getServer();
-
-					if (server != null) {
-						player.teleport(new TeleportTransition(server.getLevel(WylanMod.ZELDER_ARENA),
-															   new Vec3(2.5, 40, 2.5), // pos
-															   Vec3.ZERO, // velocity
-															   0, 0,   // rotation
-															   TeleportTransition.PLAY_PORTAL_SOUND));
+				if (isUnoiledZelder) {
+					if (!player.level().isClientSide) {
+						this.setTexture(SkinwalkerTexture.ZELDER_OILED);
 					} else {
-						LogUtils.getLogger().error("SkinwalkerEntity::mobInteract(): Server is null somehow?");
+						level().playLocalSound(
+								player, SoundEvents.HONEY_DRINK.value(), SoundSource.PLAYERS, 1.0f, 1.0f);
 					}
-				}
 
-				return InteractionResult.SUCCESS;
+					return InteractionResult.SUCCESS;
+				} else if (isOiledZelder) {
+					if (!player.level().isClientSide) {
+						var server = player.level()
+								.getServer();
+
+						if (server != null) {
+							player.teleport(new TeleportTransition(server.getLevel(WylanMod.ZELDER_ARENA),
+																   new Vec3(2.5, 40, 2.5), // pos
+																   Vec3.ZERO, // velocity
+																   0, 0,   // rotation
+																   TeleportTransition.PLAY_PORTAL_SOUND));
+						} else {
+							LogUtils.getLogger()
+									.error("SkinwalkerEntity::mobInteract(): Server is null somehow?");
+						}
+					}
+
+					return InteractionResult.SUCCESS;
+				}
+			} else if (itemStack.getItem().equals(ModItems.SALAD.get())) {
+				// this is a salad!
+				SkinwalkerTexture texture = this.getTexture();
+				boolean isRegularWylan = texture == SkinwalkerTexture.WYLAN;
+
+				if (isRegularWylan) {
+					if (!player.level().isClientSide) {
+						this.setTexture(SkinwalkerTexture.WYLAN_EVIL);
+					} else {
+						level().playLocalSound(player, SoundEvents.FOX_EAT, SoundSource.PLAYERS, 1.0f, 1.0f);
+
+						Vec3[] positions = ModUtils.getRingPositions(getX(), getY(), getZ(), getRotationVector().x, 16,
+																  2.0f, 1.0f, 1.0f, 1.0f);
+
+						for (var position : positions)
+						{
+							var x = position.x;
+							var y = position.y;
+							var z = position.z;
+							level().addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
+							level().addParticle(ParticleTypes.FLAME, x, y, z, 0.0, 0.0, 0.0);
+						}
+					}
+
+					return InteractionResult.SUCCESS;
+				}
 			}
 		}
 
