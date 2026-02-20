@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -56,6 +57,14 @@ public class SkinwalkerEntity extends PathfinderMob {
 	}
 
 	@Override
+	protected void applyGravity() {
+		SkinwalkerTexture texture = this.getTexture();
+		boolean isKat = texture == SkinwalkerTexture.KAT;
+		if (!isKat)
+			super.applyGravity();
+	}
+
+	@Override
 	public void tick() {
 		super.tick();
 		if (this.level().isClientSide)
@@ -67,6 +76,29 @@ public class SkinwalkerEntity extends PathfinderMob {
 		boolean isZelder = texture == SkinwalkerTexture.ZELDER || texture == SkinwalkerTexture.ZELDER_OILED;
 		boolean isKat = texture == SkinwalkerTexture.KAT;
 		ServerLevel level = (ServerLevel) level();
+
+		if (isKat) {
+			if (player != null) {
+				var targetPosition = player.position();
+
+				this.setInvulnerable(true);
+				double d = targetPosition.x + 0.5 - this.getX();
+				double e = targetPosition.y + 0.1 - this.getY();
+				double f = targetPosition.z + 0.5 - this.getZ();
+				Vec3 vec3 = this.getDeltaMovement();
+				Vec3 vec32 = vec3.add((Math.signum(d) * 0.5 - vec3.x) * 0.1F, (Math.signum(e) * 0.7F - vec3.y) * 0.1F, (Math.signum(f) * 0.5 - vec3.z) * 0.1F);
+				double ascend = 0.1;
+				if (targetPosition.y < getY())
+					ascend *= -1;
+				this.setDeltaMovement(vec32.add(0, ascend, 0));
+				float g = (float)(Mth.atan2(vec32.z, vec32.x) * 180.0F / (float)Math.PI) - 90.0F;
+				float h = Mth.wrapDegrees(g - this.getYRot());
+				this.zza = 0.5F;
+				this.setYRot(this.getYRot() + h);
+			}
+
+			return;
+		}
 
 		if (player != null) {
 			// maybe only move sometimes, like every 0-3 seconds set a goal?
@@ -90,10 +122,6 @@ public class SkinwalkerEntity extends PathfinderMob {
 
 		if (isZelder && !this.swinging) {
 			this.swing(InteractionHand.MAIN_HAND);
-		}
-
-		if (isKat) {
-			this.setInvulnerable(true);
 		}
 
 		if (isWylan) {
