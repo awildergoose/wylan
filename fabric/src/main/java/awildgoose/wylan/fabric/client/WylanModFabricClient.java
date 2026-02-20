@@ -1,7 +1,6 @@
 package awildgoose.wylan.fabric.client;
 
-import awildgoose.wylan.ScreenshakeInstance;
-import awildgoose.wylan.client.ScreenshakeHandler;
+import awildgoose.wylan.client.ClientPayloadHandlers;
 import awildgoose.wylan.client.WylanModClient;
 import awildgoose.wylan.client.block.entity.PlushieBlockEntityRenderer;
 import awildgoose.wylan.client.entity.GumballPelletEntityRenderer;
@@ -32,14 +31,7 @@ public final class WylanModFabricClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntityTypes.ZELDER_BOSS.get(), ZelderBossEntityRenderer::new);
         EntityRendererRegistry.register(ModEntityTypes.GUMBALL_PELLET.get(), GumballPelletEntityRenderer::new);
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> ModClientCommands.init(dispatcher));
-        ClientPlayNetworking.registerGlobalReceiver(ScreenshakeS2CPayload.ID, (payload, context) -> ScreenshakeHandler.addScreenshake(new ScreenshakeInstance(
-                payload.duration(),
-                payload.startingStrength(),
-                payload.endingStrength(),
-                payload.falloffDistance(),
-                payload.center()
-        )));
-
+        ClientPlayNetworking.registerGlobalReceiver(ScreenshakeS2CPayload.ID, (payload, context) -> ClientPayloadHandlers.handleScreenShakePacket(payload));
         ParticleFactoryRegistry.getInstance().register(ModParticles.BLOOD.get(), BloodDropParticle.Provider::new);
     }
 }

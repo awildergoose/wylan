@@ -3,12 +3,15 @@ package awildgoose.wylan.neoforge;
 import awildgoose.wylan.WylanMod;
 import awildgoose.wylan.entity.*;
 import awildgoose.wylan.init.ModEntityTypes;
+import awildgoose.wylan.payloads.ScreenshakeS2CPayload;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -49,5 +52,11 @@ public final class WylanModNeoForge {
                 ModEntityTypes.GUMBALL_PELLET.get(),
                 GumballPelletEntity.createDefaultAttributes().build()
         );
+    }
+
+    @SubscribeEvent
+    public static void registerPayloads(RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar("1");
+        registrar.playToClient(ScreenshakeS2CPayload.ID, ScreenshakeS2CPayload.CODEC);
     }
 }

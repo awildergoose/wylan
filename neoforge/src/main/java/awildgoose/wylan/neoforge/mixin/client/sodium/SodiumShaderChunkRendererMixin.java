@@ -8,6 +8,7 @@ import net.caffeinemc.mods.sodium.client.render.chunk.shader.ChunkShaderInterfac
 import net.caffeinemc.mods.sodium.client.render.chunk.shader.ChunkShaderOptions;
 import net.caffeinemc.mods.sodium.client.render.chunk.shader.DefaultShaderInterface;
 import net.minecraft.resources.ResourceLocation;
+import org.apache.commons.io.IOUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,6 +17,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Mixin(ShaderChunkRenderer.class)
@@ -45,10 +49,10 @@ public class SodiumShaderChunkRendererMixin {
 	@Unique
 	private GlProgram<ChunkShaderInterface> wylan$createOurShader(ChunkShaderOptions options) {
 		ShaderConstants constants = createShaderConstants(options);
-		GlShader vertShader = ShaderLoader.loadShader(ShaderType.VERTEX,
+		GlShader vertShader = wylan$loadShader(ShaderType.VERTEX,
 													  ResourceLocation.fromNamespaceAndPath(WylanMod.MOD_ID,
 																							"core/rendertype_lava_sodium.vsh"), constants);
-		GlShader fragShader = ShaderLoader.loadShader(ShaderType.FRAGMENT,
+		GlShader fragShader = wylan$loadShader(ShaderType.FRAGMENT,
 													  ResourceLocation.fromNamespaceAndPath(WylanMod.MOD_ID,
 																							"core/rendertype_lava_sodium.fsh"), constants);
 
@@ -70,5 +74,46 @@ public class SodiumShaderChunkRendererMixin {
 		}
 
 		return var6;
+	}
+
+	@Unique
+	private static GlShader wylan$loadShader(ShaderType type, ResourceLocation name, ShaderConstants constants) {
+		ShaderParser.ParsedShader parsedShader = ShaderParser.parseShader(wylan$getShaderSource(name), constants);
+		return new GlShader(type, name, parsedShader);
+	}
+
+	@Unique
+	private static String wylan$getShaderSource(ResourceLocation name) {
+		String path = String.format("/assets/%s/shaders/%s", name.getNamespace(), name.getPath());
+
+		try {
+			// use WylanMod (us) instead of ShaderLoader (sodium)
+			InputStream in = WylanMod.class.getResourceAsStream(path);
+
+			String var3;
+			try {
+				if (in == null) {
+					throw new RuntimeException("Shader not found: " + path);
+				}
+
+				var3 = IOUtils.toString(in, StandardCharsets.UTF_8);
+			} catch (Throwable var6) {
+				if (in != null) {
+					try {
+						in.close();
+					} catch (Throwable var5) {
+						var6.addSuppressed(var5);
+					}
+				}
+
+				throw var6;
+			}
+
+			in.close();
+
+			return var3;
+		} catch (IOException var7) {
+			throw new RuntimeException("Failed to read shader source for " + path, var7);
+		}
 	}
 }
